@@ -1,0 +1,79 @@
+generated: '2026-09-20'
+method: searched
+source: live probes of /.well-known/ paths across every known APIVerve host
+# The MCP resource host api.apiverve.com serves RFC 9728 protected-resource metadata,
+# RFC 8414 authorization-server metadata and OIDC discovery (identical body). The
+# primary/www/assets hosts return clean 404s on every path (real 404s, not a catch-all —
+# confirmed: api.apiverve.com returns 404 for security.txt/api-catalog/agent-card while
+# serving the three OAuth docs, so there is no path-echo / SPA false-positive here).
+hosts:
+  - host: https://api.apiverve.com
+    documents:
+      - path: /.well-known/oauth-protected-resource
+        status: 200
+        file: apiverve-oauth-protected-resource.json
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        file: apiverve-oauth-authorization-server.json
+      - path: /.well-known/openid-configuration
+        status: 200
+        file: apiverve-openid-configuration.json
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /.well-known/apis.json
+        status: 404
+  - host: https://apiverve.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /.well-known/apis.json
+        status: 404
+      # NOTE: apiverve.com/apis.json (domain root, not /.well-known/) DOES serve a real
+      # APIs.json 0.19 index describing the REST API + MCP server — captured separately;
+      # only the /.well-known/apis.json location 404s.
+  - host: https://assets.apiverve.com
+    documents:
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+  - host: https://docs.apiverve.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: https://dashboard.apiverve.com
+    documents:
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404

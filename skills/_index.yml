@@ -1,0 +1,16 @@
+generated: '2026-09-20'
+method: generated
+source: openapi/apiverve-openapi.yaml + conventions/apiverve-conventions.yml + errors/apiverve-problem-types.yml
+skills:
+  - file: apiverve-validate-signup.md
+    name: Validate a signup with APIVerve
+    api: openapi/apiverve-openapi.yaml
+    operations: [emailvalidator, emaildisposablechecker, phonenumbervalidator]
+  - file: apiverve-domain-intelligence.md
+    name: Domain intelligence sweep with APIVerve
+    api: openapi/apiverve-openapi.yaml
+    operations: [dnslookup, whoislookup, sslchecker]
+  - file: apiverve-ip-risk-check.md
+    name: IP risk & geolocation check with APIVerve
+    api: openapi/apiverve-openapi.yaml
+    operations: [iplookup, ipblacklistlookup]

@@ -1,0 +1,15 @@
+generated: '2026-09-20'
+method: derived
+source: openapi/apiverve-openapi.yaml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: api_key
+  type: apiKey
+  in: header
+  parameter: x-api-key
+  sources:
+  - openapi/apiverve-openapi.yaml

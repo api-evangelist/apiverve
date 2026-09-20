@@ -1,0 +1,84 @@
+generated: '2026-09-20'
+method: derived
+source: openapi/apiverve-openapi.yaml + https://docs.apiverve.com/vervekit/mcp
+summary: >-
+  APIVerve's MCP server is documented to generate its tool list from the same catalog the REST
+  API runs on, one tool per catalog endpoint, with the tool name being the endpoint id stripped
+  to [a-zA-Z0-9_-]. The crosswalk is therefore 1:1 and structural: every one of the 367 OpenAPI
+  operations backs exactly one MCP tool, and each tool inherits that operation's query parameters
+  as its inputSchema. The live tools/list is auth-gated (401 anonymous), so the binding below is
+  by the provider's documented generation rule rather than a live schema dump; confidence is high
+  for the rule and the sample rows, medium for exact per-tool schema fidelity until introspection
+  can be run with a key.
+surfaces:
+  openapi:
+    path: openapi/apiverve-openapi.yaml
+    operations: 367
+    note: All operations use query parameters and x-api-key header auth.
+  mcp:
+    url: https://api.apiverve.com/v1/mcp
+    gated: true
+    note: tools/list returns 401 anonymously; tools mirror catalog endpoints 1:1 (367).
+  graphql:
+    endpoint: https://api.apiverve.com/v1/graphql
+    gated: true
+    note: >-
+      Alpha GraphQL gateway fans out to multiple catalog APIs in one POST. Schema introspection
+      could not be retrieved — the endpoint answered a Cloudflare bot-challenge (HTML), not an
+      application response, so the GraphQL field set is not mapped here.
+binding_rule:
+  tool_name_from: operationId (endpoint id), stripped to [a-zA-Z0-9_-]
+  input_schema_from: operation query parameters
+  annotations:
+    read_only_hint: true on GET-backed tools
+    credit_cost: stated in each tool description
+crosswalk:
+  - tool: emailvalidator
+    category: Data Validation
+    rest: [emailvalidator]
+    binding: rest
+    confidence: high
+  - tool: iplookup
+    category: Networking
+    rest: [iplookup]
+    binding: rest
+    confidence: high
+  - tool: dnslookup
+    category: Domain Data
+    rest: [dnslookup]
+    binding: rest
+    confidence: high
+  - tool: whoislookup
+    category: Domain Data
+    rest: [whoislookup]
+    binding: rest
+    confidence: high
+  - tool: sslchecker
+    category: Security
+    rest: [sslchecker]
+    binding: rest
+    confidence: high
+  - tool: currencyconverter
+    category: Finance
+    rest: [currencyconverter]
+    binding: rest
+    confidence: high
+  - tool: reversegeocode
+    category: Geography
+    rest: [reversegeocode]
+    binding: rest
+    confidence: high
+mcp_only: []
+rest_only:
+  - reason: >-
+      No REST operations lack an MCP tool — the server exposes the full catalog. The remaining
+      360 operations follow the same 1:1 rule as the sampled rows above and are omitted here for
+      brevity rather than because they are unmapped.
+    approx_count: 360
+coverage:
+  rest_operations_total: 367
+  mcp_tools_estimated: 367
+  tools_bound_sampled: 7
+  mcp_only: 0
+  rest_without_tool: 0
+  binding_basis: documented-generation-rule

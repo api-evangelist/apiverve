@@ -1,0 +1,41 @@
+generated: '2026-09-20'
+method: derived
+source: >-
+  openapi/apiverve-openapi.yaml + well-known/ OAuth discovery docs on api.apiverve.com +
+  https://docs.apiverve.com/error-handling
+standards:
+  - id: oauth2
+    conforms: true
+    evidence: >-
+      api.apiverve.com serves RFC 8414 oauth-authorization-server metadata (issuer, authorize/token/
+      register endpoints) for the MCP resource; authorization_code + refresh_token grants.
+  - id: oidc
+    conforms: true
+    evidence: /.well-known/openid-configuration served on api.apiverve.com (identical to the 8414 doc).
+  - id: rfc9728-protected-resource-metadata
+    conforms: true
+    evidence: /.well-known/oauth-protected-resource returns resource + authorization_servers for https://api.apiverve.com/v1/mcp.
+  - id: rfc7636-pkce
+    conforms: true
+    evidence: code_challenge_methods_supported = [S256].
+  - id: oauth-dynamic-client-registration
+    conforms: true
+    evidence: registration_endpoint present (https://api.apiverve.com/register) in the auth-server metadata.
+  - id: apikey-auth
+    conforms: true
+    evidence: OpenAPI securityScheme api_key (apiKey, header x-api-key) applied globally to all 367 operations.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: Errors use a custom status/error/data envelope, not application/problem+json.
+  - id: mcp
+    conforms: true
+    evidence: Published remote MCP server at https://api.apiverve.com/v1/mcp (streamable HTTP), tools generated from the catalog.
+  - id: graphql
+    conforms: true
+    evidence: Alpha GraphQL gateway at https://api.apiverve.com/v1/graphql (introspection Cloudflare-challenged, not confirmable anonymously).
+  - id: apisjson
+    conforms: true
+    evidence: Self-hosted APIs.json 0.19 at https://apiverve.com/apis.json listing the REST API and MCP server.
+domain_standard_conformance: []
+# No single market-domain standard applies to a 367-endpoint horizontal utility catalog; the
+# relevant standards are the cross-cutting agent/auth ones recorded above. REWARD-ONLY — none invented.

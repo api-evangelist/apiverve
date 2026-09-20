@@ -1,0 +1,42 @@
+generated: '2026-09-20'
+method: searched
+source: https://docs.apiverve.com/rate-limits
+limit_count: 4
+scope: per-key
+window: minute
+notes: >-
+  Two distinct ceilings both answer HTTP 429: a per-minute request rate limit (continuous refill,
+  not a discrete bucket) and a monthly credit allowance. Distinguish them by x-api-remaining-credits
+  on the 429 (0 = out of credits, do not retry; non-zero = rate-limited, retry with backoff). Docs
+  recommend exponential backoff with jitter when retry-after is absent.
+tiers:
+  - plan: Free
+    rate_limit: 5/min
+    concurrency: 1
+    monthly_credits: 200
+  - plan: Starter
+    rate_limit: 60/min
+    concurrency: 5
+    monthly_credits: 200000
+  - plan: Pro
+    rate_limit: 180/min
+    concurrency: 20
+    monthly_credits: 1000000
+  - plan: Mega
+    rate_limit: unlimited
+    concurrency: 50
+    monthly_credits: 4000000
+response_headers:
+  rate_limit:
+    - x-rate-limit-limit        # requests per minute currently enforced
+    - x-rate-limit-remaining    # requests left in current window
+    - x-rate-limit-reset        # seconds until window refills (sent on 429)
+    - retry-after               # seconds before retry (sent on 429)
+  credits:
+    - x-api-credits-used
+    - x-api-remaining-credits
+    - x-api-max-credits
+    - x-api-renewal             # unix timestamp of allowance reset
+    - x-api-current-plan
+    - x-api-trialing
+exhaustion_status: 429

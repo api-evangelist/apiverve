@@ -1,0 +1,23 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for APIVerve API
+  version: 1.0.0
+extends: openapi/apiverve-openapi.yaml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provider: apiverve
+      x-apievangelist-agent-native: true
+      x-apievangelist-mcp-server: https://api.apiverve.com/v1/mcp
+      x-apievangelist-llms-txt: https://docs.apiverve.com/llms.txt
+      x-apievangelist-apis-json: https://apiverve.com/apis.json
+      x-apievangelist-note: >-
+        367 stateless lookup/compute endpoints behind one x-api-key, uniform status/error/data
+        envelope, credit-metered. Every endpoint also surfaces as an MCP tool and a per-language SDK.
+  - target: $.info
+    update:
+      x-apievangelist-auth:
+        rest: apiKey header x-api-key
+        mcp: OAuth 2.0 (PKCE S256, dynamic client registration) or x-api-key
+      x-apievangelist-rate-limit-headers: [x-rate-limit-limit, x-rate-limit-remaining, x-rate-limit-reset, retry-after]
+      x-apievangelist-credit-headers: [x-api-credits-used, x-api-remaining-credits, x-api-max-credits, x-api-renewal]

@@ -1,0 +1,32 @@
+generated: '2026-09-20'
+method: searched
+probe: true
+source: live probes of apiverve.com + evlarsoft.com legal/docs paths
+signals:
+  subprocessors:
+    url: https://evlarsoft.com/legal/subprocessors
+    evidence:
+      - source: https://evlarsoft.com/legal/subprocessors
+        keywords: [subprocessors, effective july 1 2026, cloud hosting, edge network, payment processor]
+    note: >-
+      Dated subprocessor transparency page (Effective July 1, 2026) organized by service category
+      (cloud/compute, edge/CDN, payment processor, transactional email, analytics/error monitoring,
+      support tooling) with data handled and region per category. Named vendors are NOT disclosed —
+      customers must contact EvlarSoft for the specific companies.
+  incident_notification:
+    url: https://evlarsoft.com/legal/data-processing
+    stated_sla: 'without undue delay'
+    evidence:
+      - source: https://evlarsoft.com/legal/data-processing
+        keywords: [data processing addendum, personal data breach, without undue delay, standard contractual clauses]
+    note: >-
+      Real DPA (reached via 301 from https://apiverve.com/dpa). Breach clause verbatim: "EvlarSoft
+      will notify the Customer without undue delay after becoming aware of a personal data breach."
+      References SCCs for international transfers; no specific data-residency regions committed.
+# Probed and NOT found (recorded absence is the measurement):
+#   /accessibility, /accessibility/vpat            -> 404 (no AccessibilityConformance)
+#   /security/sbom                                 -> not present (no SBOM)
+#   ai transparency / training-data summary        -> not applicable; APIVerve resells data/compute APIs, publishes no GPAI/AI-model disclosure
+#   global privacy control statement               -> none found
+#   data residency doc                             -> 404 (DPA addresses transfers generally, no residency commitment)
+#   transparency report / notice-and-action / age assurance / exit assistance / support lifetime -> none found

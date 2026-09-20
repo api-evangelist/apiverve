@@ -1,0 +1,21 @@
+generated: '2026-09-20'
+method: searched
+source: https://docs.apiverve.com/vervekit (forms, jsonbin, studio)
+summary: >-
+  APIVerve ships client-side / embeddable surfaces under its VerveKit platform layer, distinct
+  from the per-endpoint server-side SDKs in packages/.
+components:
+  - family: Embedded forms
+    kind: embeddable-widget
+    url: https://docs.apiverve.com/vervekit/forms
+    detail: >-
+      Drop a working form for any catalog endpoint onto a site with two lines of HTML — no backend,
+      and no API key exposed in the browser.
+  - family: JSON bins
+    kind: hosted-endpoint
+    url: https://docs.apiverve.com/vervekit/jsonbin
+    detail: Serve JSON from a key-protected URL (static or writable) without standing up a service.
+  - family: APIVerve Studio
+    kind: desktop-client
+    url: https://docs.apiverve.com/studio
+    detail: Desktop API client, distinct from the browser playground.

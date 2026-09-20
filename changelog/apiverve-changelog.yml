@@ -1,0 +1,33 @@
+generated: '2026-09-20'
+method: searched
+source: https://apiverve.com/changelog
+scheme: calendar
+current_version: null
+note: >-
+  APIVerve tracks changes by month/year with no formal version numbers. Entries are categorized
+  New / Improved / Fixed / Security. No breaking changes are labeled. Recent window captured below.
+entries:
+  - date: '2026-09'
+    type: addition
+    highlight: Documentation v2 — faster navigation and per-API reference pages.
+  - date: '2026-09'
+    type: addition
+    highlight: Dark mode following system theme across dashboard and marketplace.
+  - date: '2026-09'
+    type: addition
+    highlight: Bonus credits with separate expiry tracking in the dashboard.
+  - date: '2026-09'
+    type: improvement
+    highlight: Full API reference on every page, unified across marketplace and dashboard.
+  - date: '2026-09'
+    type: improvement
+    highlight: Faster cold starts via edge-injected config; latency percentiles measured.
+  - date: '2026-09'
+    type: fix
+    highlight: Nine dead API routes fixed; CI checks added to catch route regressions.
+  - date: '2026-08'
+    type: addition
+    highlight: Power Platform connectors (Power Automate, Logic Apps).
+  - date: '2026-08'
+    type: addition
+    highlight: Spreadsheet add-ins published in the Microsoft and Google marketplaces.

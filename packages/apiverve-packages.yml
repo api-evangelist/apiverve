@@ -1,0 +1,95 @@
+generated: '2026-09-20'
+method: searched
+source: https://docs.apiverve.com/sdk + registry metadata endpoints
+summary: >-
+  APIVerve auto-generates one client package per catalog endpoint across seven ecosystems
+  (npm, NuGet, PyPI, Go modules, Android/Java via JitPack, Packagist/PHP, pub.dev/Dart), plus
+  a first-party CLI and a hosted/stdio MCP server package. Package counts per ecosystem are the
+  provider's own figures. Versions/dates below were read live from each registry for a
+  representative package (emailvalidator) and for the CLI + MCP packages; the per-endpoint
+  packages share the generator and versioning cadence.
+packages:
+  # ---- First-party tooling (verified live) ----
+  - language: javascript
+    registry: npm
+    name: "@apiverve/cli"
+    url: https://www.npmjs.com/package/@apiverve/cli
+    install: npm install -g @apiverve/cli
+    official: true
+    version: 1.0.0
+    published: '2026-07-20'
+    note: Command-line access to the whole catalog; also runs via Docker. Reads APIVERVE_API_KEY.
+  - language: javascript
+    registry: npm
+    name: "@apiverve/mcp-server"
+    url: https://www.npmjs.com/package/@apiverve/mcp-server
+    install: "npx @apiverve/mcp-server cursor --api-key YOUR_API_KEY"
+    official: true
+    version: 1.1.0
+    published: '2026-07-16'
+    note: MCP installer / stdio bridge for the hosted remote MCP server. A Docker image (apiverve/mcp) is the stdio alternative.
+  # ---- Generated per-endpoint client SDKs (one package per catalog endpoint) ----
+  - language: javascript
+    registry: npm
+    name: "@apiverve/<endpoint-id>"
+    url: https://www.npmjs.com/org/apiverve
+    install: npm install @apiverve/emailvalidator
+    official: true
+    version: 1.2.0
+    published: '2026-07-15'
+    note: 357 packages (one per API). Version/date read from @apiverve/emailvalidator as the sample.
+  - language: python
+    registry: pypi
+    name: "apiverve-<api-name>"
+    url: https://pypi.org/project/apiverve-emailvalidator/
+    install: pip install apiverve-emailvalidator
+    official: true
+    version: 1.2.0
+    published: '2026-07-16'
+    note: 356 packages (one per API). Version/date read from apiverve-emailvalidator as the sample. There is NO single "apiverve-mcp" PyPI package (probed, 404).
+  - language: csharp
+    registry: nuget
+    name: "APIVerve.API.<ApiName>"
+    url: https://www.nuget.org/packages/APIVerve.API.EmailValidator
+    install: dotnet add package APIVerve.API.EmailValidator
+    official: true
+    version: 1.2.0
+    published: null
+    note: 357 packages (one per API). Latest version read from flatcontainer index; publish date not queried.
+  - language: go
+    registry: pkg.go.dev
+    name: "github.com/apiverve/<api-id>-api/go"
+    url: https://pkg.go.dev/github.com/apiverve/emailvalidator-api/go
+    install: go get github.com/apiverve/emailvalidator-api/go
+    official: true
+    version: null
+    note: 356 modules (one per API). Go modules are versioned via VCS tags; not queried per package.
+  - language: java
+    registry: jitpack
+    name: "com.github.apiverve:<api-id>-api"
+    url: https://jitpack.io/#apiverve
+    install: "implementation 'com.github.apiverve:emailvalidator-api:<tag>'"
+    official: true
+    version: null
+    note: 356 Android/Java artifacts via JitPack (built on demand from the GitHub tag).
+  - language: php
+    registry: packagist
+    name: "apiverve/<api-id>"
+    url: https://packagist.org/packages/apiverve/emailvalidator
+    install: composer require apiverve/emailvalidator
+    official: true
+    version: null
+    note: >-
+      180 packages (one per API). Package page returns 200 but the packagist p2 metadata
+      endpoint returned no version array on probe; version left null rather than guessed.
+  - language: dart
+    registry: pub.dev
+    name: "apiverve_<api-id>"
+    url: https://pub.dev/publishers/apiverve.com/packages
+    install: dart pub add apiverve_emailvalidator
+    official: true
+    version: null
+    note: >-
+      156 packages per docs. The sample name apiverve_emailvalidator returned 404 on pub.dev,
+      so the exact per-endpoint naming could not be confirmed for this sample; count is the
+      provider's figure. Left null rather than asserting a version.

@@ -1,0 +1,39 @@
+generated: '2026-09-20'
+method: searched
+status: published
+source: https://docs.apiverve.com/vervekit/mcp
+deployment:
+  mode: both
+  endpoint: https://api.apiverve.com/v1/mcp
+  install: "npx @apiverve/mcp-server cursor --api-key YOUR_API_KEY"
+  package: https://www.npmjs.com/package/@apiverve/mcp-server
+  # A stdio bridge is also published as a Docker image for clients that require stdio:
+  #   docker run -i --rm -e APIVERVE_API_KEY apiverve/mcp
+  auth: oauth
+  verified: probed
+server:
+  name: apiverve
+  transport: http           # streamable HTTP; requests must be POST, anything else refused
+  url: https://api.apiverve.com/v1/mcp
+  registered_name: com.apiverve/mcp-server
+notes: >-
+  Hosted remote MCP server that generates its tool list from the same catalog the REST API
+  runs on — all 367 catalog endpoints surface as distinct MCP tools with structured input and
+  output schemas and a readOnlyHint annotation on GET-backed tools; each tool's description
+  carries the endpoint's credit cost. Tool names are the endpoint id stripped to [a-zA-Z0-9_-]
+  (e.g. "GUID Generator" -> GUIDGenerator). A single endpoint can be isolated at
+  https://api.apiverve.com/v1/mcp/<endpoint-id>. New catalog endpoints appear as tools
+  automatically. Auth is negotiated: OAuth 2.0 by default (RFC 9728 protected-resource +
+  WWW-Authenticate challenge, PKCE S256, dynamic client registration) or an x-api-key header.
+auth_discovery:
+  protected_resource: https://api.apiverve.com/.well-known/oauth-protected-resource
+  authorization_server: https://api.apiverve.com/.well-known/oauth-authorization-server
+  pkce: S256
+  dynamic_client_registration: true
+introspection:
+  tools_list: gated
+  detail: >-
+    POST tools/list to the endpoint returns HTTP 401 {"code":-32000,"message":"Authentication
+    required"} anonymously — the live tool schemas require an authenticated session (OAuth or
+    x-api-key). The tool set is therefore mapped from the published OpenAPI operations (367)
+    and the docs, not from a live tools/list dump. See mcp/apiverve-tool-crosswalk.yml.

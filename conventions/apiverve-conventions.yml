@@ -1,0 +1,60 @@
+generated: '2026-09-20'
+method: searched
+source: https://docs.apiverve.com (making-requests, response-formats, request-headers, rate-limits, batch-requests, authentication)
+authentication:
+  style: api-key
+  header: x-api-key
+  alternatives: [Authorization: Bearer, x-jwt]
+  scoping: >-
+    Keys support sub-keys, per-key rate limits, blocked-endpoint / blocked-tool lists, IP
+    allow-lists, expiry and rotation. OAuth 2.0 (PKCE, dynamic client registration) applies to
+    the MCP surface only.
+request:
+  formats: [query parameters, JSON body, file upload]
+  base_url: https://api.apiverve.com/v1
+  batch:
+    supported: true
+    detail: Up to 200 lookups for one endpoint in a single call — one auth, one rate-limit charge, one billing settlement.
+    docs: https://docs.apiverve.com/batch-requests
+response:
+  envelope: '{ "status", "error", "data" }'
+  serialization: [json, xml, yaml, csv, text]
+  default: json
+  format_param: format
+  note: Premium fields are absent (not null) when a plan does not include them.
+  metadata_headers: [x-api-credits-used, x-api-remaining-credits, x-api-max-credits, x-api-renewal, x-api-current-plan]
+pagination:
+  style: none
+  note: >-
+    Endpoints are single-shot lookups/computations; there is no cursor/offset pagination surface.
+    Bulk work is handled by batch requests (see request.batch), not by paging a collection.
+rate_limit_signaling:
+  headers: [x-rate-limit-limit, x-rate-limit-remaining, x-rate-limit-reset, retry-after]
+  exhaustion_status: 429
+  cross_ref: rate-limits/apiverve-rate-limits.yml
+error_envelope:
+  cross_ref: errors/apiverve-problem-types.yml
+  format: custom (status/error/data), NOT RFC 9457
+versioning:
+  style: uri-path
+  current: v1
+  cross_ref: lifecycle/apiverve-lifecycle.yml
+idempotency:
+  coverage: none
+  mechanism: none
+  detail: >-
+    No Idempotency-Key header or replay-protection contract is documented. The catalog is a
+    marketplace of stateless lookup and computation endpoints (265 GET, 102 POST) — the POSTs
+    are computations over the request body (text processing, data conversion, document parsing),
+    not resource mutations, so repeated calls are naturally safe but the provider publishes no
+    idempotency guarantee. No Idempotency common[] pointer is emitted.
+reversibility:
+  applicable: na
+  detail: >-
+    Read-only / stateless compute API. No create/update/delete of provider-side resources exists,
+    so there is nothing to reverse (no cancel/refund/void/restore surface, and none is needed).
+dry_run:
+  applicable: na
+  detail: >-
+    No mutating surface to rehearse. A free tier (200 credits, no card) and Postman/VerveKit mock
+    modes serve the "try before you commit" need instead — see sandbox/apiverve-sandbox.yml.

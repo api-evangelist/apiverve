@@ -1,0 +1,49 @@
+generated: '2026-09-20'
+method: searched
+source: https://apiverve.com/pricing
+currency: USD
+billing_period: monthly
+plan_count: 5
+plans:
+  - name: Free
+    price: 0
+    billing_period: monthly
+    included_credits: 200
+    rate_limit: 5/min
+    concurrency: 1
+    notes: No credit card required; development & testing only; non-commercial use; attribution required.
+  - name: Starter
+    price: 29.99
+    billing_period: monthly
+    included_credits: 200000
+    rate_limit: 60/min
+    concurrency: 5
+    notes: Commercial license included; Zapier, Make & MCP access; email support.
+  - name: Pro
+    price: 99.99
+    billing_period: monthly
+    included_credits: 1000000
+    rate_limit: 180/min
+    concurrency: 20
+    team_members: 3
+    sub_keys: 5
+    notes: "Most popular. Full GraphQL access; 10 embedded forms; 24-hour support response."
+  - name: Mega
+    price: 299.99
+    billing_period: monthly
+    included_credits: 4000000
+    rate_limit: unlimited
+    concurrency: 50
+    team_members: 10
+    sub_keys: 25
+    notes: Dedicated servers; 90-day audit history; priority support (4-hour response).
+  - name: Enterprise
+    price: null
+    billing_period: custom
+    notes: >-
+      Contact sales. Volume pricing beyond published tiers, annual invoicing, purchase orders,
+      dedicated contact, and security-review support.
+overage: >-
+  Metered by credits per call (each endpoint states its per-call credit cost). When the monthly
+  credit balance is exhausted, calls return HTTP 429 with x-api-remaining-credits: 0 until the
+  cycle resets or the plan is upgraded; bonus credits are tracked separately with their own expiry.

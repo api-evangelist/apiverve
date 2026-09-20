@@ -1,0 +1,25 @@
+generated: '2026-09-20'
+method: searched
+source: https://apiverve.com/changelog + https://status.apiverve.com + openapi/apiverve-openapi.yaml
+versioning:
+  scheme: uri-path
+  current: v1
+  docs: https://docs.apiverve.com
+  note: >-
+    All endpoints are served under /v1/. The product changelog itself is tracked by month/year
+    with no formal semantic version numbers.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: >-
+    No published deprecation policy or RFC 8594 Sunset/Deprecation header support was found. The
+    changelog records fixing nine "dead API routes" (Sept 2026) but states no removal/deprecation
+    schedule for callers.
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    Named support-response targets are published per plan (Pro 24h, Mega 4h) but no uptime SLA
+    percentage was found.
+status_page: https://status.apiverve.com
+deprecated_operations: []

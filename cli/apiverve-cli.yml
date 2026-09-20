@@ -1,0 +1,18 @@
+generated: '2026-09-20'
+method: searched
+source: https://docs.apiverve.com/sdk + https://www.npmjs.com/package/@apiverve/cli
+cli:
+  name: "@apiverve/cli"
+  install:
+    - npm install -g @apiverve/cli
+    - "docker run (Docker alternative, no Node required)"
+  auth:
+    method: api-key
+    env: APIVERVE_API_KEY
+  surface: >-
+    Accesses the entire APIVerve catalog (350+ endpoints) from the command line. Reads the API key
+    from the APIVERVE_API_KEY environment variable.
+  version: 1.0.0
+  published: '2026-07-20'
+  registry: npm
+  url: https://www.npmjs.com/package/@apiverve/cli

@@ -1,0 +1,29 @@
+generated: '2026-09-20'
+method: searched
+source: https://docs.apiverve.com (dashboard/playground, vervekit/mock, postman) + https://apiverve.com/pricing
+summary: >-
+  APIVerve has no separate test-vs-live key namespace and publishes no magic test values (it is a
+  lookup/compute catalog, not a payments API). "Try before you spend" is served by a free tier, a
+  browser playground on the real key, an analytics endpoint that never spends a credit, and
+  cost-free mock modes.
+test_vs_live:
+  separate_keys: false
+  note: One key per account across free and paid; scoped sub-keys restrict reach rather than separating environments.
+free_tier:
+  credits_per_month: 200
+  card_required: false
+  note: Development & testing only, non-commercial, attribution required.
+playground:
+  url: https://docs.apiverve.com/dashboard/playground
+  detail: Call any endpoint from the browser with your real key; copy the working request as curl or code in eight languages.
+mock:
+  vervekit_mock:
+    url: https://docs.apiverve.com/vervekit/mock
+    detail: Stand up fake API responses (fixed bodies, status codes, headers, request rules) on your own mock server before the real endpoint exists.
+  postman_mock:
+    url: https://docs.apiverve.com/postman
+    detail: The catalog Postman collection includes a mock mode that costs nothing.
+no_cost_endpoint:
+  analytics_api:
+    url: https://docs.apiverve.com/analytics-api
+    detail: Read plan, credit balance, renewal date and usage breakdown without spending a credit.

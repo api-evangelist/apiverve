@@ -1,0 +1,45 @@
+generated: '2026-09-20'
+method: searched
+source: https://docs.apiverve.com/error-handling + openapi/apiverve-openapi.yaml
+format: custom-envelope
+envelope:
+  shape: '{ "status": "ok"|"error", "error": "message"|null, "data": {...}|null }'
+  note: >-
+    APIVerve does NOT use RFC 9457 application/problem+json. Every endpoint returns the same
+    three-key envelope; failures set status:"error" and a human-readable, parameter-specific
+    error string (e.g. "The 'email' parameter is required."). The OpenAPI declares 200/401/404/500
+    on all 367 operations; the docs describe the fuller runtime status set below.
+problems:
+  - status: 400
+    title: Malformed request
+    detail: Bad parameter, missing field, or oversized upload.
+    retryable: false
+  - status: 401
+    title: Unrecognized key
+    detail: Key is well-formed but not recognized.
+    retryable: false
+  - status: 403
+    title: Insufficient permissions / key not presented
+    detail: >-
+      Valid key but insufficient permissions, OR (as an HTML 403 with no JSON body) the request
+      never reached the service — missing x-api-key header or malformed key format.
+    retryable: false
+  - status: 404
+    title: Endpoint not found
+    detail: Endpoint does not exist or is not in the catalog.
+    retryable: false
+  - status: 429
+    title: Rate limited or out of credits
+    detail: >-
+      Dual meaning. Check x-api-remaining-credits: 0 = monthly budget exhausted (do not retry);
+      non-zero = rate-limited (retry after backoff / retry-after).
+    retryable: conditional
+  - status: 500
+    title: Server-side failure
+    detail: Retry with exponential backoff.
+    retryable: true
+  - status: 503
+    title: Upstream unavailable
+    detail: Retry with exponential backoff.
+    retryable: true
+never_retry: [400, 401, 403, 404]
