@@ -8,6 +8,29 @@ created: '2026-09-19'
 modified: '2026-09-20'
 specificationVersion: '0.21'
 tags:
+- API Marketplace
+- REST
+- JSON
+- GraphQL
+- OpenAPI
+- Postman
+- MCP
+- llms-txt
+- agent-native
+- APIKeys
+- IP Geolocation
+- DNS
+- WHOIS
+- SSL
+- Email Validation
+- Phone Validation
+- Exchange Rates
+- metals prices
+- Weather
+- Geocoding
+- Text Processing
+- Developer Tools
+tags_raw:
 - api marketplace
 - rest
 - json
@@ -40,6 +63,29 @@ apis:
   humanURL: https://docs.apiverve.com
   baseURL: https://api.apiverve.com/v1
   tags:
+  - API Marketplace
+  - REST
+  - JSON
+  - GraphQL
+  - OpenAPI
+  - Postman
+  - MCP
+  - llms-txt
+  - agent-native
+  - APIKeys
+  - IP Geolocation
+  - DNS
+  - WHOIS
+  - SSL
+  - Email Validation
+  - Phone Validation
+  - Exchange Rates
+  - metals prices
+  - Weather
+  - Geocoding
+  - Text Processing
+  - Developer Tools
+  tags_raw:
   - api marketplace
   - rest
   - json
@@ -86,6 +132,29 @@ apis:
   humanURL: https://docs.apiverve.com/graphql
   baseURL: https://api.apiverve.com/v1/graphql
   tags:
+  - API Marketplace
+  - REST
+  - JSON
+  - GraphQL
+  - OpenAPI
+  - Postman
+  - MCP
+  - llms-txt
+  - agent-native
+  - APIKeys
+  - IP Geolocation
+  - DNS
+  - WHOIS
+  - SSL
+  - Email Validation
+  - Phone Validation
+  - Exchange Rates
+  - metals prices
+  - Weather
+  - Geocoding
+  - Text Processing
+  - Developer Tools
+  tags_raw:
   - api marketplace
   - rest
   - json
@@ -123,6 +192,29 @@ apis:
   humanURL: https://docs.apiverve.com
   baseURL: https://api.apiverve.com/v1/mcp
   tags:
+  - API Marketplace
+  - REST
+  - JSON
+  - GraphQL
+  - OpenAPI
+  - Postman
+  - MCP
+  - llms-txt
+  - agent-native
+  - APIKeys
+  - IP Geolocation
+  - DNS
+  - WHOIS
+  - SSL
+  - Email Validation
+  - Phone Validation
+  - Exchange Rates
+  - metals prices
+  - Weather
+  - Geocoding
+  - Text Processing
+  - Developer Tools
+  tags_raw:
   - api marketplace
   - rest
   - json
