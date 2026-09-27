@@ -1,0 +1,367 @@
+openapi: 3.2.0
+info:
+  title: APIVerve AI/Computer Vision API
+  description: One API key, 370+ real-world REST endpoints — weather, geocoding, finance, DNS, validation, text processing and more. Every endpoint returns JSON. Full documentation at https://docs.apiverve.com.
+  termsOfService: https://apiverve.com/terms/
+  contact:
+    name: APIVerve Support
+    email: hello@apiverve.com
+    url: https://apiverve.com/contact
+  license:
+    name: APIVerve Terms of Service
+    url: https://apiverve.com/terms/
+  version: 1.0.0
+  x-logo:
+    url: https://apiverve.com/images/favicon.png
+    altText: APIVerve
+servers:
+- url: https://api.apiverve.com
+security:
+- api_key: []
+tags:
+- name: AI/Computer Vision
+paths:
+  /v1/articleideas:
+    get:
+      summary: Article Ideas Generator
+      description: Generate article ideas based on a topic using Artificial Intelligence
+      operationId: articleideas
+      parameters:
+      - name: topic
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The topic for which you want to generate article ideas (up to 50 characters)
+        example: software and technology
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  topic: software and technology
+                  topicIdeas: 3
+                  topics:
+                  - 'The Future of AI: How Artificial Intelligence Will Transform Software and Technology'
+                  - 'Cybersecurity in the Modern Age: Protecting Your Data in a Connected World'
+                  - 'Cloud Computing Explained: A Beginner''s Guide to Understanding the Cloud'
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - AI/Computer Vision
+  /v1/codedetector:
+    post:
+      summary: Code Detector
+      description: Code Detector is a simple tool for detecting the language of code in text. It returns details such as extension, language, family, and more.
+      operationId: codedetector
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  likelihood: 0.99
+                  family: PYTHON
+                  current: python
+                  readable: Python Code
+                  extension: .py
+                  paradigm: multi-paradigm
+                  isCompiled: false
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  description: The code snippet you want to detect the programming language of
+              required:
+              - code
+      tags:
+      - AI/Computer Vision
+  /v1/imagecaption:
+    post:
+      summary: Image Caption
+      description: Image Caption is an AI-powered tool that generates descriptive captions for images. Simply upload an image and receive a natural language description of its contents.
+      operationId: imagecaption
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  caption: A golden retriever running through a grassy field on a sunny day
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  description: 'File to upload (accepted: .jpg, .jpeg, .png, .gif, max 5MB)'
+                  x-acceptedTypes:
+                  - .jpg
+                  - .jpeg
+                  - .png
+                  - .gif
+                  x-maxSizeMB: 5
+              required:
+              - image
+      tags:
+      - AI/Computer Vision
+  /v1/imagetotext:
+    post:
+      summary: Image to Text
+      description: Extract text from an uploaded image using OCR
+      operationId: imagetotext
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  text: 'Ayear after that (in 2021) I hired somebody tpHfelp me write blog posts for
+
+                    my personal website.
+
+
+                    The point is, | like reinvesting the money | make
+
+                    back into my business.'
+                  words: 28
+                  characters: 170
+                  lines: 5
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  description: 'File to upload (accepted: .jpg, .jpeg, .png, .gif, max 5MB)'
+                  x-acceptedTypes:
+                  - .jpg
+                  - .jpeg
+                  - .png
+                  - .gif
+                  x-maxSizeMB: 5
+              required:
+              - image
+      tags:
+      - AI/Computer Vision
+  /v1/languagedetector:
+    post:
+      summary: Language Detector
+      description: Detect the language of a body of text
+      operationId: languagedetector
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  primaryLanguage: spanish
+                  primaryCode: es
+                  confidenceLevel: medium
+                  detectedLanguages:
+                  - language: spanish
+                    confidence: 0.38471794871794873
+                    code: es
+                  - language: portuguese
+                    confidence: 0.2946153846153846
+                    code: pt
+                  - language: danish
+                    confidence: 0.2464615384615384
+                    code: da
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to detect the language of
+              required:
+              - text
+      tags:
+      - AI/Computer Vision
+  /v1/sentimentanalysis:
+    post:
+      summary: Sentiment Analysis
+      description: Analyze the sentiment of a body of text
+      operationId: sentimentanalysis
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  comparative: 0.25
+                  sentimentText: positive
+                  sentiment: 3
+                  isPositive: true
+                  isNegative: false
+                  normalizedScore: 0.3
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to analyze the sentiment of
+              required:
+              - text
+      tags:
+      - AI/Computer Vision
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
+externalDocs:
+  description: APIVerve Documentation
+  url: https://docs.apiverve.com

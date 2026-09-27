@@ -1,3 +1,5 @@
+# x-archived-from: apiverve-openapi.yaml
+# x-archived-on: 2026-09-26
 openapi: 3.0.4
 info:
   title: APIVerve API

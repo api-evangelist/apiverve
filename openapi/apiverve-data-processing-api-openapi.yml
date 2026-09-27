@@ -1,0 +1,614 @@
+openapi: 3.2.0
+info:
+  title: APIVerve Data Processing API
+  description: One API key, 370+ real-world REST endpoints — weather, geocoding, finance, DNS, validation, text processing and more. Every endpoint returns JSON. Full documentation at https://docs.apiverve.com.
+  termsOfService: https://apiverve.com/terms/
+  contact:
+    name: APIVerve Support
+    email: hello@apiverve.com
+    url: https://apiverve.com/contact
+  license:
+    name: APIVerve Terms of Service
+    url: https://apiverve.com/terms/
+  version: 1.0.0
+  x-logo:
+    url: https://apiverve.com/images/favicon.png
+    altText: APIVerve
+servers:
+- url: https://api.apiverve.com
+security:
+- api_key: []
+tags:
+- name: Data Processing
+paths:
+  /v1/counter:
+    get:
+      summary: Cloud Counter
+      description: Get the current value of the counter
+      operationId: counter
+      parameters:
+      - name: id
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The ID of the counter (e.g., test_counter)
+        example: test_counter
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  created: '2024-04-26T22:09:46.000Z'
+                  id: test_counter
+                  lastAction: get
+                  lastRead: '2025-12-16T22:21:45.000Z'
+                  lastUpdated: '2024-04-26T22:09:46.000Z'
+                  numberOfDigits: 1
+                  ordinal: zeroth
+                  value: 0
+                  words: zero
+                  isEven: true
+                  isNegative: false
+                  isZero: true
+                  isPrime: false
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Processing
+  /v1/htmltotext:
+    post:
+      summary: HTML to Text
+      description: Convert HTML to text
+      operationId: htmltotext
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  text: This is an example paragraph. Anything in the body tag will appear on the page, just like this p tag and its contents.
+                  parsed: true
+                  extractionMethod: article
+                  detectedLanguage:
+                    language: english
+                    confidence: 0.3507446808510638
+                  characterCount: 118
+                  wordCount: 23
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                html:
+                  type: string
+                  description: The HTML to convert to text
+              required:
+              - html
+      tags:
+      - Data Processing
+  /v1/metadataextractor:
+    post:
+      summary: Metadata Extractor
+      description: Extract metadata from a web page
+      operationId: metadataextractor
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  requestUrl: https://apiverve.com
+                  url: https://apiverve.com/
+                  canonical: ''
+                  lang: en
+                  charset: utf-8
+                  title: APIVerve — One key for 300+ production APIs
+                  image: ''
+                  favicons:
+                  - rel: icon
+                    href: /images/favicon.ico
+                    sizes: any
+                  - rel: icon
+                    type: image/png
+                    href: /images/favicon.png
+                  - rel: apple-touch-icon
+                    href: /images/apple-touch-icon.png
+                  author: ''
+                  description: Consistent schemas, predictable credit pricing, and an uptime SLA on every paid plan across 300+ production APIs. One key, one bill, zero glue code.
+                  keywords: ''
+                  source: ''
+                  price: ''
+                  priceCurrency: ''
+                  availability: ''
+                  robots: ''
+                  jsonld: []
+                  og:url: https://apiverve.com
+                  og:locale: en_US
+                  og:locale:alternate: ''
+                  og:title: APIVerve — One key for 300+ production APIs
+                  og:type: website
+                  og:description: Consistent schemas, predictable credit pricing, and an uptime SLA on every paid plan across 300+ production APIs. One key, one bill, zero glue code.
+                  og:determiner: ''
+                  og:site_name: APIVerve
+                  og:image: https://apiverve.com/social-images/page-home.png
+                  og:image:secure_url: ''
+                  og:image:type: ''
+                  og:image:width: '1200'
+                  og:image:height: '630'
+                  twitter:title: APIVerve — One key for 300+ production APIs
+                  twitter:description: Consistent schemas, predictable credit pricing, and an uptime SLA on every paid plan across 300+ production APIs.
+                  twitter:image: https://apiverve.com/social-images/page-home.png
+                  twitter:image:alt: ''
+                  twitter:card: summary_large_image
+                  twitter:site: ''
+                  twitter:site:id: ''
+                  twitter:url: ''
+                  twitter:account_id: ''
+                  twitter:creator: ''
+                  twitter:creator:id: ''
+                  twitter:player: ''
+                  twitter:player:width: ''
+                  twitter:player:height: ''
+                  twitter:player:stream: ''
+                  twitter:app:name:iphone: ''
+                  twitter:app:id:iphone: ''
+                  twitter:app:url:iphone: ''
+                  twitter:app:name:ipad: ''
+                  twitter:app:id:ipad: ''
+                  twitter:app:url:ipad: ''
+                  twitter:app:name:googleplay: ''
+                  twitter:app:id:googleplay: ''
+                  twitter:app:url:googleplay: ''
+                  headings:
+                  - level: h1
+                    text: Every API your product needs, behind one key.
+                  - level: h2
+                    text: The boring parts of API integration, already solved.
+                  - level: h3
+                    text: One response envelope
+                  - level: h3
+                    text: Flat credit pricing
+                  - level: h3
+                    text: Backed by an uptime SLA
+                  - level: h2
+                    text: Your first call takes two minutes.
+                  - level: h3
+                    text: Grab a key
+                  - level: h3
+                    text: Call any endpoint
+                  - level: h3
+                    text: Ship it
+                  - level: h2
+                    text: Authenticate once. Point at anything.
+                  - level: h2
+                    text: Skip the integration work. Ship the feature.
+                  - level: h3
+                    text: User verification
+                  - level: h3
+                    text: Commerce toolkit
+                  - level: h3
+                    text: Data enrichment
+                  - level: h3
+                    text: Docs & media
+                  - level: h2
+                    text: Metrics from the last 24 hours.
+                  - level: h2
+                    text: Production APIs for the things you keep rebuilding.
+                  - level: h3
+                    text: Email Validator →
+                  - level: h3
+                    text: IP Lookup →
+                  - level: h3
+                    text: Weather →
+                  - level: h3
+                    text: QR Code Generator →
+                  - level: h3
+                    text: Currency Converter →
+                  - level: h3
+                    text: Translator →
+                  - level: h2
+                    text: 450,000+ lookups, validations, and conversions a day, through one key.
+                  - level: h2
+                    text: Give your software a way to act on the world.
+                  - level: h3
+                    text: Scaling in production?
+                  - level: h4
+                    text: Product
+                  - level: h4
+                    text: Solutions
+                  - level: h4
+                    text: Integrations
+                  - level: h4
+                    text: Resources
+                  - level: h4
+                    text: Compare
+                  - level: h4
+                    text: SDKs
+                  - level: h4
+                    text: Company
+                  - level: h4
+                    text: Featured APIs
+                  - level: h4
+                    text: More
+                  - level: h4
+                    text: Legal
+                  - level: h4
+                    text: Important disclaimer
+                  imgTags:
+                  - src: /images/favicon.png
+                    alt: ''
+                    width: '26'
+                    height: '26'
+                  - src: /images/brands/brand01.png
+                    alt: Microsoft
+                  - src: /images/brands/brand02.png
+                    alt: DuckDuckGo
+                  - src: /images/brands/brand03.png
+                    alt: Topdanmark
+                  - src: /images/brands/brand04.png
+                    alt: University of Maryland
+                  - src: /images/brands/brand05.png
+                    alt: Postman
+                  - src: /images/brands/brand06.png
+                    alt: RapidAPI
+                  - src: /images/brands/brand07.png
+                    alt: Zapier
+                  - src: /images/brands/brand08.svg
+                    alt: Deloitte
+                  - src: /images/brands/brand01.png
+                    alt: ''
+                  - src: /images/brands/brand02.png
+                    alt: ''
+                  - src: /images/brands/brand03.png
+                    alt: ''
+                  - src: /images/brands/brand04.png
+                    alt: ''
+                  - src: /images/brands/brand05.png
+                    alt: ''
+                  - src: /images/brands/brand06.png
+                    alt: ''
+                  - src: /images/brands/brand07.png
+                    alt: ''
+                  - src: /images/brands/brand08.svg
+                    alt: ''
+                  - src: /images/brands/brand01.png
+                    alt: ''
+                  - src: /images/brands/brand02.png
+                    alt: ''
+                  - src: /images/brands/brand03.png
+                    alt: ''
+                  - src: /images/brands/brand04.png
+                    alt: ''
+                  - src: /images/brands/brand05.png
+                    alt: ''
+                  - src: /images/brands/brand06.png
+                    alt: ''
+                  - src: /images/brands/brand07.png
+                    alt: ''
+                  - src: /images/brands/brand08.svg
+                    alt: ''
+                  - src: /images/brands/brand01.png
+                    alt: ''
+                  - src: /images/brands/brand02.png
+                    alt: ''
+                  - src: /images/brands/brand03.png
+                    alt: ''
+                  - src: /images/brands/brand04.png
+                    alt: ''
+                  - src: /images/brands/brand05.png
+                    alt: ''
+                  - src: /images/brands/brand06.png
+                    alt: ''
+                  - src: /images/brands/brand07.png
+                    alt: ''
+                  - src: /images/brands/brand08.svg
+                    alt: ''
+                  - src: /images/brands/brand01.png
+                    alt: ''
+                  - src: /images/brands/brand02.png
+                    alt: ''
+                  - src: /images/brands/brand03.png
+                    alt: ''
+                  - src: /images/brands/brand04.png
+                    alt: ''
+                  - src: /images/brands/brand05.png
+                    alt: ''
+                  - src: /images/brands/brand06.png
+                    alt: ''
+                  - src: /images/brands/brand07.png
+                    alt: ''
+                  - src: /images/brands/brand08.svg
+                    alt: ''
+                  - src: /images/brands/brand01.png
+                    alt: ''
+                  - src: /images/brands/brand02.png
+                    alt: ''
+                  - src: /images/brands/brand03.png
+                    alt: ''
+                  - src: /images/brands/brand04.png
+                    alt: ''
+                  - src: /images/brands/brand05.png
+                    alt: ''
+                  - src: /images/brands/brand06.png
+                    alt: ''
+                  - src: /images/brands/brand07.png
+                    alt: ''
+                  - src: /images/brands/brand08.svg
+                    alt: ''
+                  - src: /images/favicon.png
+                    alt: ''
+                    width: '24'
+                    height: '24'
+                  responseBody: ''
+                  viewport: width=device-width, initial-scale=1, maximum-scale=1
+                  theme-color: '#ffffff'
+                  application-name: APIVerve
+                  og:image:alt: APIVerve — One key for 300+ production APIs
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: The URL of the web page to extract metadata from
+              required:
+              - url
+      tags:
+      - Data Processing
+  /v1/morsecode:
+    post:
+      summary: Morse Code
+      description: Morse Code is a simple tool for encoding and decoding Morse code. It returns the encoded or decoded Morse code.
+      operationId: morsecode
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  text: This Is A Message
+                  morse: '- .... .. ... / .. ... / .- / -- . ... ... .- --. . '
+                  stats:
+                    characters: 17
+                    dits: 25
+                    dahs: 7
+                  valid: true
+                  audio:
+                    audioFile: a11f9d7f-1fd2-4b10-86de-82defaf18c57.wav
+                    format: .wav
+                    downloadURL: https://storage.googleapis.com/apiverve/APIData/morsecode/a11f9d7f-1fd2-4b10-86de-82defaf18c57.wav?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1765925804&Signature=TiktgUsHV0ipCaRwNNiEihtD5e1SacBHBwWLGvsrnLJTkH%2BH5fRsII5hxk7nEqTypya05Dg4BHTxu672tRU%2Bhb3F8g%2BQYL7u3PMaCHzcnrrpcjSh0hH7%2BWVfEyHxPf5cCuKliISePCOlpbVsU8xtFL8p1DfgTV2FeD8Rmwo3SVpCG4LHpYXJWoZVET2IbS4dZS%2Brn9kvnoBvApgDJgc5EEufOZHYLba6278g0HTgQaOIhdSNhpeSpCwPuSw6q3eK%2FGqzhD5PtzTBMPN1hMvXIZPX11EYRG%2FLbqvltu6gVgbYL5khcG5zQbDse2vXphAys8fMq7PiZSGe1ODf63Gakw%3D%3D
+                    duration: 13.20s
+                    frequency: 600Hz
+                    sampleRate: 8000Hz
+                    expires: 1765925804517
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to encode or decode in Morse code
+                audio:
+                  type: boolean
+                  description: Set to true to include an audio file of the Morse code
+              required:
+              - text
+      tags:
+      - Data Processing
+  /v1/murmurhash:
+    post:
+      summary: MurmurHash
+      description: Generate a MurmurHash3 hash
+      operationId: murmurhash
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  hash: 1586663183
+                  hashHex: 5e928f0f
+                  variant: murmur3_32
+                  seed: 0
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to hash
+                seed:
+                  type: integer
+                  description: Seed value for the hash function
+                variant:
+                  type: string
+                  description: 'Hash variant: 32 (32-bit) or 128 (128-bit)'
+              required:
+              - text
+      tags:
+      - Data Processing
+  /v1/sqlexplainer:
+    post:
+      summary: SQL Explainer
+      description: Get a plain English explanation of a SQL query
+      operationId: sqlexplainer
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  explanation: This SQL query retrieves the names of users and the number of orders they have placed. It filters users who were created after January 1, 2024. The query then groups the results by user ID and only includes users who have placed more than 5 orders, finally ordering the results by the order count in descending order.
+                  operation: SELECT
+                  tables:
+                  - users
+                  - orders
+                  complexity: moderate
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  description: The SQL query to explain
+                detail:
+                  type: string
+                  description: 'Explanation detail level: brief, standard, or detailed'
+              required:
+              - query
+      tags:
+      - Data Processing
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
+externalDocs:
+  description: APIVerve Documentation
+  url: https://docs.apiverve.com

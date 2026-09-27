@@ -1,0 +1,547 @@
+openapi: 3.2.0
+info:
+  title: APIVerve Data Validation API
+  description: One API key, 370+ real-world REST endpoints — weather, geocoding, finance, DNS, validation, text processing and more. Every endpoint returns JSON. Full documentation at https://docs.apiverve.com.
+  termsOfService: https://apiverve.com/terms/
+  contact:
+    name: APIVerve Support
+    email: hello@apiverve.com
+    url: https://apiverve.com/contact
+  license:
+    name: APIVerve Terms of Service
+    url: https://apiverve.com/terms/
+  version: 1.0.0
+  x-logo:
+    url: https://apiverve.com/images/favicon.png
+    altText: APIVerve
+servers:
+- url: https://api.apiverve.com
+security:
+- api_key: []
+tags:
+- name: Data Validation
+paths:
+  /v1/cardvalidator:
+    get:
+      summary: Card Validator
+      description: Validate a card number to ensure it is valid
+      operationId: cardvalidator
+      parameters:
+      - name: number
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The card number to validate
+        example: '4900264223817524'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  card:
+                    niceType: Visa
+                    type: visa
+                    patterns:
+                    - 4
+                    gaps:
+                    - 4
+                    - 8
+                    - 12
+                    lengths:
+                    - 16
+                    - 18
+                    - 19
+                    code:
+                      name: CVV
+                      size: 3
+                    matchStrength: 1
+                  brand: Visa
+                  cardNumber: '4900264223817524'
+                  bin: '490026'
+                  last4: '7524'
+                  isValid: true
+                  isPotentiallyValid: true
+                  isTestCard: false
+                  riskScore: 0
+                  riskLevel: low
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Validation
+  /v1/disposablephone:
+    get:
+      summary: Disposable Phone Number Checker
+      description: Checks whether a given phone number is a known disposable or temporary number from SMS receiving services.
+      operationId: disposablephone
+      parameters:
+      - name: phone
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The phone number to check in E.164 format (e.g., +12085813945)
+        example: '+12085813945'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  phone: '+12085813945'
+                  isDisposable: true
+                  firstSeen: '2024-01-30'
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Validation
+  /v1/emaildisposablechecker:
+    get:
+      summary: Disposable Email Checker
+      description: Check if an email address is disposable
+      operationId: emaildisposablechecker
+      parameters:
+      - name: email
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The email address to check (e.g., support@myspace.com)
+        example: support@myspace.com
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  isDisposable: false
+                  email: support@myspace.com
+                  domain: myspace.com
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Validation
+  /v1/emailvalidator:
+    get:
+      summary: Email Validator
+      description: Validate if an email address is valid and exists
+      operationId: emailvalidator
+      parameters:
+      - name: email
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The email address to validate (e.g., support@myspace.com)
+        example: support@myspace.com
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  email: support@myspace.com
+                  domain: myspace.com
+                  username: support
+                  isRegexValid: true
+                  hasTypo: false
+                  isMxValid: true
+                  isValid: true
+                  isFreeEmail: false
+                  isCompanyEmail: true
+                  isDisposable: false
+                  isRoleAccount: true
+                  suggestedCorrection: null
+                  riskScore: 10
+                  riskLevel: low
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Validation
+  /v1/passwordstrength:
+    get:
+      summary: Password Strength
+      description: Check the strength of a password
+      operationId: passwordstrength
+      parameters:
+      - name: password
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The password to check the strength of
+        example: Password123
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  strength: weak
+                  score: 1
+                  passwordInfo:
+                    length: 11
+                    hasSpecialCharacters: false
+                    hasNumbers: true
+                    hasLowercase: true
+                    hasUppercase: true
+                    hasSpaces: false
+                    hasSequentialChars: true
+                    hasRepeatedChars: false
+                  recommendations:
+                  - Use at least 12 characters
+                  - Add special characters
+                  - Avoid sequential characters (e.g. abc, 123)
+                  entropyBits: 65.5
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Validation
+  /v1/phonenumbervalidator:
+    get:
+      summary: Phone Number Validator
+      description: Validate a phone number
+      operationId: phonenumbervalidator
+      parameters:
+      - name: number
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The phone number to validate
+        example: 816-555-1017
+      - name: country
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The country code of the phone number (e.g., us, uk)
+        example: us
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  country: US
+                  detectedCountry: US
+                  countryName: United States
+                  countrycode: 1
+                  numberNational: 8165551017
+                  extension: null
+                  isValid: true
+                  isMobile: true
+                  isVoip: false
+                  isDisposable: false
+                  type: fixed_line_or_mobile
+                  formatted:
+                    international: +1 816-555-1017
+                    national: (816) 555-1017
+                    rfc: tel:+1-816-555-1017
+                    e164: '+18165551017'
+                  riskScore: 0
+                  riskLevel: low
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Validation
+  /v1/seovalidator:
+    post:
+      summary: SEO Quick Validator
+      description: Validate the SEO metrics of a web page
+      operationId: seovalidator
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  url: https://apiverve.com
+                  passed: false
+                  issueCount: 6
+                  issues:
+                  - 'Image missing ''alt'' attribute: ''/assets/img/hero-diagram.png'''
+                  - 'Image missing ''alt'' attribute: ''/assets/img/logo-mark.svg'''
+                  - 'External link missing ''rel'' attribute: ''https://twitter.com/apiverve'''
+                  - 'External link missing ''rel'' attribute: ''https://github.com/apiverve'''
+                  - 'External link missing ''rel'' attribute: ''https://status.apiverve.com'''
+                  - Missing meta 'keywords' tag in head
+                  checks:
+                    hasTitle: true
+                    titleLength: 54
+                    hasMetaDescription: true
+                    metaDescriptionLength: 158
+                    hasMetaKeywords: false
+                    h1Count: 1
+                    hasCanonical: true
+                    hasViewport: true
+                    imagesTotal: 8
+                    imagesMissingAlt: 2
+                    externalLinksTotal: 10
+                    externalLinksMissingRel: 3
+                  seoScore: 93
+                  grade: A
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: The URL of the web page to validate the SEO metrics of
+              required:
+              - url
+      tags:
+      - Data Validation
+  /v1/spamdetector:
+    post:
+      summary: Spam Detector
+      description: Detect spam in a body of text. Also utilize an email address or IP address to validate the given text against the spam database
+      operationId: spamdetector
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  likelySpam: true
+                  isDisposableEmail: false
+                  isIPBlacklisted: false
+                  ipDetails:
+                    country: IN
+                    region: DL
+                  parsed: true
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to detect spam in
+                email:
+                  type: string
+                  description: The email address to validate against the spam database. This is optional
+                ip:
+                  type: string
+                  description: The IP address to validate against the spam database.  This is optional
+              required:
+              - text
+      tags:
+      - Data Validation
+  /v1/usernameprofanity:
+    get:
+      summary: Username Profanity
+      description: Check if a username is inappropriate or profane
+      operationId: usernameprofanity
+      parameters:
+      - name: username
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The username to check if it is inappropriate or profane
+        example: b00bs
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  username: b00bs
+                  isProfane: true
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Validation
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
+externalDocs:
+  description: APIVerve Documentation
+  url: https://docs.apiverve.com

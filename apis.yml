@@ -16,13 +16,13 @@ tags:
 - Postman
 - MCP
 - llms-txt
-- agent-native
+- Agent-Native
 - APIKeys
 - IP Geolocation
 - DNS
 - WHOIS
 - SSL
-- Email Validation
+- Email Verification
 - Phone Validation
 - Exchange Rates
 - metals prices
@@ -54,81 +54,12 @@ tags_raw:
 - geocoding
 - text processing
 - developer tools
+- Email Validation
 apis:
-- name: APIVerve REST API
-  description: >-
-    Single-key REST gateway to 300+ (367+ enumerated) APIs sharing a consistent request shape and status/error/data
-    JSON envelope (JSON default; XML/YAML via format param). Authenticated with an x-api-key header (or Authorization:
-    Bearer / x-jwt).
-  humanURL: https://docs.apiverve.com
-  baseURL: https://api.apiverve.com/v1
-  tags:
-  - API Marketplace
-  - REST
-  - JSON
-  - GraphQL
-  - OpenAPI
-  - Postman
-  - MCP
-  - llms-txt
-  - agent-native
-  - APIKeys
-  - IP Geolocation
-  - DNS
-  - WHOIS
-  - SSL
-  - Email Validation
-  - Phone Validation
-  - Exchange Rates
-  - metals prices
-  - Weather
-  - Geocoding
-  - Text Processing
-  - Developer Tools
-  tags_raw:
-  - api marketplace
-  - rest
-  - json
-  - graphql
-  - openapi
-  - postman
-  - mcp
-  - model context protocol
-  - llms.txt
-  - agent-native
-  - api key
-  - ip geolocation
-  - dns
-  - whois
-  - ssl
-  - email validation
-  - phone validation
-  - exchange rates
-  - metals prices
-  - weather
-  - geocoding
-  - text processing
-  - developer tools
-  properties:
-  - type: Documentation
-    url: https://docs.apiverve.com
-  - type: OpenAPI
-    url: openapi/apiverve-openapi.yaml
-  - type: OpenAPI
-    name: OpenAPI (provider-hosted)
-    url: https://assets.apiverve.com/openapi.yaml
-  - type: PostmanCollection
-    url: https://www.postman.com/apiverve
-  - type: LLMsTxt
-    url: llms/apiverve-llms.txt
-  - type: LLMsTxt
-    name: llms.txt (provider-hosted)
-    url: https://docs.apiverve.com/llms.txt
-  image: https://apiverve.com/images/favicon.png
 - name: APIVerve GraphQL API (alpha)
   description: >-
-    Single GraphQL endpoint that fans out to multiple APIs in one request. Explicitly labeled alpha / not for
-    production.
+    Single GraphQL endpoint that fans out to multiple APIs in one request. Explicitly labeled alpha /
+    not for production.
   humanURL: https://docs.apiverve.com/graphql
   baseURL: https://api.apiverve.com/v1/graphql
   tags:
@@ -140,13 +71,13 @@ apis:
   - Postman
   - MCP
   - llms-txt
-  - agent-native
+  - Agent-Native
   - APIKeys
   - IP Geolocation
   - DNS
   - WHOIS
   - SSL
-  - Email Validation
+  - Email Verification
   - Phone Validation
   - Exchange Rates
   - metals prices
@@ -178,6 +109,7 @@ apis:
   - geocoding
   - text processing
   - developer tools
+  - Email Validation
   properties:
   - type: GraphQL
     url: https://api.apiverve.com/v1/graphql
@@ -186,9 +118,9 @@ apis:
   image: https://apiverve.com/images/favicon.png
 - name: APIVerve MCP Server
   description: >-
-    Hosted remote MCP server (streamable HTTP) exposing every catalog endpoint as individual MCP tools with
-    input/output schemas. Auth is negotiated: OAuth 2.0 by default or API key via x-api-key. New endpoints appear
-    automatically.
+    Hosted remote MCP server (streamable HTTP) exposing every catalog endpoint as individual MCP tools
+    with input/output schemas. Auth is negotiated: OAuth 2.0 by default or API key via x-api-key. New
+    endpoints appear automatically.
   humanURL: https://docs.apiverve.com
   baseURL: https://api.apiverve.com/v1/mcp
   tags:
@@ -200,13 +132,13 @@ apis:
   - Postman
   - MCP
   - llms-txt
-  - agent-native
+  - Agent-Native
   - APIKeys
   - IP Geolocation
   - DNS
   - WHOIS
   - SSL
-  - Email Validation
+  - Email Verification
   - Phone Validation
   - Exchange Rates
   - metals prices
@@ -238,6 +170,7 @@ apis:
   - geocoding
   - text processing
   - developer tools
+  - Email Validation
   properties:
   - type: MCPServer
     url: https://api.apiverve.com/v1/mcp
@@ -249,6 +182,528 @@ apis:
   - type: ToolCrosswalk
     url: mcp/apiverve-tool-crosswalk.yml
   image: https://apiverve.com/images/favicon.png
+- aid: apiverve:apiverve-ai-computer-vision-api
+  name: APIVerve AI/Computer Vision API
+  description: The AI/Computer Vision API from APIVerve — 6 operation(s) for ai/computer vision.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - AI/Computer Vision
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-ai-computer-vision-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
+- aid: apiverve:apiverve-astrology-api
+  name: APIVerve Astrology API
+  description: The Astrology API from APIVerve — 6 operation(s) for astrology.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - Astrology
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-astrology-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
+- aid: apiverve:apiverve-calendar-api
+  name: APIVerve Calendar API
+  description: The Calendar API from APIVerve — 5 operation(s) for calendar.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - Calendar
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-calendar-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
+- aid: apiverve:apiverve-data-conversion-api
+  name: APIVerve Data Conversion API
+  description: The Data Conversion API from APIVerve — 33 operation(s) for data conversion.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - Data Conversion
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-data-conversion-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
+- aid: apiverve:apiverve-data-generation-api
+  name: APIVerve Data Generation API
+  description: The Data Generation API from APIVerve — 32 operation(s) for data generation.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - Data Generation
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-data-generation-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
+- aid: apiverve:apiverve-data-lookup-api
+  name: APIVerve Data Lookup API
+  description: The Data Lookup API from APIVerve — 17 operation(s) for data lookup.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - Data Lookup
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-data-lookup-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
+- aid: apiverve:apiverve-data-processing-api
+  name: APIVerve Data Processing API
+  description: The Data Processing API from APIVerve — 6 operation(s) for data processing.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - Data Processing
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-data-processing-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
+- aid: apiverve:apiverve-data-scraping-api
+  name: APIVerve Data Scraping API
+  description: The Data Scraping API from APIVerve — 5 operation(s) for data scraping.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - Data Scraping
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-data-scraping-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
+- aid: apiverve:apiverve-data-validation-api
+  name: APIVerve Data Validation API
+  description: The Data Validation API from APIVerve — 9 operation(s) for data validation.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - Data Validation
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-data-validation-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
+- aid: apiverve:apiverve-documents-api
+  name: APIVerve Documents API
+  description: The Documents API from APIVerve — 3 operation(s) for documents.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - Documents
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-documents-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
+- aid: apiverve:apiverve-domain-data-api
+  name: APIVerve Domain Data API
+  description: The Domain Data API from APIVerve — 18 operation(s) for domain data.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - Domain Data
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-domain-data-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
+- aid: apiverve:apiverve-entertainment-api
+  name: APIVerve Entertainment API
+  description: The Entertainment API from APIVerve — 24 operation(s) for entertainment.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - Entertainment
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-entertainment-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
+- aid: apiverve:apiverve-finance-api
+  name: APIVerve Finance API
+  description: The Finance API from APIVerve — 49 operation(s) for finance.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - Finance
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-finance-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
+- aid: apiverve:apiverve-food-api
+  name: APIVerve Food API
+  description: The Food API from APIVerve — 3 operation(s) for food.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - Food
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-food-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
+- aid: apiverve:apiverve-games-api
+  name: APIVerve Games API
+  description: The Games API from APIVerve — 21 operation(s) for games.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - Games
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-games-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
+- aid: apiverve:apiverve-geography-api
+  name: APIVerve Geography API
+  description: The Geography API from APIVerve — 13 operation(s) for geography.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - Geography
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-geography-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
+- aid: apiverve:apiverve-health-wellness-api
+  name: APIVerve Health/Wellness API
+  description: The Health/Wellness API from APIVerve — 2 operation(s) for health/wellness.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - Health/Wellness
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-health-wellness-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
+- aid: apiverve:apiverve-images-api
+  name: APIVerve Images API
+  description: The Images API from APIVerve — 7 operation(s) for images.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - Images
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-images-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
+- aid: apiverve:apiverve-lifestyle-api
+  name: APIVerve Lifestyle API
+  description: The Lifestyle API from APIVerve — 3 operation(s) for lifestyle.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - Lifestyle
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-lifestyle-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
+- aid: apiverve:apiverve-math-calculations-api
+  name: APIVerve Math/Calculations API
+  description: The Math/Calculations API from APIVerve — 8 operation(s) for math/calculations.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - Math/Calculations
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-math-calculations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
+- aid: apiverve:apiverve-networking-api
+  name: APIVerve Networking API
+  description: The Networking API from APIVerve — 14 operation(s) for networking.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - Networking
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-networking-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
+- aid: apiverve:apiverve-news-api
+  name: APIVerve News API
+  description: The News API from APIVerve — 1 operation(s) for news.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - News
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-news-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
+- aid: apiverve:apiverve-parsers-api
+  name: APIVerve Parsers API
+  description: The Parsers API from APIVerve — 4 operation(s) for parsers.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - Parsers
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-parsers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
+- aid: apiverve:apiverve-reference-data-api
+  name: APIVerve Reference Data API
+  description: The Reference Data API from APIVerve — 11 operation(s) for reference data.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - Reference Data
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-reference-data-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
+- aid: apiverve:apiverve-science-api
+  name: APIVerve Science API
+  description: The Science API from APIVerve — 4 operation(s) for science.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - Science
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-science-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
+- aid: apiverve:apiverve-security-api
+  name: APIVerve Security API
+  description: The Security API from APIVerve — 4 operation(s) for security.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - Security
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-security-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
+- aid: apiverve:apiverve-text-processing-api
+  name: APIVerve Text Processing API
+  description: The Text Processing API from APIVerve — 45 operation(s) for text processing.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - Text Processing
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-text-processing-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
+- aid: apiverve:apiverve-transportation-api
+  name: APIVerve Transportation API
+  description: The Transportation API from APIVerve — 6 operation(s) for transportation.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - Transportation
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-transportation-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
+- aid: apiverve:apiverve-weather-api
+  name: APIVerve Weather API
+  description: The Weather API from APIVerve — 8 operation(s) for weather.
+  humanURL: https://docs.apiverve.com
+  baseURL: https://api.apiverve.com/v1
+  tags:
+  - Weather
+  properties:
+  - type: OpenAPI
+    url: openapi/apiverve-weather-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apiverve.com
+  - type: PostmanCollection
+    url: https://www.postman.com/apiverve
+  - type: LLMsTxt
+    url: llms/apiverve-llms.txt
+  - type: LLMsTxt
+    url: https://docs.apiverve.com/llms.txt
 maintainers:
 - FN: EvlarSoft LLC
   url: https://apiverve.com

@@ -1,0 +1,496 @@
+openapi: 3.2.0
+info:
+  title: APIVerve Transportation API
+  description: One API key, 370+ real-world REST endpoints — weather, geocoding, finance, DNS, validation, text processing and more. Every endpoint returns JSON. Full documentation at https://docs.apiverve.com.
+  termsOfService: https://apiverve.com/terms/
+  contact:
+    name: APIVerve Support
+    email: hello@apiverve.com
+    url: https://apiverve.com/contact
+  license:
+    name: APIVerve Terms of Service
+    url: https://apiverve.com/terms/
+  version: 1.0.0
+  x-logo:
+    url: https://apiverve.com/images/favicon.png
+    altText: APIVerve
+servers:
+- url: https://api.apiverve.com
+security:
+- api_key: []
+tags:
+- name: Transportation
+paths:
+  /v1/airlinelookup:
+    get:
+      summary: Airline Lookup
+      description: Get the airline information for a specific airline IATA code
+      operationId: airlinelookup
+      parameters:
+      - name: iata
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The IATA code of the airline for which you want to get the information (e.g., AA)
+        example: AA
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                - name: American Airlines
+                  alias: null
+                  iata: AA
+                  icao: AAL
+                  callsign: AMERICAN
+                  country: United States
+                  id: AA
+                  islowcost: false
+                  logourl: https://storage.googleapis.com/apiverve/APIResources/arlinelookup/logos/AA.png?X-Goog-Algorithm=...
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Transportation
+  /v1/airportcodeconverter:
+    get:
+      summary: Airport Code Converter
+      description: Submit an IATA (3-letter) or ICAO (4-letter) airport code and get the corresponding code in the other format.
+      operationId: airportcodeconverter
+      parameters:
+      - name: code
+        in: query
+        schema:
+          type: string
+        required: true
+        description: 'The airport code to convert (IATA: 3 letters, ICAO: 4 letters)'
+        example: MCI
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  input: MCI
+                  inputType: IATA
+                  iata: MCI
+                  icao: KMCI
+                  name: Kansas City International Airport
+                  city: Kansas City
+                  state: Missouri
+                  country: US
+                  elevation: 1026
+                  latitude: 39.2976
+                  longitude: -94.7139
+                  timezone: America/Chicago
+                  found: true
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Transportation
+  /v1/airportdistance:
+    get:
+      summary: Airport Distance
+      description: Airport Distance is a simple tool for getting the distance between two airports. It returns the distance between the two airports.
+      operationId: airportdistance
+      parameters:
+      - name: iata1
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The IATA code of the first airport (e.g. JFK)
+        example: JFK
+      - name: iata2
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The IATA code of the second airport (e.g. LAX)
+        example: LAX
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  distanceMiles: 2470.23
+                  distanceKm: 3974.2
+                  distanceNauticalMiles: 2145.12
+                  estimatedFlightTime: 5h 24m
+                  timezoneDiffHours: -3
+                  bearing: 265
+                  direction: West
+                  isInternational: false
+                  carbonEstimateKg: 543
+                  airport1:
+                    name: John F Kennedy International Airport
+                    iata: JFK
+                    icao: KJFK
+                    city: New York
+                    state: New-York
+                    country: US
+                    elevation: 13
+                    latitude: 40.63980103
+                    longitude: -73.77890015
+                    timezone: America/New_York
+                  airport2:
+                    name: Los Angeles International Airport
+                    iata: LAX
+                    icao: KLAX
+                    city: Los Angeles
+                    state: California
+                    country: US
+                    elevation: 125
+                    latitude: 33.94250107
+                    longitude: -118.4079971
+                    timezone: America/Los_Angeles
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Transportation
+  /v1/airports:
+    get:
+      summary: Airports Lookup
+      description: Get the airport information for a specific airport IATA code
+      operationId: airports
+      parameters:
+      - name: iata
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The IATA code of the airport for which you want to get the information (e.g., MCI)
+        example: MCI
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  icao: KMCI
+                  iata: MCI
+                  name: Kansas City International Airport
+                  city: Kansas City
+                  state: Missouri
+                  country: US
+                  elevation: 1026
+                  lat: 39.2975997925
+                  lon: -94.7138977051
+                  tz: America/Chicago
+                  city_info:
+                    name: Kansas City
+                    altName: ''
+                    country: US
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Transportation
+  /v1/carmodels:
+    get:
+      summary: US Car Models
+      description: Get all car models for a specific make (manufacturer)
+      operationId: carmodels
+      parameters:
+      - name: make
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The make (manufacturer) of the car (e.g., Toyota, Honda, Ford)
+        example: Toyota
+      - name: year
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Filter by year (1984-present)
+        example: 2024
+      - name: model
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Narrow to a model name (e.g., Camry)
+        example: Camry
+      - name: trim
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Narrow to a trim level (e.g., Hybrid)
+        example: Hybrid
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  count: 4
+                  filteredOn:
+                  - year
+                  - make
+                  - model
+                  cars:
+                  - Make: Acura
+                    CityMPG: '30'
+                    CityELEC: '0'
+                    CombMPG: '33'
+                    CombELEC: '0'
+                    Cyl: '4'
+                    Displace: '1.5'
+                    Drive: Front-Wheel Drive
+                    Fuel: Premium
+                    HighwELEC: '0'
+                    HighwMPG: '37'
+                    Trans: Automatic (AV-S7)
+                    Size: Large Cars
+                    Year: '2024'
+                    Trim: Integra
+                    Model: Integra
+                  - Make: Acura
+                    CityMPG: '21'
+                    CityELEC: '0'
+                    CombMPG: '24'
+                    CombELEC: '0'
+                    Cyl: '4'
+                    Displace: '2'
+                    Drive: Front-Wheel Drive
+                    Fuel: Premium
+                    HighwELEC: '0'
+                    HighwMPG: '28'
+                    Trans: Manual 6-spd
+                    Size: Large Cars
+                    Year: '2024'
+                    Trim: Integra
+                    Model: Integra
+                  - Make: Acura
+                    CityMPG: '26'
+                    CityELEC: '0'
+                    CombMPG: '30'
+                    CombELEC: '0'
+                    Cyl: '4'
+                    Displace: '1.5'
+                    Drive: Front-Wheel Drive
+                    Fuel: Premium
+                    HighwELEC: '0'
+                    HighwMPG: '36'
+                    Trans: Manual 6-spd
+                    Size: Large Cars
+                    Year: '2024'
+                    Trim: Integra A-Spec
+                    Model: Integra
+                  - Make: Acura
+                    CityMPG: '29'
+                    CityELEC: '0'
+                    CombMPG: '32'
+                    CombELEC: '0'
+                    Cyl: '4'
+                    Displace: '1.5'
+                    Drive: Front-Wheel Drive
+                    Fuel: Premium
+                    HighwELEC: '0'
+                    HighwMPG: '36'
+                    Trans: Automatic (AV-S7)
+                    Size: Large Cars
+                    Year: '2024'
+                    Trim: Integra A-Spec
+                    Model: Integra
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Transportation
+  /v1/vindecoder:
+    get:
+      summary: VIN Decoder
+      description: Decode a Vehicle Identification Number into the vehicle it identifies
+      operationId: vindecoder
+      parameters:
+      - name: vin
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The Vehicle Identification Number to decode. Partial VINs are accepted and decode as far as the available characters allow.
+        example: 1HGCM82633A004352
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  vin: 1HGCM82633A004352
+                  valid: true
+                  decoded: true
+                  vehicleDescriptor: 1HGCM826*3A
+                  make: HONDA
+                  model: Accord
+                  year: 2003
+                  trim: EX-V6
+                  trim2: null
+                  series: null
+                  series2: null
+                  manufacturer: AMERICAN HONDA MOTOR CO., INC.
+                  vehicleType: PASSENGER CAR
+                  bodyClass: Coupe
+                  plant:
+                    country: UNITED STATES (USA)
+                    city: MARYSVILLE
+                    state: OHIO
+                  engine:
+                    displacementL: '2.998832712'
+                    displacementCc: '2998.832712'
+                    displacementCi: '183'
+                    engineNumberOfCylinders: '6'
+                    engineBrakeHpFrom: '240'
+                    engineConfiguration: V-Shaped
+                    engineModel: J30A4
+                    valveTrainDesign: Single Overhead Cam (SOHC)
+                    fuelTypePrimary: Gasoline
+                  features:
+                    exterior:
+                      doors: '2'
+                      grossVehicleWeightRatingFrom: 'Class 1C: 4,001 - 5,000 lb (1,814 - 2,268 kg)'
+                      grossVehicleWeightRatingTo: 'Class 1: 6,000 lb or less (2,722 kg or less)'
+                    mechanical:
+                      transmissionStyle: Automatic
+                      transmissionSpeeds: '5'
+                    passiveSafetySystem:
+                      seatBeltType: Manual
+                      otherRestraintSystemInfo: Seat Belt (Rr center position)
+                      frontAirBagLocations: 1st Row (Driver and Passenger)
+                      sideAirBagLocations: 1st Row (Driver and Passenger)
+                      curtainAirBagLocations: 1st and 2nd Rows
+                  validation:
+                    errorCode: '0'
+                    errorCodes:
+                    - '0'
+                    errorText: 0 - VIN decoded clean. Check Digit (9th position) is correct
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Transportation
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
+externalDocs:
+  description: APIVerve Documentation
+  url: https://docs.apiverve.com

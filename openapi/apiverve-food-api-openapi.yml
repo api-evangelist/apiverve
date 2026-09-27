@@ -1,0 +1,352 @@
+openapi: 3.2.0
+info:
+  title: APIVerve Food API
+  description: One API key, 370+ real-world REST endpoints — weather, geocoding, finance, DNS, validation, text processing and more. Every endpoint returns JSON. Full documentation at https://docs.apiverve.com.
+  termsOfService: https://apiverve.com/terms/
+  contact:
+    name: APIVerve Support
+    email: hello@apiverve.com
+    url: https://apiverve.com/contact
+  license:
+    name: APIVerve Terms of Service
+    url: https://apiverve.com/terms/
+  version: 1.0.0
+  x-logo:
+    url: https://apiverve.com/images/favicon.png
+    altText: APIVerve
+servers:
+- url: https://api.apiverve.com
+security:
+- api_key: []
+tags:
+- name: Food
+paths:
+  /v1/cocktail:
+    get:
+      summary: Cocktail Recipe
+      description: Get the recipe for a cocktail based on the name or ingredient
+      operationId: cocktail
+      parameters:
+      - name: name
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The name of the cocktail for which you want to get the recipe (e.g., martini)
+        example: martini
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  count: 5
+                  filteredOn: name
+                  cocktails:
+                  - name: Espresso Martini
+                    glass: martini
+                    category: After Dinner Cocktail
+                    ingredients:
+                    - unit: cl
+                      amount: 5
+                      ingredient: Vodka
+                    - unit: cl
+                      amount: 1
+                      ingredient: Coffee liqueur
+                      label: Kahlúa
+                    - special: Sugar syrup (according to individual preference of sweetness)
+                    - special: 1 short strong Espresso
+                    ingredientCount: 4
+                    estimatedStrength: medium
+                    preparation: Shake and strain into a chilled cocktail glass.
+                  - name: Lemon Drop Martini
+                    glass: martini
+                    category: All Day Cocktail
+                    ingredients:
+                    - unit: cl
+                      amount: 2.5
+                      ingredient: Vodka
+                      label: Citron Vodka
+                    - unit: cl
+                      amount: 2
+                      ingredient: Triple Sec
+                    - unit: cl
+                      amount: 1.5
+                      ingredient: Lemon juice
+                    garnish: Lemon slice
+                    preparation: Shake and strain into a chilled cocktail glass rimmed with sugar.
+                  - name: French Martini
+                    glass: martini
+                    category: Before Dinner Cocktail
+                    ingredients:
+                    - unit: cl
+                      amount: 4.5
+                      ingredient: Vodka
+                    - unit: cl
+                      amount: 1.5
+                      ingredient: Raspberry liqueur
+                    - unit: cl
+                      amount: 1.5
+                      ingredient: Pineapple juice
+                    preparation: Stir in mixing glass with ice cubes. Strain into chilled cocktail glass. Squeeze oil from lemon peel onto the drink.
+                  - name: Dirty Martini
+                    glass: martini
+                    category: Before Dinner Cocktail
+                    ingredients:
+                    - unit: cl
+                      amount: 6
+                      ingredient: Vodka
+                    - unit: cl
+                      amount: 1
+                      ingredient: Vermouth
+                      label: Dry vermouth
+                    - unit: cl
+                      amount: 1
+                      ingredient: Olive juice
+                    garnish: Green olive
+                    preparation: Stir in mixing glass with ice cubes. Strain into chilled martini glass.
+                  - name: Dry Martini
+                    glass: martini
+                    category: Before Dinner Cocktail
+                    ingredients:
+                    - unit: cl
+                      amount: 6
+                      ingredient: Gin
+                    - unit: cl
+                      amount: 1
+                      ingredient: Vermouth
+                      label: Dry vermouth
+                    preparation: Stir in mixing glass with ice cubes. Strain into chilled martini glass. Squeeze oil from lemon peel onto the drink, or garnish with olive.
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Food
+  /v1/nutrition:
+    get:
+      summary: Nutrition
+      description: Get the nutrition facts for a generic whole food by name. Optionally scale the panel to a serving weight in grams.
+      operationId: nutrition
+      parameters:
+      - name: food
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Name of the food to look up (e.g. banana, chicken breast, olive oil)
+        example: banana
+      - name: grams
+        in: query
+        schema:
+          type: number
+        required: false
+        description: Serving weight in grams to scale the nutrition panel to. Defaults to a per-100-gram basis.
+        example: 118
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  food: Bananas, raw
+                  fdcId: 173944
+                  category: Fruits and Fruit Juices
+                  basis: per 100g
+                  servingSizes:
+                  - label: 1 NLEA serving
+                    grams: 126
+                  - label: 1 extra large (9" or longer)
+                    grams: 152
+                  - label: 1 large (8" to 8-7/8" long)
+                    grams: 136
+                  nutrition:
+                    calories: 89
+                    protein: 1.09
+                    totalFat: 0.33
+                    carbohydrates: 22.8
+                    fiber: 2.6
+                    sugars: 12.2
+                  micronutrients:
+                    sodium: 1
+                    potassium: 358
+                    cholesterol: 0
+                    saturatedFat: 0.112
+                    transFat: 0
+                    monounsaturatedFat: 0.032
+                    polyunsaturatedFat: 0.073
+                    calcium: 5
+                    iron: 0.26
+                    magnesium: 27
+                    phosphorus: 22
+                    zinc: 0.15
+                    vitaminC: 8.7
+                    vitaminA: 3
+                    vitaminD: 0
+                    vitaminE: 0.1
+                    vitaminK: 0.5
+                    thiamin: 0.031
+                    riboflavin: 0.073
+                    niacin: 0.665
+                    vitaminB6: 0.367
+                    folate: 20
+                    vitaminB12: 0
+                    water: 74.9
+                  analytics:
+                    caloriesPerGram: 0.89
+                    proteinCaloriePercent: 4.4
+                    fatCaloriePercent: 3
+                    carbCaloriePercent: 92.6
+                    proteinPer100Calories: 1.22
+                  dailyValues:
+                    protein: 2.2
+                    totalFat: 0.4
+                    saturatedFat: 0.6
+                    cholesterol: 0
+                    sodium: 0
+                    carbohydrates: 8.3
+                    fiber: 9.3
+                    potassium: 7.6
+                    calcium: 0.4
+                    iron: 1.4
+                    magnesium: 6.4
+                    phosphorus: 1.8
+                    zinc: 1.4
+                    vitaminC: 9.7
+                    vitaminA: 0.3
+                    vitaminD: 0
+                    vitaminE: 0.7
+                    vitaminK: 0.4
+                    thiamin: 2.6
+                    riboflavin: 5.6
+                    niacin: 4.2
+                    vitaminB6: 21.6
+                    folate: 5
+                    vitaminB12: 0
+                  dietaryFlags:
+                    highProtein: false
+                    goodSourceOfProtein: false
+                    highFiber: false
+                    goodSourceOfFiber: false
+                    lowSodium: true
+                    lowFat: true
+                    lowSaturatedFat: true
+                    lowCholesterol: true
+                    lowCalorie: false
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Food
+  /v1/recipe:
+    get:
+      summary: Recipe Generator
+      description: Recipe Generator is an AI-powered tool for generating detailed recipes. It returns complete recipes with ingredients, instructions, prep time, cook time, and servings.
+      operationId: recipe
+      parameters:
+      - name: name
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The name or description of the recipe you want to generate
+        example: chicken fajitas
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  name: Chicken Fajitas
+                  description: A flavorful and easy-to-make dish with marinated chicken, bell peppers, and onions, served with warm tortillas.
+                  ingredients:
+                  - 1.5 pounds boneless, skinless chicken breasts, sliced
+                  - 1 red bell pepper, sliced
+                  - 1 green bell pepper, sliced
+                  - 1 large onion, sliced
+                  - 2 tablespoons olive oil
+                  - 1 packet (1 ounce) fajita seasoning
+                  - 1/2 cup water
+                  - 12 flour tortillas
+                  - 'Optional toppings: sour cream, guacamole, salsa, shredded cheese'
+                  instructions: '1. In a bowl, combine chicken with fajita seasoning and water. Marinate for at least 15 minutes.
+
+                    2. Heat olive oil in a large skillet or cast-iron pan over medium-high heat.
+
+                    3. Add the chicken and cook until browned and cooked through, about 5-7 minutes.
+
+                    4. Add bell peppers and onions to the skillet. Cook until softened, about 5-7 minutes.
+
+                    5. Warm tortillas according to package instructions.
+
+                    6. Serve chicken and vegetables in warm tortillas with desired toppings.'
+                  prep_time: 15 minutes
+                  cook_time: 20 minutes
+                  servings: 4
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Food
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
+externalDocs:
+  description: APIVerve Documentation
+  url: https://docs.apiverve.com

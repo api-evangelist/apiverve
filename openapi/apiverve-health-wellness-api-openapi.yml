@@ -1,0 +1,263 @@
+openapi: 3.2.0
+info:
+  title: APIVerve Health/Wellness API
+  description: One API key, 370+ real-world REST endpoints — weather, geocoding, finance, DNS, validation, text processing and more. Every endpoint returns JSON. Full documentation at https://docs.apiverve.com.
+  termsOfService: https://apiverve.com/terms/
+  contact:
+    name: APIVerve Support
+    email: hello@apiverve.com
+    url: https://apiverve.com/contact
+  license:
+    name: APIVerve Terms of Service
+    url: https://apiverve.com/terms/
+  version: 1.0.0
+  x-logo:
+    url: https://apiverve.com/images/favicon.png
+    altText: APIVerve
+servers:
+- url: https://api.apiverve.com
+security:
+- api_key: []
+tags:
+- name: Health/Wellness
+paths:
+  /v1/bmicalculator:
+    get:
+      summary: BMI Calculator
+      description: Calculate BMI, ideal weight, BMR, TDEE, calorie targets and macros
+      operationId: bmicalculator
+      parameters:
+      - name: weight
+        in: query
+        schema:
+          type: number
+        required: true
+        description: Weight in kg (metric) or lbs (imperial)
+        example: 180
+      - name: height
+        in: query
+        schema:
+          type: number
+        required: true
+        description: Height in cm (metric) or inches (imperial)
+        example: 70
+      - name: unit
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Unit system for weight and height
+        example: imperial
+      - name: age
+        in: query
+        schema:
+          type: number
+        required: false
+        description: Age in years (required for BMR/TDEE calculations)
+        example: 30
+      - name: gender
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Gender (required for BMR/TDEE calculations)
+        example: male
+      - name: activityLevel
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Activity level (required for TDEE/calorie calculations)
+        example: moderate
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  height: 70 inches
+                  weight: 180 lbs
+                  bmi: 25.83
+                  bmiPrime: 1.033
+                  category: Overweight
+                  risk: Increased risk
+                  summary: BMI is above the healthy range. Lifestyle changes may be beneficial.
+                  idealWeightRange:
+                    min: 129
+                    max: 173.5
+                    unit: lbs
+                  weightToChange:
+                    direction: lose
+                    amount: 6.5
+                    unit: lbs
+                  bmr: 1783
+                  tdee: 2763
+                  calorieTargets:
+                    extremeDeficit: 1763
+                    moderateDeficit: 2263
+                    maintain: 2763
+                    moderateSurplus: 3063
+                    bulkSurplus: 3263
+                  macros:
+                    lose:
+                      protein: 198
+                      carbs: 198
+                      fat: 75
+                    maintain:
+                      protein: 207
+                      carbs: 276
+                      fat: 92
+                    gain:
+                      protein: 230
+                      carbs: 345
+                      fat: 85
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Health/Wellness
+  /v1/exercises:
+    get:
+      summary: Exercises
+      description: Exercises is a simple tool for getting exercise information. It returns information on various exercises.
+      operationId: exercises
+      parameters:
+      - name: muscle
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The muscle group to get exercises for
+        example: chest
+      - name: name
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The name of the exercise to get information about
+        example: barbell
+      - name: equipment
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The equipment used for the exercise
+        example: barbell
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  count: 5
+                  filteredOn:
+                  - name
+                  - muscle
+                  exercises:
+                  - name: Barbell Ab Rollout
+                    force: pull
+                    level: intermediate
+                    mechanic: compound
+                    equipment: barbell
+                    instructions:
+                    - For this exercise you will need to get into a pushup position, but instead of having your hands of the floor, you will be grabbing on to an Olympic barbell (loaded with 5-10 lbs on each side) instead. This will be your starting position.
+                    - 'While keeping a slight arch on your back, lift your hips and roll the barbell towards your feet as you exhale. Tip: As you perform the movement, your glutes should be coming up, you should be keeping the abs tight and should maintain your back posture at all times. Also your arms should be staying perpendicular to the floor throughout the movement. If you don''t, you will work out your shoulders and back more than the abs.'
+                    - After a second contraction at the top, start to roll the barbell back forward to the starting position slowly as you inhale.
+                    - Repeat for the recommended amount of repetitions.
+                    muscle: biceps
+                  - name: Barbell Ab Rollout - On Knees
+                    force: pull
+                    level: expert
+                    mechanic: compound
+                    equipment: barbell
+                    instructions:
+                    - Hold an Olympic barbell loaded with 5-10lbs on each side and kneel on the floor.
+                    - Now place the barbell on the floor in front of you so that you are on all your hands and knees (as in a kneeling push up position). This will be your starting position.
+                    - 'Slowly roll the barbell straight forward, stretching your body into a straight position. Tip: Go down as far as you can without touching the floor with your body. Breathe in during this portion of the movement.'
+                    - 'After a second pause at the stretched position, start pulling yourself back to the starting position as you breathe out. Tip: Go slowly and keep your abs tight at all times.'
+                    muscle: biceps
+                  - name: Barbell Bench Press - Medium Grip
+                    force: push
+                    level: beginner
+                    mechanic: compound
+                    equipment: barbell
+                    instructions:
+                    - Lie back on a flat bench. Using a medium width grip (a grip that creates a 90-degree angle in the middle of the movement between the forearms and the upper arms), lift the bar from the rack and hold it straight over you with your arms locked. This will be your starting position.
+                    - From the starting position, breathe in and begin coming down slowly until the bar touches your middle chest.
+                    - 'After a brief pause, push the bar back to the starting position as you breathe out. Focus on pushing the bar using your chest muscles. Lock your arms and squeeze your chest in the contracted position at the top of the motion, hold for a second and then start coming down slowly again. Tip: Ideally, lowering the weight should take about twice as long as raising it.'
+                    - Repeat the movement for the prescribed amount of repetitions.
+                    - When you are done, place the bar back in the rack.
+                    muscle: biceps
+                  - name: Barbell Curl
+                    force: pull
+                    level: beginner
+                    mechanic: isolation
+                    equipment: barbell
+                    instructions:
+                    - Stand up with your torso upright while holding a barbell at a shoulder-width grip. The palm of your hands should be facing forward and the elbows should be close to the torso. This will be your starting position.
+                    - 'While holding the upper arms stationary, curl the weights forward while contracting the biceps as you breathe out. Tip: Only the forearms should move.'
+                    - Continue the movement until your biceps are fully contracted and the bar is at shoulder level. Hold the contracted position for a second and squeeze the biceps hard.
+                    - Slowly begin to bring the bar back to starting position as your breathe in.
+                    - Repeat for the recommended amount of repetitions.
+                    muscle: biceps
+                  - name: Barbell Curls Lying Against An Incline
+                    force: pull
+                    level: beginner
+                    mechanic: isolation
+                    equipment: barbell
+                    instructions:
+                    - Lie against an incline bench, with your arms holding a barbell and hanging down in a horizontal line. This will be your starting position.
+                    - 'While keeping the upper arms stationary, curl the weight up as high as you can while squeezing the biceps. Breathe out as you perform this portion of the movement. Tip: Only the forearms should move. Do not swing the arms.'
+                    - 'After a second contraction, slowly go back to the starting position as you inhale. Tip: Make sure that you go all of the way down.'
+                    - Repeat for the recommended amount of repetitions.
+                    muscle: biceps
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Health/Wellness
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
+externalDocs:
+  description: APIVerve Documentation
+  url: https://docs.apiverve.com

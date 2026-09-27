@@ -1,0 +1,343 @@
+openapi: 3.2.0
+info:
+  title: APIVerve Security API
+  description: One API key, 370+ real-world REST endpoints — weather, geocoding, finance, DNS, validation, text processing and more. Every endpoint returns JSON. Full documentation at https://docs.apiverve.com.
+  termsOfService: https://apiverve.com/terms/
+  contact:
+    name: APIVerve Support
+    email: hello@apiverve.com
+    url: https://apiverve.com/contact
+  license:
+    name: APIVerve Terms of Service
+    url: https://apiverve.com/terms/
+  version: 1.0.0
+  x-logo:
+    url: https://apiverve.com/images/favicon.png
+    altText: APIVerve
+servers:
+- url: https://api.apiverve.com
+security:
+- api_key: []
+tags:
+- name: Security
+paths:
+  /v1/csrparser:
+    post:
+      summary: CSR Parser
+      description: Parse a Certificate Signing Request and extract information
+      operationId: csrparser
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  version: v1
+                  subject:
+                    common_name: example.com
+                    organization: Example Co
+                    organizational_unit: DevTeam
+                    locality: San Francisco
+                    state: California
+                    country: US
+                    email: null
+                  public_key:
+                    algorithm: RSA
+                    size_bits: 2048
+                    exponent: 65537
+                  signature_algorithm: SHA256withRSA
+                  extensions: []
+                  fingerprints:
+                    sha1: 05:E5:65:28:8A:47:01:D3:05:EA:3B:3F:F5:DC:C7:42:BF:06:E2:5F
+                    sha256: E0:0B:C1:59:A3:9E:F9:96:13:7B:CE:98:BC:8F:A1:49:62:4D:2E:CF:85:D5:36:2C:DD:46:9E:96:CF:92:A3:AF
+                    md5: 27:C7:EC:94:73:34:E3:B7:3F:F6:FD:3E:0A:81:EA:3D
+                  pem: '-----BEGIN CERTIFICATE REQUEST-----
+
+                    MIICvDCCAaQCAQAwdzELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWEx
+
+                    FjAUBgNVBAcMDVNhbiBGcmFuY2lzY28xEzARBgNVBAoMCkV4YW1wbGUgQ28xEDAO
+
+                    BgNVBAsMB0RldlRlYW0xFDASBgNVBAMMC2V4YW1wbGUuY29tMIIBIjANBgkqhkiG
+
+                    9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjd/RepiCLQ5/HfKynijcPdiwygrSgxQeTKPo
+
+                    T/WiEaRTaUToW9uDUeiIHK83Tgn2+TIONpMoLJRNG+zslpHybWhVVWNlamkrlRwP
+
+                    XFQJzsxDN5+TQugILatLsp680SgMNyyPtDIpT3niiNuQ4NFepQLvQTbjXgj1celb
+
+                    U86CCeJzYengTF0ZE9Ra+/SsRTA+oy0fNLChNMc2DBaybccxwV2rNWvlvPdhfB7M
+
+                    sel3sw/x2hsbWoYC/kudzYmoDPZKX+XOhCkFwUgwib8V4hbjVLcOYsPBJcROYpRh
+
+                    9d5g7xdRlbF1I7dHsCRKnsvkIONtwKQmJ2v/UPqYahjtm2TPUQIDAQABoAAwDQYJ
+
+                    KoZIhvcNAQELBQADggEBAFEHOsN2SkB3qFBMk9JR5IDoh8rSUKj/310DOwilOQm+
+
+                    5lAwRfcFMYCl9yf4IV+XPPfvT3ahzUFfi8Fc98CDeIxAhEwtuZFlE7LA5+/F4HXM
+
+                    H3gzqTFwOZq+Wa2m029/BvcyII830h4Z+gU68R52px7O7wYSbAR/n7t1fh2bxzmW
+
+                    KqqjrvCpHoMVpgcm9y2bYTj+HLxgX4/uADFvotQppOWZi0ctam+if3Kqb3Kd2MFD
+
+                    vVHZp9NwEoqNPxmFEzcyOk2y1PYhhRja7rjdC6bdAqj6JRt+WSzStvgx7aEsxBQj
+
+                    rJCMi+GypGf9xQUfCJBhTDQVQ3fmCKTfddDeeVbJBrA=
+
+                    -----END CERTIFICATE REQUEST-----'
+                  size_bytes: 704
+                  format: PEM
+                  is_valid: true
+                  security_assessment:
+                    is_weak_key: false
+                    is_deprecated_signature: false
+                    key_strength: acceptable
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                csr:
+                  type: string
+                  description: The PEM-formatted Certificate Signing Request to parse
+              required:
+              - csr
+      tags:
+      - Security
+  /v1/danevalidator:
+    post:
+      summary: DANE Record Validator
+      description: Validate a DANE/TLSA DNS record
+      operationId: danevalidator
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  raw_record: _443._tcp.example.com. 86400 IN TLSA 3 1 1 0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF
+                  parsed:
+                    name: _443._tcp.example.com.
+                    port: 443
+                    protocol: tcp
+                    hostname: example.com
+                    ttl: 86400
+                    class: IN
+                    usage: 3
+                    selector: 1
+                    matching: 1
+                    certificate_data: 0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF
+                    certificate_data_length: 64
+                  interpretation:
+                    usage:
+                      name: DANE-EE
+                      description: Domain-issued certificate
+                      full_description: Certificate must exactly match the provided association data (most common)
+                    selector:
+                      name: SPKI
+                      description: SubjectPublicKeyInfo
+                      full_description: Match against the Subject Public Key Info (recommended)
+                    matching:
+                      name: SHA-256
+                      description: SHA-256 hash
+                      full_description: SHA-256 hash of the selected content (recommended)
+                    security_level: Recommended
+                    recommendation: This is the recommended DANE configuration (DANE-EE + SPKI + SHA-256)
+                  validation:
+                    is_valid: true
+                    certificate_data_format: Valid hexadecimal
+                    certificate_data_length_valid: true
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                record:
+                  type: string
+                  description: The DANE/TLSA record string to validate
+              required:
+              - record
+      tags:
+      - Security
+  /v1/hashgenerator:
+    get:
+      summary: Hash Generator
+      description: Generate cryptographic hashes using multiple algorithms
+      operationId: hashgenerator
+      parameters:
+      - name: text
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Text to hash
+        example: Hello World
+      - name: algorithms
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Comma-separated list of algorithms or 'all'
+        example: sha256,md5
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  input_text: Hello World
+                  input_length: 11
+                  algorithms_used:
+                  - sha256
+                  - md5
+                  hashes:
+                    sha256: a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e
+                    md5: b10a8db164e0754105b7a99be72e3fe5
+                  hash_details:
+                  - algorithm: sha256
+                    hash: a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e
+                    length: 64
+                    uppercase: A591A6D40BF420404A011733CFB7B190D62C65BF0BCDA32B57B277D9AD9F146E
+                  - algorithm: md5
+                    hash: b10a8db164e0754105b7a99be72e3fe5
+                    length: 32
+                    uppercase: B10A8DB164E0754105B7A99BE72E3FE5
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Security
+  /v1/hmac:
+    post:
+      summary: HMAC Generator
+      description: Generate an HMAC signature for a message
+      operationId: hmac
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  hmac: 2cd7c25025198d4458002ceb064ad37ccfbbe46650876d693f5e080bd954e449
+                  algorithm: sha256
+                  encoding: hex
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  description: The message to sign
+                secret:
+                  type: string
+                  description: The secret key for HMAC generation
+                algorithm:
+                  type: string
+                  description: Hash algorithm to use
+                encoding:
+                  type: string
+                  description: Output encoding format
+              required:
+              - message
+              - secret
+      tags:
+      - Security
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
+externalDocs:
+  description: APIVerve Documentation
+  url: https://docs.apiverve.com

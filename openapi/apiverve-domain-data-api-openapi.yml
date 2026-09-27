@@ -1,0 +1,1640 @@
+openapi: 3.2.0
+info:
+  title: APIVerve Domain Data API
+  description: One API key, 370+ real-world REST endpoints — weather, geocoding, finance, DNS, validation, text processing and more. Every endpoint returns JSON. Full documentation at https://docs.apiverve.com.
+  termsOfService: https://apiverve.com/terms/
+  contact:
+    name: APIVerve Support
+    email: hello@apiverve.com
+    url: https://apiverve.com/contact
+  license:
+    name: APIVerve Terms of Service
+    url: https://apiverve.com/terms/
+  version: 1.0.0
+  x-logo:
+    url: https://apiverve.com/images/favicon.png
+    altText: APIVerve
+servers:
+- url: https://api.apiverve.com
+security:
+- api_key: []
+tags:
+- name: Domain Data
+paths:
+  /v1/bimivalidator:
+    get:
+      summary: BIMI Record Validator
+      description: BIMI Validator checks if a domain has a valid BIMI record published in DNS. BIMI enables domain owners to display verified logos in supported email clients.
+      operationId: bimivalidator
+      parameters:
+      - name: domain
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The domain to validate the BIMI record for
+        example: ebay.com
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  host: ebay.com
+                  bimi_host: default._bimi.ebay.com
+                  has_bimi_record: true
+                  bimi_record: v=BIMI1;l=https://vmc.digicert.com/2b7216dc-27d2-4fbd-8472-f68790117238.svg;a=https://vmc.digicert.com/2b7216dc-27d2-4fbd-8472-f68790117238.pem
+                  bimi_records_count: 1
+                  version: BIMI1
+                  svg_logo:
+                    url: https://vmc.digicert.com/2b7216dc-27d2-4fbd-8472-f68790117238.svg
+                    status_code: 200
+                    valid: true
+                    file_size_bytes: 1518
+                  vmc_certificate:
+                    url: https://vmc.digicert.com/2b7216dc-27d2-4fbd-8472-f68790117238.pem
+                    status_code: 200
+                    valid: true
+                  issues_found: []
+                  valid: true
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Domain Data
+  /v1/dkimvalidator:
+    get:
+      summary: DKIM Validator
+      description: DKIM Validator checks the DomainKeys Identified Mail (DKIM) DNS records for a domain to verify that they are present and correctly formatted.
+      operationId: dkimvalidator
+      parameters:
+      - name: domain
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The domain to validate the DKIM record for
+        example: github.com
+      - name: selector
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The DKIM selector to look up (the label before ._domainkey). When omitted, a list of common selectors is tried
+        example: s1
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  selector: s1
+                  host: github.com
+                  dkim_host: s1._domainkey.github.com
+                  cname_target: null
+                  has_dkim_record: true
+                  dkim_record: k=rsa; t=s; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyn3fMCVpb7ryIRKOGXhXVGYmsWUitNlSckqGHOwNFZgFadplOrD+Qzf1XQkP7MH/VB/97DsAAJGtEXW1Uq71Hjnfr/DuBN/YfjF/gU70qEFb7q1sdIiNtjFL2TkOpoW+X/bhhPNheW/fYwyFb6ZHFM6LTgXyuimWRHTOUP3VjZzhNVda79nt+2WZYbS4l8HdMgWpTNHjpVw5PtXESA9KBg/evSRk5fIaXIX5eRXW3baoV9yVzD8O29/IL/DiSk+yNvaO0EHL5c4yGuZJhGzvpiznb2IDVdemJK4Dqzdy5FTN/SGYZhAEr7MguG3Z314hMS2scgMsOMgB64uj/6+6UwIDAQAB
+                  dkim_records_count: 1
+                  key_type: rsa
+                  issues_found:
+                  - code: V_TAG_NOT_FOUND
+                    type: warning
+                    message: The v tag is missing
+                  - code: STRICT_MODE
+                    type: info
+                    message: 'Strict flag set (t=s): the i= identity domain must exactly match d= (no subdomains)'
+                  valid: true
+                  key_bits: 2048
+                  is_test_mode: false
+                  risk_score: 0
+                  risk_level: low
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Domain Data
+  /v1/dmarcvalidator:
+    get:
+      summary: DMARC Validator
+      description: DMARC Validator checks the Domain-based Message Authentication, Reporting and Conformance (DMARC) record for a domain to ensure it is correctly configured.
+      operationId: dmarcvalidator
+      parameters:
+      - name: domain
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The domain to validate the DMARC record for
+        example: paypal.com
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  host: paypal.com
+                  dmarcHost: _dmarc.paypal.com
+                  hasDmarc: true
+                  dmarc_record: v=DMARC1; p=reject; rua=mailto:d@rua.agari.com,mailto:dmarc_agg@vali.email; ruf=mailto:d@ruf.agari.com,mailto:MTc4Mzcw@ruf.vali.email
+                  rua:
+                    email: d@rua.agari.com,dmarc_agg@vali.email
+                    domain: rua.agari.com
+                    valid: true
+                  ruf:
+                    email: d@ruf.agari.com,MTc4Mzcw@ruf.vali.email
+                    domain: ruf.agari.com
+                    valid: true
+                  v: DMARC1
+                  p: reject
+                  sp: null
+                  pct: null
+                  adkim: null
+                  aspf: null
+                  fo: null
+                  rf: null
+                  ri: null
+                  valid: true
+                  issues: []
+                  isEnforced: true
+                  riskScore: 5
+                  riskLevel: low
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Domain Data
+  /v1/dnslookup:
+    get:
+      summary: DNS Lookup
+      description: Lookup the DNS records of a domain
+      operationId: dnslookup
+      parameters:
+      - name: domain
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The domain name for which you want to lookup the DNS records. Do not include the protocol, and not subdomains (e.g., myspace.com)
+        example: myspace.com
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  domain: myspace.com
+                  records:
+                    A:
+                    - 34.111.176.156
+                    AAAA: null
+                    CNAME: null
+                    MX:
+                    - exchange: us-smtp-inbound-1.mimecast.com
+                      priority: 10
+                    - exchange: us-smtp-inbound-2.mimecast.com
+                      priority: 10
+                    NS:
+                    - ns-cloud-a4.googledomains.com
+                    - ns-cloud-a1.googledomains.com
+                    - ns-cloud-a2.googledomains.com
+                    - ns-cloud-a3.googledomains.com
+                    PTR: null
+                    SRV: null
+                    SOA:
+                      nsname: ns-cloud-a1.googledomains.com
+                      hostmaster: cloud-dns-hostmaster.google.com
+                      serial: 2
+                      refresh: 21600
+                      retry: 3600
+                      expire: 259200
+                      minttl: 300
+                    TXT:
+                    - cr40m536tje9on1slld9bi81bg
+                    - qpdYoeakhlmAxsnmxgAVFmJgUSibqb/y+Eu6GGn8pdmLf+mFGIB3jhRAxIC5KObsPMES9MW2c+oOrpOo/lCQVw==
+                    - oZ19a+EOIwWVDPJ7POj14UAGBfzk9xcJMmsTUAMUy7H82sDuVCxvw9rZqdg3znFrdTH04+49zd1djhEAt0ooiA==
+                    - MS=ms89904786
+                    - google-site-verification=eu-3gW1JePvsGRRCaEvH17YUOTFJNofm4lnz2Pk0LTc
+                    - google-site-verification=q0iWqpcfOBclAJaCeWh83v62QQ4uCgbWObQ08p37qgU
+                    - al4upe6q5cl13sg4srvfivflvg
+                    - v=spf1 mx ip4:63.208.226.34 ip4:204.16.32.0/22 ip4:67.134.143.0/24 ip4:216.205.243.0/24 ip4:34.85.156.5/32 ip4:35.245.108.108/32 ip4:34.86.129.193/32 ip4:34.86.134.94/32 ip4:34.85.222.234/32 ip4:34.86.176.234/32 ip4:34.86.125.212/32 ip4:34.85.224.60/32 ip4:34.86.160.49/32 ip4:35.245.64.166/32 ip4:35.188.226.11/32 ip4:34.86.208.228/32 ip4:34.85.216.144/32 ip4:35.221.22.153/32 ip4:34.86.137.108/32 ip4:34.86.51.35/32 ip4:34.150.221.40/32 ip4:34.85.216.70/32 ip4:34.86.37.191/32 ip4:34.85.214.215/32 ip4:35.236.234.82/32 ip4:34.86.161.241/32 ip4:216.32.181.16 ip4:216.178.32.0/20 ip4:168.235.224.0/24 include:_netblocks.mimecast.com -all
+                    - cj65vjpq0s1v9u7vfo020c6rel
+                    CAA: null
+                  summary:
+                    hasIPv6: false
+                    hasMailServers: true
+                    hasSPF: true
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Domain Data
+  /v1/dnspropagation:
+    get:
+      summary: DNS Propagation Checker
+      description: Check DNS propagation for a domain across global DNS servers
+      operationId: dnspropagation
+      parameters:
+      - name: domain
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The domain name to check propagation for
+        example: google.com
+      - name: type
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The DNS record type to check
+        example: A
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  domain: google.com
+                  recordType: A
+                  propagationComplete: true
+                  serversChecked: 10
+                  serversResponded: 10
+                  uniqueResponses: 1
+                  results:
+                  - server: Google
+                    location: United States
+                    ip: 8.8.8.8
+                    success: true
+                    records:
+                    - 142.250.80.46
+                    error: null
+                    responseTime: 23
+                  - server: Cloudflare
+                    location: Global
+                    ip: 1.1.1.1
+                    success: true
+                    records:
+                    - 142.250.80.46
+                    error: null
+                    responseTime: 18
+                  - server: OpenDNS
+                    location: United States
+                    ip: 208.67.222.222
+                    success: true
+                    records:
+                    - 142.250.80.46
+                    error: null
+                    responseTime: 31
+                  - server: Quad9
+                    location: Global
+                    ip: 9.9.9.9
+                    success: true
+                    records:
+                    - 142.250.80.46
+                    error: null
+                    responseTime: 25
+                  - server: Control D
+                    location: Global
+                    ip: 76.76.2.0
+                    success: true
+                    records:
+                    - 142.250.80.46
+                    error: null
+                    responseTime: 42
+                  - server: Level3
+                    location: United States
+                    ip: 4.2.2.1
+                    success: true
+                    records:
+                    - 142.250.80.46
+                    error: null
+                    responseTime: 28
+                  - server: Verisign
+                    location: United States
+                    ip: 64.6.64.6
+                    success: true
+                    records:
+                    - 142.250.80.46
+                    error: null
+                    responseTime: 35
+                  - server: DNS4EU
+                    location: Europe
+                    ip: 86.54.11.100
+                    success: true
+                    records:
+                    - 142.250.80.46
+                    error: null
+                    responseTime: 89
+                  - server: Yandex
+                    location: Russia
+                    ip: 77.88.8.8
+                    success: true
+                    records:
+                    - 142.250.80.46
+                    error: null
+                    responseTime: 112
+                  - server: Hurricane Electric
+                    location: United States
+                    ip: 74.82.42.42
+                    success: true
+                    records:
+                    - 142.250.80.46
+                    error: null
+                    responseTime: 29
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Domain Data
+  /v1/dnsseccheck:
+    get:
+      summary: DNSSEC Checker
+      description: Validate DNSSEC configuration for a domain
+      operationId: dnsseccheck
+      parameters:
+      - name: domain
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The domain name to check DNSSEC configuration for
+        example: cloudflare.com
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  domain: cloudflare.com
+                  dnssecEnabled: true
+                  valid: true
+                  records:
+                    dnskey: 3
+                    ds: 2
+                    nsec: NSEC3
+                  errors: []
+                  details:
+                    dnskeyCount: 3
+                    dsCount: 2
+                  status: DNSSEC is properly configured with DS records at parent
+                  recommendation: DNSSEC is properly configured
+                  riskScore: 5
+                  riskLevel: low
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Domain Data
+  /v1/domainavailability:
+    get:
+      summary: Domain Availability
+      description: Check if a domain is available
+      operationId: domainavailability
+      parameters:
+      - name: domain
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The domain to check if it is available
+        example: myspace.com
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  domain: myspace.com
+                  available: false
+                  owner:
+                    registrar: GoDaddy.com, LLC
+                    createdDate: '1996-02-22T05:00:00Z'
+                    expiryDate: '2029-02-23T05:00:00Z'
+                  source: rdap
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Domain Data
+  /v1/domainexpiration:
+    get:
+      summary: Domain Expiration
+      description: Check the expiration date of a domain
+      operationId: domainexpiration
+      parameters:
+      - name: domain
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The domain to check the expiration date of
+        example: myspace.com
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  domain: myspace.com
+                  expirationDate: '2029-02-23T05:00:00Z'
+                  daysToExpiration: 1164
+                  expirationStatus: healthy
+                  createdDate: '1996-02-22T05:00:00Z'
+                  lastUpdatedDate: '2023-01-17T00:16:21Z'
+                  daysSinceLastUpdate: 1064
+                  domainAgeDays: 10890
+                  domainAgeYears: 29.8
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Domain Data
+  /v1/fullyqualifieddomain:
+    get:
+      summary: Fully Qualified Domain
+      description: Get the fully qualified domain name of an ip
+      operationId: fullyqualifieddomain
+      parameters:
+      - name: ip
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The IP address to get the fully qualified domain name of
+        example: 199.30.24.0
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  ip: 199.30.24.0
+                  baseDomain: msn.com
+                  fqdn: msnbot-199-30-24-0.search.msn.com
+                  tld: com
+                  subdomain: msnbot-199-30-24-0.search
+                  domainLevels: 5
+                  detected: true
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Domain Data
+  /v1/mxlookup:
+    get:
+      summary: MX Lookup
+      description: MX Lookup is a simple tool for getting MX records for a domain. It returns the MX records for the given domain.
+      operationId: mxlookup
+      parameters:
+      - name: domain
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The domain you want to get the MX records for (e.g. yahoo.com)
+        example: yahoo.com
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  domain: yahoo.com
+                  mx:
+                  - priority: 1
+                    exchange: mta7.am0.yahoodns.net
+                  - priority: 1
+                    exchange: mta6.am0.yahoodns.net
+                  - priority: 1
+                    exchange: mta5.am0.yahoodns.net
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Domain Data
+  /v1/reversednslookup:
+    get:
+      summary: Reverse DNS Lookup
+      description: Get the hostname associated with an IP address
+      operationId: reversednslookup
+      parameters:
+      - name: ip
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The IP address to lookup (IPv4 or IPv6)
+        example: 8.8.8.8
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  ip: 8.8.8.8
+                  hostname: dns.google
+                  ptr:
+                  - dns.google
+                  found: true
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Domain Data
+  /v1/spfvalidator:
+    get:
+      summary: SPF Validator
+      description: SPF Validator checks the Sender Policy Framework (SPF) DNS record for a domain to verify if it's valid and optionally whether a given IP address is authorized to send emails for that domain.
+      operationId: spfvalidator
+      parameters:
+      - name: domain
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The domain to validate the SPF record for
+        example: myspace.com
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  host: myspace.com
+                  has_spf_record: true
+                  dns_lookups_num: 9
+                  spf_record: v=spf1 mx ip4:63.208.226.34 ip4:204.16.32.0/22 ip4:67.134.143.0/24 ip4:216.205.243.0/24 ip4:34.85.156.5/32 ip4:35.245.108.108/32 ip4:34.86.129.193/32 ip4:34.86.134.94/32 ip4:34.85.222.234/32 ip4:34.86.176.234/32 ip4:34.86.125.212/32 ip4:34.85.224.60/32 ip4:34.86.160.49/32 ip4:35.245.64.166/32 ip4:35.188.226.11/32 ip4:34.86.208.228/32 ip4:34.85.216.144/32 ip4:35.221.22.153/32 ip4:34.86.137.108/32 ip4:34.86.51.35/32 ip4:34.150.221.40/32 ip4:34.85.216.70/32 ip4:34.86.37.191/32 ip4:34.85.214.215/32 ip4:35.236.234.82/32 ip4:34.86.161.241/32 ip4:216.32.181.16 ip4:216.178.32.0/20 ip4:168.235.224.0/24 include:_netblocks.mimecast.com -all
+                  spf_records_list:
+                  - origin: myspace.com
+                    record: v=spf1 mx ip4:63.208.226.34 ip4:204.16.32.0/22 ip4:67.134.143.0/24 ip4:216.205.243.0/24 ip4:34.85.156.5/32 ip4:35.245.108.108/32 ip4:34.86.129.193/32 ip4:34.86.134.94/32 ip4:34.85.222.234/32 ip4:34.86.176.234/32 ip4:34.86.125.212/32 ip4:34.85.224.60/32 ip4:34.86.160.49/32 ip4:35.245.64.166/32 ip4:35.188.226.11/32 ip4:34.86.208.228/32 ip4:34.85.216.144/32 ip4:35.221.22.153/32 ip4:34.86.137.108/32 ip4:34.86.51.35/32 ip4:34.150.221.40/32 ip4:34.85.216.70/32 ip4:34.86.37.191/32 ip4:34.85.214.215/32 ip4:35.236.234.82/32 ip4:34.86.161.241/32 ip4:216.32.181.16 ip4:216.178.32.0/20 ip4:168.235.224.0/24 include:_netblocks.mimecast.com -all
+                    chars_num: 637
+                    use_macro: false
+                    domains:
+                    - _netblocks.mimecast.com
+                    authorized_ips:
+                      ipv4:
+                      - 63.208.226.34
+                      - 204.16.32.0/22
+                      - 67.134.143.0/24
+                      - 216.205.243.0/24
+                      - 34.85.156.5/32
+                      - 35.245.108.108/32
+                      - 34.86.129.193/32
+                      - 34.86.134.94/32
+                      - 34.85.222.234/32
+                      - 34.86.176.234/32
+                      - 34.86.125.212/32
+                      - 34.85.224.60/32
+                      - 34.86.160.49/32
+                      - 35.245.64.166/32
+                      - 35.188.226.11/32
+                      - 34.86.208.228/32
+                      - 34.85.216.144/32
+                      - 35.221.22.153/32
+                      - 34.86.137.108/32
+                      - 34.86.51.35/32
+                      - 34.150.221.40/32
+                      - 34.85.216.70/32
+                      - 34.86.37.191/32
+                      - 34.85.214.215/32
+                      - 35.236.234.82/32
+                      - 34.86.161.241/32
+                      - 216.32.181.16
+                      - 216.178.32.0/20
+                      - 168.235.224.0/24
+                  - origin: _netblocks.mimecast.com
+                    record: v=spf1 include:eu._netblocks.mimecast.com include:us._netblocks.mimecast.com include:za._netblocks.mimecast.com include:de._netblocks.mimecast.com include:au._netblocks.mimecast.com include:ca._netblocks.mimecast.com include:usb._netblocks.mimecast.com ~all
+                    chars_num: 257
+                    use_macro: false
+                    domains:
+                    - eu._netblocks.mimecast.com
+                    - us._netblocks.mimecast.com
+                    - za._netblocks.mimecast.com
+                    - de._netblocks.mimecast.com
+                    - au._netblocks.mimecast.com
+                    - ca._netblocks.mimecast.com
+                    - usb._netblocks.mimecast.com
+                  - origin: eu._netblocks.mimecast.com
+                    record: v=spf1 ip4:195.130.217.0/24 ip4:91.220.42.0/24 ip4:146.101.78.0/24 ip4:207.82.80.0/24 ip4:213.167.81.0/25 ip4:193.7.207.0/25 ip4:213.167.75.0/25 ip4:185.58.85.0/24 ip4:185.58.86.0/24 ip4:193.7.206.0/25 ip4:147.28.36.0/24 ~all
+                    chars_num: 225
+                    use_macro: false
+                    authorized_ips:
+                      ipv4:
+                      - 195.130.217.0/24
+                      - 91.220.42.0/24
+                      - 146.101.78.0/24
+                      - 207.82.80.0/24
+                      - 213.167.81.0/25
+                      - 193.7.207.0/25
+                      - 213.167.75.0/25
+                      - 185.58.85.0/24
+                      - 185.58.86.0/24
+                      - 193.7.206.0/25
+                      - 147.28.36.0/24
+                  - origin: us._netblocks.mimecast.com
+                    record: v=spf1 ip4:207.211.31.0/25 ip4:205.139.110.0/24 ip4:216.205.24.0/24 ip4:170.10.129.0/24 ip4:63.128.21.0/24 ip4:170.10.133.0/24 ip4:185.58.84.93/32 ip4:207.211.41.113/32 ip4:207.211.30.64/26 ip4:207.211.30.128/25 ip4:216.145.221.0/24 ip4:170.10.128.0/24 ip4:170.10.132.56/29 ip4:170.10.132.64/29 ~all
+                    chars_num: 299
+                    use_macro: false
+                    authorized_ips:
+                      ipv4:
+                      - 207.211.31.0/25
+                      - 205.139.110.0/24
+                      - 216.205.24.0/24
+                      - 170.10.129.0/24
+                      - 63.128.21.0/24
+                      - 170.10.133.0/24
+                      - 185.58.84.93/32
+                      - 207.211.41.113/32
+                      - 207.211.30.64/26
+                      - 207.211.30.128/25
+                      - 216.145.221.0/24
+                      - 170.10.128.0/24
+                      - 170.10.132.56/29
+                      - 170.10.132.64/29
+                  - origin: za._netblocks.mimecast.com
+                    record: v=spf1 ip4:41.74.192.0/22 ip4:41.74.200.0/23 ip4:41.74.196.0/22 ip4:41.74.204.0/23 ip4:41.74.206.0/24 ~all
+                    chars_num: 106
+                    use_macro: false
+                    authorized_ips:
+                      ipv4:
+                      - 41.74.192.0/22
+                      - 41.74.200.0/23
+                      - 41.74.196.0/22
+                      - 41.74.204.0/23
+                      - 41.74.206.0/24
+                  - origin: de._netblocks.mimecast.com
+                    record: v=spf1 ip4:51.163.158.0/24 ip4:194.104.109.0/24 ip4:194.104.111.0/24 ip4:194.104.110.21/32 ip4:194.104.110.240/28 ip4:62.140.10.21/32 ip4:62.140.7.0/24 ip4:194.104.108.240/29 ip4:194.104.108.21/32 ip4:51.163.159.0/24 ~all
+                    chars_num: 221
+                    use_macro: false
+                    authorized_ips:
+                      ipv4:
+                      - 51.163.158.0/24
+                      - 194.104.109.0/24
+                      - 194.104.111.0/24
+                      - 194.104.110.21/32
+                      - 194.104.110.240/28
+                      - 62.140.10.21/32
+                      - 62.140.7.0/24
+                      - 194.104.108.240/29
+                      - 194.104.108.21/32
+                      - 51.163.159.0/24
+                  - origin: au._netblocks.mimecast.com
+                    record: v=spf1 ip4:103.13.69.0/24 ip4:124.47.150.0/24 ip4:124.47.189.0/24 ip4:103.96.23.0/24 ip4:103.96.21.0/24 ip4:180.189.28.0/24 ip4:216.145.217.0/24 ip4:103.96.22.96/28 ip4:103.96.22.22/32 ip4:103.96.20.22/32 ip4:103.96.20.96/28 ~all
+                    chars_num: 229
+                    use_macro: false
+                    authorized_ips:
+                      ipv4:
+                      - 103.13.69.0/24
+                      - 124.47.150.0/24
+                      - 124.47.189.0/24
+                      - 103.96.23.0/24
+                      - 103.96.21.0/24
+                      - 180.189.28.0/24
+                      - 216.145.217.0/24
+                      - 103.96.22.96/28
+                      - 103.96.22.22/32
+                      - 103.96.20.22/32
+                      - 103.96.20.96/28
+                  - origin: ca._netblocks.mimecast.com
+                    record: v=spf1 ip4:170.10.145.0/24 ip4:170.10.147.0/24 ip4:170.10.144.126/32 ip4:170.10.146.126/32 ip4:170.10.144.240/29 ip4:170.10.146.240/29 ip4:216.145.216.0/24 ~all
+                    chars_num: 160
+                    use_macro: false
+                    authorized_ips:
+                      ipv4:
+                      - 170.10.145.0/24
+                      - 170.10.147.0/24
+                      - 170.10.144.126/32
+                      - 170.10.146.126/32
+                      - 170.10.144.240/29
+                      - 170.10.146.240/29
+                      - 216.145.216.0/24
+                  - origin: usb._netblocks.mimecast.com
+                    record: v=spf1 ip4:170.10.151.0/24 ip4:170.10.153.0/24 ip4:170.10.150.240/29 ip4:170.10.152.240/29 ip4:170.10.156.0/24 ip4:170.10.157.0/24 ~all
+                    chars_num: 135
+                    use_macro: false
+                    authorized_ips:
+                      ipv4:
+                      - 170.10.151.0/24
+                      - 170.10.153.0/24
+                      - 170.10.150.240/29
+                      - 170.10.152.240/29
+                      - 170.10.156.0/24
+                      - 170.10.157.0/24
+                  domains_extracted:
+                  - myspace.com
+                  - _netblocks.mimecast.com
+                  - eu._netblocks.mimecast.com
+                  - us._netblocks.mimecast.com
+                  - za._netblocks.mimecast.com
+                  - de._netblocks.mimecast.com
+                  - au._netblocks.mimecast.com
+                  - ca._netblocks.mimecast.com
+                  - usb._netblocks.mimecast.com
+                  authorized_ips:
+                    ipv4:
+                    - 63.208.226.34
+                    - 204.16.32.0/22
+                    - 67.134.143.0/24
+                    - 216.205.243.0/24
+                    - 34.85.156.5/32
+                    - 35.245.108.108/32
+                    - 34.86.129.193/32
+                    - 34.86.134.94/32
+                    - 34.85.222.234/32
+                    - 34.86.176.234/32
+                    - 34.86.125.212/32
+                    - 34.85.224.60/32
+                    - 34.86.160.49/32
+                    - 35.245.64.166/32
+                    - 35.188.226.11/32
+                    - 34.86.208.228/32
+                    - 34.85.216.144/32
+                    - 35.221.22.153/32
+                    - 34.86.137.108/32
+                    - 34.86.51.35/32
+                    - 34.150.221.40/32
+                    - 34.85.216.70/32
+                    - 34.86.37.191/32
+                    - 34.85.214.215/32
+                    - 35.236.234.82/32
+                    - 34.86.161.241/32
+                    - 216.32.181.16
+                    - 216.178.32.0/20
+                    - 168.235.224.0/24
+                    - 195.130.217.0/24
+                    - 91.220.42.0/24
+                    - 146.101.78.0/24
+                    - 207.82.80.0/24
+                    - 213.167.81.0/25
+                    - 193.7.207.0/25
+                    - 213.167.75.0/25
+                    - 185.58.85.0/24
+                    - 185.58.86.0/24
+                    - 193.7.206.0/25
+                    - 147.28.36.0/24
+                    - 207.211.31.0/25
+                    - 205.139.110.0/24
+                    - 216.205.24.0/24
+                    - 170.10.129.0/24
+                    - 63.128.21.0/24
+                    - 170.10.133.0/24
+                    - 185.58.84.93/32
+                    - 207.211.41.113/32
+                    - 207.211.30.64/26
+                    - 207.211.30.128/25
+                    - 216.145.221.0/24
+                    - 170.10.128.0/24
+                    - 170.10.132.56/29
+                    - 170.10.132.64/29
+                    - 41.74.192.0/22
+                    - 41.74.200.0/23
+                    - 41.74.196.0/22
+                    - 41.74.204.0/23
+                    - 41.74.206.0/24
+                    - 51.163.158.0/24
+                    - 194.104.109.0/24
+                    - 194.104.111.0/24
+                    - 194.104.110.21/32
+                    - 194.104.110.240/28
+                    - 62.140.10.21/32
+                    - 62.140.7.0/24
+                    - 194.104.108.240/29
+                    - 194.104.108.21/32
+                    - 51.163.159.0/24
+                    - 103.13.69.0/24
+                    - 124.47.150.0/24
+                    - 124.47.189.0/24
+                    - 103.96.23.0/24
+                    - 103.96.21.0/24
+                    - 180.189.28.0/24
+                    - 216.145.217.0/24
+                    - 103.96.22.96/28
+                    - 103.96.22.22/32
+                    - 103.96.20.22/32
+                    - 103.96.20.96/28
+                    - 170.10.145.0/24
+                    - 170.10.147.0/24
+                    - 170.10.144.126/32
+                    - 170.10.146.126/32
+                    - 170.10.144.240/29
+                    - 170.10.146.240/29
+                    - 216.145.216.0/24
+                    - 170.10.151.0/24
+                    - 170.10.153.0/24
+                    - 170.10.150.240/29
+                    - 170.10.152.240/29
+                    - 170.10.156.0/24
+                    - 170.10.157.0/24
+                    ipv6: []
+                  issues_found: []
+                  spf_valid: true
+                  has_issues: false
+                  macros_found: false
+                  ip_pass: false
+                  elapsed_ms: 431
+                  all_qualifier: fail
+                  risk_score: 5
+                  risk_level: low
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Domain Data
+  /v1/sslchecker:
+    get:
+      summary: SSL Certificate Checker
+      description: Check the SSL certificate of a domain
+      operationId: sslchecker
+      parameters:
+      - name: domain
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The domain of the website to check the SSL certificate of
+        example: ebay.com
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  subject:
+                    C: US
+                    ST: California
+                    O: eBay, Inc.
+                    CN: ebay.com
+                  issuer:
+                    C: GB
+                    O: Sectigo Limited
+                    CN: Sectigo Public Server Authentication CA OV R36
+                  subjectaltname: DNS:ebay.com, DNS:befr.ebay.be, DNS:benl.ebay.be, DNS:cafr.ebay.ca, DNS:e-bay.it, DNS:ebay.at, DNS:ebay.be, DNS:ebay.ca, DNS:ebay.ch, DNS:ebay.co.uk, DNS:ebay.com.au, DNS:ebay.com.hk, DNS:ebay.com.my, DNS:ebay.com.sg, DNS:ebay.de, DNS:ebay.es, DNS:ebay.fr, DNS:ebay.ie, DNS:ebay.in, DNS:ebay.it, DNS:ebay.nl, DNS:ebay.ph, DNS:ebay.pl, DNS:ebay.us, DNS:ebay.vn, DNS:wwww.ebay.co.uk, DNS:wwww.ebay.com, DNS:wwww.ebay.com.au, DNS:wwww.ebay.de, DNS:wwww.ebay.in, DNS:wwww.ebay.it
+                  infoAccess:
+                    CA Issuers - URI:
+                    - http://crt.sectigo.com/SectigoPublicServerAuthenticationCAOVR36.crt
+                    OCSP - URI:
+                    - http://ocsp.sectigo.com
+                  ca: false
+                  bits: 2048
+                  valid_from: Jul 28 00:00:00 2025 GMT
+                  valid_to: Jul 28 23:59:59 2026 GMT
+                  serialNumber: 99F408949A6416EDC3B8F5EC77B2EBE5
+                  domain: ebay.com
+                  isExpired: false
+                  isValid: true
+                  daysUntilExpiry: 20
+                  isExpiringSoon: true
+                  isSelfSigned: false
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Domain Data
+  /v1/subdomainfinder:
+    get:
+      summary: Subdomain Finder
+      description: Subdomain Finder is a simple tool for finding all the available subdomains for a given domain. It returns a list of all the available subdomains for the given domain.
+      operationId: subdomainfinder
+      parameters:
+      - name: domain
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The domain you want to find all the available subdomains for (e.g. google.com)
+        example: google.com
+      - name: limit
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Limit the number of subdomains to detect
+        example: 5
+      - name: deepScan
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: 'Search the full wordlist instead of only certificate transparency and common names. Slower, and may still report complete: false when the time limit is reached'
+        example: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  rootDomain:
+                    domain: paypal.com
+                    records:
+                    - 151.101.3.1
+                    - 151.101.195.1
+                    - 162.159.141.96
+                  subDomains:
+                  - host: api.paypal.com
+                    records:
+                    - 66.211.168.123
+                  - host: mail.paypal.com
+                    records:
+                    - 159.127.187.12
+                  - host: admin.paypal.com
+                    records:
+                    - 173.0.88.10
+                  - host: smtp.paypal.com
+                    records:
+                    - 64.4.244.68
+                  - host: ns2.paypal.com
+                    records:
+                    - 64.4.244.71
+                  - host: test.paypal.com
+                    records:
+                    - 156.59.125.88
+                  - host: ns1.paypal.com
+                    records:
+                    - 64.4.244.70
+                  - host: mx.paypal.com
+                    records:
+                    - 10.190.3.55
+                  - host: demo.paypal.com
+                    records:
+                    - 151.101.1.21
+                    - 151.101.193.21
+                    - 151.101.129.21
+                    - 151.101.65.21
+                  - host: shop.paypal.com
+                    records:
+                    - 54.148.26.111
+                    - 35.80.170.143
+                    - 54.212.145.128
+                  - host: www.paypal.com
+                    records:
+                    - 151.101.193.21
+                    - 151.101.65.21
+                    - 151.101.129.21
+                    - 151.101.1.21
+                  - host: m.paypal.com
+                    records:
+                    - 151.101.129.21
+                    - 151.101.1.21
+                    - 151.101.193.21
+                    - 151.101.65.21
+                  - host: stage.paypal.com
+                    records:
+                    - 64.4.241.16
+                  - host: ssl.paypal.com
+                    records:
+                    - 151.101.65.21
+                    - 151.101.129.21
+                    - 151.101.193.21
+                    - 151.101.1.21
+                  - host: i.paypal.com
+                    records:
+                    - 63.140.38.107
+                    - 63.140.39.244
+                    - 63.140.39.114
+                    - 63.140.38.116
+                    - 63.140.39.254
+                    - 63.140.39.146
+                    - 63.140.38.213
+                    - 63.140.39.214
+                    - 63.140.39.87
+                    - 63.140.39.123
+                  - host: news.paypal.com
+                    records:
+                    - 192.243.228.1
+                  - host: autodiscover.paypal.com
+                    records:
+                    - 52.96.79.120
+                    - 52.96.79.200
+                    - 52.96.163.40
+                    - 52.96.79.248
+                  - host: dl.paypal.com
+                    records:
+                    - 216.113.188.115
+                  - host: connect.paypal.com
+                    records:
+                    - 151.101.65.21
+                    - 151.101.129.21
+                    - 151.101.1.21
+                    - 151.101.193.21
+                  - host: sandbox.paypal.com
+                    records:
+                    - 151.101.195.1
+                    - 162.159.141.96
+                    - 151.101.3.1
+                  - host: training.paypal.com
+                    records:
+                    - 64.4.254.252
+                  - host: c.paypal.com
+                    records:
+                    - 151.101.129.21
+                    - 151.101.65.21
+                    - 151.101.193.21
+                    - 151.101.1.21
+                  - host: business.paypal.com
+                    records:
+                    - 104.18.6.168
+                    - 104.18.7.168
+                  - host: service.paypal.com
+                    records:
+                    - 192.243.228.1
+                  - host: login.paypal.com
+                    records: []
+                  - host: t.paypal.com
+                    records:
+                    - 151.101.3.1
+                    - 151.101.131.1
+                    - 151.101.67.1
+                    - 151.101.195.1
+                  - host: status.paypal.com
+                    records:
+                    - 20.69.68.249
+                  - host: shopping.paypal.com
+                    records:
+                    - 208.76.140.165
+                  - host: newsletter.paypal.com
+                    records:
+                    - 192.243.228.1
+                  - host: reports.paypal.com
+                    records:
+                    - 173.0.93.28
+                  - host: forms.paypal.com
+                    records:
+                    - 216.113.190.190
+                  - host: labs.paypal.com
+                    records:
+                    - 173.0.88.135
+                  - host: p.paypal.com
+                    records:
+                    - 151.101.131.1
+                    - 151.101.67.1
+                    - 151.101.195.1
+                    - 151.101.3.1
+                  - host: transfer.paypal.com
+                    records:
+                    - 151.101.193.21
+                    - 151.101.129.21
+                    - 151.101.65.21
+                    - 151.101.1.21
+                  - host: xmpp.paypal.com
+                    records:
+                    - 173.224.160.144
+                    - 173.224.160.141
+                    - 185.97.80.137
+                    - 185.97.80.136
+                  - host: manager.paypal.com
+                    records:
+                    - 173.0.93.191
+                  - host: developer.paypal.com
+                    records:
+                    - 151.101.1.21
+                    - 151.101.193.21
+                    - 151.101.129.21
+                    - 151.101.65.21
+                  - host: account.paypal.com
+                    records:
+                    - 192.243.228.1
+                  - host: history.paypal.com
+                    records:
+                    - 151.101.129.21
+                    - 151.101.193.21
+                    - 151.101.65.21
+                    - 151.101.1.21
+                  - host: pics.paypal.com
+                    records:
+                    - 151.101.131.1
+                    - 151.101.195.1
+                    - 151.101.67.1
+                    - 151.101.3.1
+                  - host: registration.paypal.com
+                    records:
+                    - 173.0.93.135
+                  - host: mcp.paypal.com
+                    records:
+                    - 104.18.7.170
+                    - 104.18.6.170
+                  - host: accounts.paypal.com
+                    records:
+                    - 173.0.93.28
+                  - host: hotspot.paypal.com
+                    records:
+                    - 64.4.240.12
+                  - host: bm.paypal.com
+                    records:
+                    - 130.211.16.153
+                  - host: rms.paypal.com
+                    records:
+                    - 173.0.82.166
+                  - host: cb.paypal.com
+                    records:
+                    - 173.0.88.142
+                  count: 47
+                  totalFound: 47
+                  complete: true
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Domain Data
+  /v1/urllookup:
+    post:
+      summary: URL Lookup
+      description: Lookup the location of a URL
+      operationId: urllookup
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  range: ''
+                  country: US
+                  region: ''
+                  city: Cheney
+                  timezone: America/Chicago
+                  state: Kansas
+                  zipcode: '67025'
+                  coordinates:
+                  - 37.751
+                  - -97.822
+                  url: https://www.merriam-webster.com/dictionary/documentation
+                  domain: www.merriam-webster.com
+                  ip: 104.20.45.199
+                  countryName: United States
+                  continent: NA
+                  continentName: North America
+                  accuracyRadius: 1000
+                  isEU: false
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: The URL to lookup the location of. Include the https protocol
+              required:
+              - url
+      tags:
+      - Domain Data
+  /v1/urltitle:
+    post:
+      summary: URL Title
+      description: Get the title of a web page based on the URL
+      operationId: urltitle
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  title: HTML element - Wikipedia
+                  h1:
+                  - HTML element
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: The URL of the web page to get the title of
+              required:
+              - url
+      tags:
+      - Domain Data
+  /v1/urlunshortener:
+    post:
+      summary: URL Unshortener
+      description: Unshorten a shortened URL
+      operationId: urlunshortener
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  source: https://bit.ly/3k3j4
+                  destination: http://www.allclimbing.com/archive/2009/09/climbing-video-alex-puccio-on-trice-v12/
+                  unshortened: true
+                  redirectCount: 1
+                  destinationDomain: www.allclimbing.com
+                  redirectChain:
+                  - https://bit.ly/3k3j4
+                  - http://www.allclimbing.com/archive/2009/09/climbing-video-alex-puccio-on-trice-v12/
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: The shortened URL to unshorten
+              required:
+              - url
+      tags:
+      - Domain Data
+  /v1/whoislookup:
+    get:
+      summary: WHOIS Lookup
+      description: Lookup domain registration data based on the domain name
+      operationId: whoislookup
+      parameters:
+      - name: domain
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The domain name for which you want to get the registration data (e.g., myspace.com)
+        example: myspace.com
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  domainName: MYSPACE.COM
+                  registryDomainID: 3877095_DOMAIN_COM-VRSN
+                  createdDate: '1996-02-22T05:00:00Z'
+                  expiryDate: '2029-02-23T05:00:00Z'
+                  updatedDate: '2023-01-17T00:16:21Z'
+                  domainStatus:
+                  - client delete prohibited https://icann.org/epp#client delete prohibited
+                  - client renew prohibited https://icann.org/epp#client renew prohibited
+                  - client transfer prohibited https://icann.org/epp#client transfer prohibited
+                  - client update prohibited https://icann.org/epp#client update prohibited
+                  dNSSEC: unsigned
+                  registrar: GoDaddy.com, LLC
+                  registrarIANAID: '146'
+                  registrarURL: http://www.godaddy.com
+                  registrarAbuseContactEmail: abuse@godaddy.com
+                  registrarAbuseContactPhone: tel:480-624-2505
+                  nameServers:
+                  - ns-cloud-a2.googledomains.com
+                  - ns-cloud-a3.googledomains.com
+                  - ns-cloud-a4.googledomains.com
+                  - ns-cloud-a1.googledomains.com
+                  domain: myspace.com
+                  fetchedAtUTC: '2025-12-17T01:54:05.069Z'
+                  tld: com
+                  status: active
+                  domainAgeDays: 11094
+                  domainAgeYears: 30.4
+                  isRecentlyRegistered: false
+                  trustScore: 93
+                  trustLevel: high
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Domain Data
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
+externalDocs:
+  description: APIVerve Documentation
+  url: https://docs.apiverve.com

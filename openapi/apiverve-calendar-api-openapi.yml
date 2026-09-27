@@ -1,0 +1,1196 @@
+openapi: 3.2.0
+info:
+  title: APIVerve Calendar API
+  description: One API key, 370+ real-world REST endpoints — weather, geocoding, finance, DNS, validation, text processing and more. Every endpoint returns JSON. Full documentation at https://docs.apiverve.com.
+  termsOfService: https://apiverve.com/terms/
+  contact:
+    name: APIVerve Support
+    email: hello@apiverve.com
+    url: https://apiverve.com/contact
+  license:
+    name: APIVerve Terms of Service
+    url: https://apiverve.com/terms/
+  version: 1.0.0
+  x-logo:
+    url: https://apiverve.com/images/favicon.png
+    altText: APIVerve
+servers:
+- url: https://api.apiverve.com
+security:
+- api_key: []
+tags:
+- name: Calendar
+paths:
+  /v1/agecalculator:
+    get:
+      summary: Age Calculator
+      description: Calculate age based on the date of birth provided
+      operationId: agecalculator
+      parameters:
+      - name: dob
+        in: query
+        schema:
+          type: string
+        required: true
+        description: 'The date of birth to calculate the age from (format: YYYY-MM-DD)'
+        example: '1990-08-02'
+      - name: timezone
+        in: query
+        schema:
+          type: string
+        required: false
+        description: IANA timezone used to interpret the date of birth and to determine "today" when computing the age
+        example: America/Chicago
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  dob: '1990-01-01'
+                  age_breakdown:
+                    years: 35
+                    months: 431
+                    weeks: 1876
+                    days: 13133
+                    hours: 315208
+                    minutes: 18912499
+                    seconds: 1134749976
+                  age_words:
+                    years: thirty-five
+                    ordinal: thirty-fifth
+                    full: thirty-five years old
+                    locale: en-US
+                  timezone: America/Chicago
+                  locale: en-US
+                  next_birthday:
+                    months: 0
+                    weeks: 2
+                    days: 15
+                    hours: 367
+                    minutes: 22060
+                    seconds: 1323623
+                  insights:
+                    generation: Millennial
+                    zodiacSign: Capricorn
+                    chineseZodiac: Horse
+                    birthstone: Garnet
+                    dayOfWeekBorn: Monday
+                    isLeapYearBirth: false
+                    milestones:
+                      canVoteUS: true
+                      canDrinkUS: true
+                      canRentCarUS: true
+                      seniorDiscount: false
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Calendar
+  /v1/datecalculator:
+    get:
+      summary: Date Calculator
+      description: Calculate date differences based on the dates provided
+      operationId: datecalculator
+      parameters:
+      - name: start
+        in: query
+        schema:
+          type: string
+        required: true
+        description: 'The start date for calculating the difference (format: YYYY-MM-DD)'
+        example: '2022-01-01'
+      - name: end
+        in: query
+        schema:
+          type: string
+        required: true
+        description: 'The end date for calculating the difference (format: YYYY-MM-DD)'
+        example: '2024-08-31'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  minutes: 524160
+                  hours: 8736
+                  days: 364
+                  weeks: 52
+                  months: 11
+                  years: 0
+                  start:
+                    date: '2022-01-01'
+                    day: Saturday
+                    month: January
+                    year: '2022'
+                    words: Saturday, January 1st 2022
+                  end:
+                    date: '2022-12-31'
+                    day: Saturday
+                    month: December
+                    year: '2022'
+                    words: Saturday, December 31st 2022
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Calendar
+  /v1/liturgicalcalendar:
+    get:
+      summary: Liturgical Calendar
+      description: Returns the Catholic liturgical calendar for one month. The response data is an object keyed by ISO date (YYYY-MM-DD), and each date holds an array of the celebrations falling on it — a date can carry more than one, such as a weekday plus an optional memorial. The fields below describe one celebration in those arrays.
+      operationId: liturgicalcalendar
+      parameters:
+      - name: month
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: 'The month to get Liturgical Calendar data for (default: current month)'
+        example: 2
+      - name: year
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: 'The year to get Liturgical Calendar data for (default: current year)'
+        example: 2025
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  '2026-01-01':
+                  - id: mary_mother_of_god
+                    precedence: GENERAL_SOLEMNITY_3
+                    rank: SOLEMNITY
+                    isHolyDayOfObligation: true
+                    isOptional: false
+                    colors:
+                    - WHITE
+                  '2026-01-02':
+                  - id: basil_the_great_and_gregory_nazianzen_bishops
+                    precedence: GENERAL_MEMORIAL_10
+                    rank: MEMORIAL
+                    isHolyDayOfObligation: false
+                    isOptional: false
+                    colors:
+                    - WHITE
+                    weekday:
+                      id: christmas_time_january_2
+                      date: '2026-01-02'
+                      dateDef:
+                        dateFn: weekdayBeforeEpiphany
+                        dateArgs:
+                        - 2
+                        yearOffset: 0
+                      dateExceptions: []
+                      alternativeTransferDateDefs: []
+                      precedence: WEEKDAY_13
+                      rank: WEEKDAY
+                      allowSimilarRankItems: false
+                      isHolyDayOfObligation: false
+                      isOptional: false
+                      i18nDef:
+                      - seasons:christmas_time.before_epiphany
+                      - day: 2
+                      seasons:
+                      - CHRISTMAS_TIME
+                      periods:
+                      - DAYS_BEFORE_EPIPHANY
+                      - CHRISTMAS_TO_PRESENTATION_OF_THE_LORD
+                      colors:
+                      - WHITE
+                      commonsDef: []
+                      martyrology: []
+                      titles: []
+                      calendar:
+                        weekOfSeason: 2
+                        dayOfSeason: 9
+                        dayOfWeek: 5
+                        nthDayOfWeekInMonth: 1
+                        startOfSeason: '2025-12-25'
+                        endOfSeason: '2026-01-11'
+                        startOfLiturgicalYear: '2025-11-30'
+                        endOfLiturgicalYear: '2026-11-28'
+                        seasons:
+                        - CHRISTMAS_TIME
+                      cycles:
+                        properCycle: PROPER_OF_TIME
+                        sundayCycle: YEAR_A
+                        weekdayCycle: YEAR_2
+                        psalterWeek: WEEK_1
+                      fromCalendarId: ProperOfTime
+                      fromExtendedCalendars: []
+                  '2026-01-03':
+                  - id: christmas_time_january_3
+                    precedence: WEEKDAY_13
+                    rank: WEEKDAY
+                    isHolyDayOfObligation: false
+                    isOptional: false
+                    colors:
+                    - WHITE
+                  - id: most_holy_name_of_jesus
+                    precedence: OPTIONAL_MEMORIAL_12
+                    rank: OPTIONAL_MEMORIAL
+                    isHolyDayOfObligation: false
+                    isOptional: true
+                    colors:
+                    - WHITE
+                    weekday:
+                      id: christmas_time_january_3
+                      precedence: WEEKDAY_13
+                      rank: WEEKDAY
+                      isHolyDayOfObligation: false
+                      isOptional: false
+                      colors:
+                      - WHITE
+                  '2026-01-04':
+                  - id: second_sunday_after_christmas
+                    precedence: UNPRIVILEGED_SUNDAY_6
+                    rank: SUNDAY
+                    isHolyDayOfObligation: true
+                    isOptional: false
+                    colors:
+                    - WHITE
+                  '2026-01-05':
+                  - id: christmas_time_january_5
+                    precedence: WEEKDAY_13
+                    rank: WEEKDAY
+                    isHolyDayOfObligation: false
+                    isOptional: false
+                    colors:
+                    - WHITE
+                  '2026-01-06':
+                  - id: epiphany_of_the_lord
+                    precedence: PROPER_OF_TIME_SOLEMNITY_2
+                    rank: SOLEMNITY
+                    isHolyDayOfObligation: true
+                    isOptional: false
+                    colors:
+                    - WHITE
+                  '2026-01-07':
+                  - id: wednesday_after_epiphany
+                    precedence: WEEKDAY_13
+                    rank: WEEKDAY
+                    isHolyDayOfObligation: false
+                    isOptional: false
+                    colors:
+                    - WHITE
+                  - id: raymond_of_penyafort_priest
+                    precedence: OPTIONAL_MEMORIAL_12
+                    rank: OPTIONAL_MEMORIAL
+                    isHolyDayOfObligation: false
+                    isOptional: true
+                    colors:
+                    - WHITE
+                    weekday:
+                      id: wednesday_after_epiphany
+                      precedence: WEEKDAY_13
+                      rank: WEEKDAY
+                      isHolyDayOfObligation: false
+                      isOptional: false
+                      colors:
+                      - WHITE
+                  '2026-01-08':
+                  - id: thursday_after_epiphany
+                    precedence: WEEKDAY_13
+                    rank: WEEKDAY
+                    isHolyDayOfObligation: false
+                    isOptional: false
+                    colors:
+                    - WHITE
+                  '2026-01-09':
+                  - id: friday_after_epiphany
+                    precedence: WEEKDAY_13
+                    rank: WEEKDAY
+                    isHolyDayOfObligation: false
+                    isOptional: false
+                    colors:
+                    - WHITE
+                  '2026-01-10':
+                  - id: saturday_after_epiphany
+                    precedence: WEEKDAY_13
+                    rank: WEEKDAY
+                    isHolyDayOfObligation: false
+                    isOptional: false
+                    colors:
+                    - WHITE
+                  '2026-01-11':
+                  - id: baptism_of_the_lord
+                    precedence: PROPER_OF_TIME_SOLEMNITY_2
+                    rank: SOLEMNITY
+                    isHolyDayOfObligation: true
+                    isOptional: false
+                    colors:
+                    - WHITE
+                  '2026-01-12':
+                  - id: ordinary_time_1_monday
+                    precedence: WEEKDAY_13
+                    rank: WEEKDAY
+                    isHolyDayOfObligation: false
+                    isOptional: false
+                    colors:
+                    - GREEN
+                  '2026-01-13':
+                  - id: ordinary_time_1_tuesday
+                    precedence: WEEKDAY_13
+                    rank: WEEKDAY
+                    isHolyDayOfObligation: false
+                    isOptional: false
+                    colors:
+                    - GREEN
+                  - id: hilary_of_poitiers_bishop
+                    precedence: OPTIONAL_MEMORIAL_12
+                    rank: OPTIONAL_MEMORIAL
+                    isHolyDayOfObligation: false
+                    isOptional: true
+                    colors:
+                    - WHITE
+                    weekday:
+                      id: ordinary_time_1_tuesday
+                      precedence: WEEKDAY_13
+                      rank: WEEKDAY
+                      isHolyDayOfObligation: false
+                      isOptional: false
+                      colors:
+                      - GREEN
+                  '2026-01-14':
+                  - id: ordinary_time_1_wednesday
+                    precedence: WEEKDAY_13
+                    rank: WEEKDAY
+                    isHolyDayOfObligation: false
+                    isOptional: false
+                    colors:
+                    - GREEN
+                  '2026-01-15':
+                  - id: ordinary_time_1_thursday
+                    precedence: WEEKDAY_13
+                    rank: WEEKDAY
+                    isHolyDayOfObligation: false
+                    isOptional: false
+                    colors:
+                    - GREEN
+                  '2026-01-16':
+                  - id: ordinary_time_1_friday
+                    precedence: WEEKDAY_13
+                    rank: WEEKDAY
+                    isHolyDayOfObligation: false
+                    isOptional: false
+                    colors:
+                    - GREEN
+                  '2026-01-17':
+                  - id: anthony_of_egypt_abbot
+                    precedence: GENERAL_MEMORIAL_10
+                    rank: MEMORIAL
+                    isHolyDayOfObligation: false
+                    isOptional: false
+                    colors:
+                    - WHITE
+                    weekday:
+                      id: ordinary_time_1_saturday
+                      date: '2026-01-17'
+                      dateDef:
+                        dateFn: dateOfOrdinaryTime
+                        dateArgs:
+                        - 6
+                        - 1
+                        yearOffset: 0
+                      dateExceptions: []
+                      alternativeTransferDateDefs: []
+                      precedence: WEEKDAY_13
+                      rank: WEEKDAY
+                      allowSimilarRankItems: false
+                      isHolyDayOfObligation: false
+                      isOptional: false
+                      i18nDef:
+                      - seasons:ordinary_time.weekday
+                      - week: 1
+                        dow: 6
+                      seasons:
+                      - ORDINARY_TIME
+                      periods:
+                      - EARLY_ORDINARY_TIME
+                      colors:
+                      - GREEN
+                      commonsDef: []
+                      martyrology: []
+                      titles: []
+                      calendar:
+                        weekOfSeason: 1
+                        dayOfSeason: 6
+                        dayOfWeek: 6
+                        nthDayOfWeekInMonth: 3
+                        startOfSeason: '2026-01-12'
+                        endOfSeason: '2026-11-28'
+                        startOfLiturgicalYear: '2025-11-30'
+                        endOfLiturgicalYear: '2026-11-28'
+                        seasons:
+                        - ORDINARY_TIME
+                      cycles:
+                        properCycle: PROPER_OF_TIME
+                        sundayCycle: YEAR_A
+                        weekdayCycle: YEAR_2
+                        psalterWeek: WEEK_1
+                      fromCalendarId: ProperOfTime
+                      fromExtendedCalendars: []
+                  '2026-01-18':
+                  - id: ordinary_time_2_sunday
+                    precedence: UNPRIVILEGED_SUNDAY_6
+                    rank: SUNDAY
+                    isHolyDayOfObligation: true
+                    isOptional: false
+                    colors:
+                    - GREEN
+                  '2026-01-19':
+                  - id: ordinary_time_2_monday
+                    precedence: WEEKDAY_13
+                    rank: WEEKDAY
+                    isHolyDayOfObligation: false
+                    isOptional: false
+                    colors:
+                    - GREEN
+                  '2026-01-20':
+                  - id: ordinary_time_2_tuesday
+                    precedence: WEEKDAY_13
+                    rank: WEEKDAY
+                    isHolyDayOfObligation: false
+                    isOptional: false
+                    colors:
+                    - GREEN
+                  - id: fabian_i_pope
+                    precedence: OPTIONAL_MEMORIAL_12
+                    rank: OPTIONAL_MEMORIAL
+                    isHolyDayOfObligation: false
+                    isOptional: true
+                    colors:
+                    - RED
+                    weekday:
+                      id: ordinary_time_2_tuesday
+                      precedence: WEEKDAY_13
+                      rank: WEEKDAY
+                      isHolyDayOfObligation: false
+                      isOptional: false
+                      colors:
+                      - GREEN
+                  - id: sebastian_of_milan_martyr
+                    precedence: OPTIONAL_MEMORIAL_12
+                    rank: OPTIONAL_MEMORIAL
+                    isHolyDayOfObligation: false
+                    isOptional: true
+                    colors:
+                    - RED
+                    weekday:
+                      id: ordinary_time_2_tuesday
+                      precedence: WEEKDAY_13
+                      rank: WEEKDAY
+                      isHolyDayOfObligation: false
+                      isOptional: false
+                      colors:
+                      - GREEN
+                  '2026-01-21':
+                  - id: agnes_of_rome_virgin
+                    precedence: GENERAL_MEMORIAL_10
+                    rank: MEMORIAL
+                    isHolyDayOfObligation: false
+                    isOptional: false
+                    colors:
+                    - RED
+                    weekday:
+                      id: ordinary_time_2_wednesday
+                      date: '2026-01-21'
+                      dateDef:
+                        dateFn: dateOfOrdinaryTime
+                        dateArgs:
+                        - 3
+                        - 2
+                        yearOffset: 0
+                      dateExceptions: []
+                      alternativeTransferDateDefs: []
+                      precedence: WEEKDAY_13
+                      rank: WEEKDAY
+                      allowSimilarRankItems: false
+                      isHolyDayOfObligation: false
+                      isOptional: false
+                      i18nDef:
+                      - seasons:ordinary_time.weekday
+                      - week: 2
+                        dow: 3
+                      seasons:
+                      - ORDINARY_TIME
+                      periods:
+                      - EARLY_ORDINARY_TIME
+                      colors:
+                      - GREEN
+                      commonsDef: []
+                      martyrology: []
+                      titles: []
+                      calendar:
+                        weekOfSeason: 2
+                        dayOfSeason: 10
+                        dayOfWeek: 3
+                        nthDayOfWeekInMonth: 3
+                        startOfSeason: '2026-01-12'
+                        endOfSeason: '2026-11-28'
+                        startOfLiturgicalYear: '2025-11-30'
+                        endOfLiturgicalYear: '2026-11-28'
+                        seasons:
+                        - ORDINARY_TIME
+                      cycles:
+                        properCycle: PROPER_OF_TIME
+                        sundayCycle: YEAR_A
+                        weekdayCycle: YEAR_2
+                        psalterWeek: WEEK_2
+                      fromCalendarId: ProperOfTime
+                      fromExtendedCalendars: []
+                  '2026-01-22':
+                  - id: ordinary_time_2_thursday
+                    precedence: WEEKDAY_13
+                    rank: WEEKDAY
+                    isHolyDayOfObligation: false
+                    isOptional: false
+                    colors:
+                    - GREEN
+                  - id: vincent_of_saragossa_deacon
+                    precedence: OPTIONAL_MEMORIAL_12
+                    rank: OPTIONAL_MEMORIAL
+                    isHolyDayOfObligation: false
+                    isOptional: true
+                    colors:
+                    - RED
+                    weekday:
+                      id: ordinary_time_2_thursday
+                      precedence: WEEKDAY_13
+                      rank: WEEKDAY
+                      isHolyDayOfObligation: false
+                      isOptional: false
+                      colors:
+                      - GREEN
+                  '2026-01-23':
+                  - id: ordinary_time_2_friday
+                    precedence: WEEKDAY_13
+                    rank: WEEKDAY
+                    isHolyDayOfObligation: false
+                    isOptional: false
+                    colors:
+                    - GREEN
+                  '2026-01-24':
+                  - id: francis_de_sales_bishop
+                    precedence: GENERAL_MEMORIAL_10
+                    rank: MEMORIAL
+                    isHolyDayOfObligation: false
+                    isOptional: false
+                    colors:
+                    - WHITE
+                    weekday:
+                      id: ordinary_time_2_saturday
+                      date: '2026-01-24'
+                      dateDef:
+                        dateFn: dateOfOrdinaryTime
+                        dateArgs:
+                        - 6
+                        - 2
+                        yearOffset: 0
+                      dateExceptions: []
+                      alternativeTransferDateDefs: []
+                      precedence: WEEKDAY_13
+                      rank: WEEKDAY
+                      allowSimilarRankItems: false
+                      isHolyDayOfObligation: false
+                      isOptional: false
+                      i18nDef:
+                      - seasons:ordinary_time.weekday
+                      - week: 2
+                        dow: 6
+                      seasons:
+                      - ORDINARY_TIME
+                      periods:
+                      - EARLY_ORDINARY_TIME
+                      colors:
+                      - GREEN
+                      commonsDef: []
+                      martyrology: []
+                      titles: []
+                      calendar:
+                        weekOfSeason: 2
+                        dayOfSeason: 13
+                        dayOfWeek: 6
+                        nthDayOfWeekInMonth: 4
+                        startOfSeason: '2026-01-12'
+                        endOfSeason: '2026-11-28'
+                        startOfLiturgicalYear: '2025-11-30'
+                        endOfLiturgicalYear: '2026-11-28'
+                        seasons:
+                        - ORDINARY_TIME
+                      cycles:
+                        properCycle: PROPER_OF_TIME
+                        sundayCycle: YEAR_A
+                        weekdayCycle: YEAR_2
+                        psalterWeek: WEEK_2
+                      fromCalendarId: ProperOfTime
+                      fromExtendedCalendars: []
+                  '2026-01-25':
+                  - id: sunday_of_the_word_of_god
+                    precedence: UNPRIVILEGED_SUNDAY_6
+                    rank: SUNDAY
+                    isHolyDayOfObligation: true
+                    isOptional: false
+                    colors:
+                    - GREEN
+                  '2026-01-26':
+                  - id: timothy_of_ephesus_and_titus_of_crete_bishops
+                    precedence: GENERAL_MEMORIAL_10
+                    rank: MEMORIAL
+                    isHolyDayOfObligation: false
+                    isOptional: false
+                    colors:
+                    - WHITE
+                    weekday:
+                      id: ordinary_time_3_monday
+                      date: '2026-01-26'
+                      dateDef:
+                        dateFn: dateOfOrdinaryTime
+                        dateArgs:
+                        - 1
+                        - 3
+                        yearOffset: 0
+                      dateExceptions: []
+                      alternativeTransferDateDefs: []
+                      precedence: WEEKDAY_13
+                      rank: WEEKDAY
+                      allowSimilarRankItems: false
+                      isHolyDayOfObligation: false
+                      isOptional: false
+                      i18nDef:
+                      - seasons:ordinary_time.weekday
+                      - week: 3
+                        dow: 1
+                      seasons:
+                      - ORDINARY_TIME
+                      periods:
+                      - EARLY_ORDINARY_TIME
+                      colors:
+                      - GREEN
+                      commonsDef: []
+                      martyrology: []
+                      titles: []
+                      calendar:
+                        weekOfSeason: 3
+                        dayOfSeason: 15
+                        dayOfWeek: 1
+                        nthDayOfWeekInMonth: 4
+                        startOfSeason: '2026-01-12'
+                        endOfSeason: '2026-11-28'
+                        startOfLiturgicalYear: '2025-11-30'
+                        endOfLiturgicalYear: '2026-11-28'
+                        seasons:
+                        - ORDINARY_TIME
+                      cycles:
+                        properCycle: PROPER_OF_TIME
+                        sundayCycle: YEAR_A
+                        weekdayCycle: YEAR_2
+                        psalterWeek: WEEK_3
+                      fromCalendarId: ProperOfTime
+                      fromExtendedCalendars: []
+                  '2026-01-27':
+                  - id: ordinary_time_3_tuesday
+                    precedence: WEEKDAY_13
+                    rank: WEEKDAY
+                    isHolyDayOfObligation: false
+                    isOptional: false
+                    colors:
+                    - GREEN
+                  - id: angela_merici_virgin
+                    precedence: OPTIONAL_MEMORIAL_12
+                    rank: OPTIONAL_MEMORIAL
+                    isHolyDayOfObligation: false
+                    isOptional: true
+                    colors:
+                    - WHITE
+                    weekday:
+                      id: ordinary_time_3_tuesday
+                      precedence: WEEKDAY_13
+                      rank: WEEKDAY
+                      isHolyDayOfObligation: false
+                      isOptional: false
+                      colors:
+                      - GREEN
+                  '2026-01-28':
+                  - id: thomas_aquinas_priest
+                    precedence: GENERAL_MEMORIAL_10
+                    rank: MEMORIAL
+                    isHolyDayOfObligation: false
+                    isOptional: false
+                    colors:
+                    - WHITE
+                    weekday:
+                      id: ordinary_time_3_wednesday
+                      date: '2026-01-28'
+                      dateDef:
+                        dateFn: dateOfOrdinaryTime
+                        dateArgs:
+                        - 3
+                        - 3
+                        yearOffset: 0
+                      dateExceptions: []
+                      alternativeTransferDateDefs: []
+                      precedence: WEEKDAY_13
+                      rank: WEEKDAY
+                      allowSimilarRankItems: false
+                      isHolyDayOfObligation: false
+                      isOptional: false
+                      i18nDef:
+                      - seasons:ordinary_time.weekday
+                      - week: 3
+                        dow: 3
+                      seasons:
+                      - ORDINARY_TIME
+                      periods:
+                      - EARLY_ORDINARY_TIME
+                      colors:
+                      - GREEN
+                      commonsDef: []
+                      martyrology: []
+                      titles: []
+                      calendar:
+                        weekOfSeason: 3
+                        dayOfSeason: 17
+                        dayOfWeek: 3
+                        nthDayOfWeekInMonth: 4
+                        startOfSeason: '2026-01-12'
+                        endOfSeason: '2026-11-28'
+                        startOfLiturgicalYear: '2025-11-30'
+                        endOfLiturgicalYear: '2026-11-28'
+                        seasons:
+                        - ORDINARY_TIME
+                      cycles:
+                        properCycle: PROPER_OF_TIME
+                        sundayCycle: YEAR_A
+                        weekdayCycle: YEAR_2
+                        psalterWeek: WEEK_3
+                      fromCalendarId: ProperOfTime
+                      fromExtendedCalendars: []
+                  '2026-01-29':
+                  - id: ordinary_time_3_thursday
+                    precedence: WEEKDAY_13
+                    rank: WEEKDAY
+                    isHolyDayOfObligation: false
+                    isOptional: false
+                    colors:
+                    - GREEN
+                  '2026-01-30':
+                  - id: ordinary_time_3_friday
+                    precedence: WEEKDAY_13
+                    rank: WEEKDAY
+                    isHolyDayOfObligation: false
+                    isOptional: false
+                    colors:
+                    - GREEN
+                  '2026-01-31':
+                  - id: john_bosco_priest
+                    precedence: GENERAL_MEMORIAL_10
+                    rank: MEMORIAL
+                    isHolyDayOfObligation: false
+                    isOptional: false
+                    colors:
+                    - WHITE
+                    weekday:
+                      id: ordinary_time_3_saturday
+                      date: '2026-01-31'
+                      dateDef:
+                        dateFn: dateOfOrdinaryTime
+                        dateArgs:
+                        - 6
+                        - 3
+                        yearOffset: 0
+                      dateExceptions: []
+                      alternativeTransferDateDefs: []
+                      precedence: WEEKDAY_13
+                      rank: WEEKDAY
+                      allowSimilarRankItems: false
+                      isHolyDayOfObligation: false
+                      isOptional: false
+                      i18nDef:
+                      - seasons:ordinary_time.weekday
+                      - week: 3
+                        dow: 6
+                      seasons:
+                      - ORDINARY_TIME
+                      periods:
+                      - EARLY_ORDINARY_TIME
+                      colors:
+                      - GREEN
+                      commonsDef: []
+                      martyrology: []
+                      titles: []
+                      calendar:
+                        weekOfSeason: 3
+                        dayOfSeason: 20
+                        dayOfWeek: 6
+                        nthDayOfWeekInMonth: 5
+                        startOfSeason: '2026-01-12'
+                        endOfSeason: '2026-11-28'
+                        startOfLiturgicalYear: '2025-11-30'
+                        endOfLiturgicalYear: '2026-11-28'
+                        seasons:
+                        - ORDINARY_TIME
+                      cycles:
+                        properCycle: PROPER_OF_TIME
+                        sundayCycle: YEAR_A
+                        weekdayCycle: YEAR_2
+                        psalterWeek: WEEK_3
+                      fromCalendarId: ProperOfTime
+                      fromExtendedCalendars: []
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Calendar
+  /v1/workingdays:
+    get:
+      summary: Working Days
+      description: Working Days is a simple tool for getting the number of working days in a month. It returns the number of working days in the given month.
+      operationId: workingdays
+      parameters:
+      - name: country
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The 2-letter country code you want to get the number of working days for
+        example: US
+      - name: month
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: The month you want to get the number of working days for
+        example: 10
+      - name: year
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: The year you want to get the number of working days for
+        example: 2026
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  workingDaysCount: 21
+                  nonWorkingDaysCount: 10
+                  workingDays:
+                  - '2023-10-02'
+                  - '2023-10-03'
+                  - '2023-10-04'
+                  - '2023-10-05'
+                  - '2023-10-06'
+                  - '2023-10-10'
+                  - '2023-10-11'
+                  - '2023-10-12'
+                  - '2023-10-13'
+                  - '2023-10-16'
+                  - '2023-10-17'
+                  - '2023-10-18'
+                  - '2023-10-19'
+                  - '2023-10-20'
+                  - '2023-10-23'
+                  - '2023-10-24'
+                  - '2023-10-25'
+                  - '2023-10-26'
+                  - '2023-10-27'
+                  - '2023-10-30'
+                  - '2023-10-31'
+                  nonWorkingDays:
+                  - date: '2023-10-01'
+                    reasons:
+                    - weekend
+                    holiday_name: null
+                  - date: '2023-10-07'
+                    reasons:
+                    - weekend
+                    holiday_name: null
+                  - date: '2023-10-08'
+                    reasons:
+                    - weekend
+                    holiday_name: null
+                  - date: '2023-10-09'
+                    reasons:
+                    - public holiday
+                    holiday_name: Columbus Day
+                  - date: '2023-10-14'
+                    reasons:
+                    - weekend
+                    holiday_name: null
+                  - date: '2023-10-15'
+                    reasons:
+                    - weekend
+                    holiday_name: null
+                  - date: '2023-10-21'
+                    reasons:
+                    - weekend
+                    holiday_name: null
+                  - date: '2023-10-22'
+                    reasons:
+                    - weekend
+                    holiday_name: null
+                  - date: '2023-10-28'
+                    reasons:
+                    - weekend
+                    holiday_name: null
+                  - date: '2023-10-29'
+                    reasons:
+                    - weekend
+                    holiday_name: null
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Calendar
+  /v1/worldholidays:
+    get:
+      summary: World Holidays
+      description: Get the holidays of a country for a given year
+      operationId: worldholidays
+      parameters:
+      - name: country
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The 2-letter country code for which you want to get the holidays
+        example: US
+      - name: year
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: The year for which you want to get the holidays
+        example: 2026
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  country: US
+                  year: '2025'
+                  holidays:
+                  - date: '2025-01-01 00:00:00'
+                    start: '2025-01-01T05:00:00Z'
+                    end: '2025-01-02T05:00:00Z'
+                    name: New Year's Day
+                    type: public
+                  - date: '2025-01-20 00:00:00'
+                    start: '2025-01-20T05:00:00Z'
+                    end: '2025-01-21T05:00:00Z'
+                    name: Martin Luther King Jr. Day
+                    type: public
+                  - date: '2025-02-14 00:00:00'
+                    start: '2025-02-14T05:00:00Z'
+                    end: '2025-02-15T05:00:00Z'
+                    name: Valentine's Day
+                    type: observance
+                  - date: '2025-02-17 00:00:00'
+                    start: '2025-02-17T05:00:00Z'
+                    end: '2025-02-18T05:00:00Z'
+                    name: Washington's Birthday
+                    type: public
+                  - date: '2025-03-17 00:00:00'
+                    start: '2025-03-17T04:00:00Z'
+                    end: '2025-03-18T04:00:00Z'
+                    name: St. Patrick's Day
+                    type: observance
+                  - date: '2025-04-15 00:00:00'
+                    start: '2025-04-15T04:00:00Z'
+                    end: '2025-04-16T04:00:00Z'
+                    name: Tax Day
+                    type: observance
+                  - date: '2025-04-20 00:00:00'
+                    start: '2025-04-20T04:00:00Z'
+                    end: '2025-04-21T04:00:00Z'
+                    name: Easter Sunday
+                    type: observance
+                  - date: '2025-04-23 00:00:00'
+                    start: '2025-04-23T04:00:00Z'
+                    end: '2025-04-24T04:00:00Z'
+                    name: Administrative Professionals Day
+                    type: observance
+                  - date: '2025-05-11 00:00:00'
+                    start: '2025-05-11T04:00:00Z'
+                    end: '2025-05-12T04:00:00Z'
+                    name: Mother's Day
+                    type: observance
+                  - date: '2025-05-26 00:00:00'
+                    start: '2025-05-26T04:00:00Z'
+                    end: '2025-05-27T04:00:00Z'
+                    name: Memorial Day
+                    type: public
+                  - date: '2025-06-15 00:00:00'
+                    start: '2025-06-15T04:00:00Z'
+                    end: '2025-06-16T04:00:00Z'
+                    name: Father's Day
+                    type: observance
+                  - date: '2025-06-19 00:00:00'
+                    start: '2025-06-19T04:00:00Z'
+                    end: '2025-06-20T04:00:00Z'
+                    name: Juneteenth
+                    type: public
+                  - date: '2025-07-04 00:00:00'
+                    start: '2025-07-04T04:00:00Z'
+                    end: '2025-07-05T04:00:00Z'
+                    name: Independence Day
+                    type: public
+                  - date: '2025-09-01 00:00:00'
+                    start: '2025-09-01T04:00:00Z'
+                    end: '2025-09-02T04:00:00Z'
+                    name: Labor Day
+                    type: public
+                  - date: '2025-10-13 00:00:00'
+                    start: '2025-10-13T04:00:00Z'
+                    end: '2025-10-14T04:00:00Z'
+                    name: Columbus Day
+                    type: public
+                  - date: '2025-10-31 18:00:00'
+                    start: '2025-10-31T22:00:00Z'
+                    end: '2025-11-01T04:00:00Z'
+                    name: Halloween
+                    type: observance
+                  - date: '2025-11-11 00:00:00'
+                    start: '2025-11-11T05:00:00Z'
+                    end: '2025-11-12T05:00:00Z'
+                    name: Veterans Day
+                    type: public
+                  - date: '2025-11-27 00:00:00'
+                    start: '2025-11-27T05:00:00Z'
+                    end: '2025-11-28T05:00:00Z'
+                    name: Thanksgiving Day
+                    type: public
+                  - date: '2025-11-28 00:00:00'
+                    start: '2025-11-28T05:00:00Z'
+                    end: '2025-11-29T05:00:00Z'
+                    name: Day after Thanksgiving Day
+                    type: observance
+                  - date: '2025-12-24 00:00:00'
+                    start: '2025-12-24T05:00:00Z'
+                    end: '2025-12-25T05:00:00Z'
+                    name: Christmas Eve
+                    type: optional
+                  - date: '2025-12-25 00:00:00'
+                    start: '2025-12-25T05:00:00Z'
+                    end: '2025-12-26T05:00:00Z'
+                    name: Christmas Day
+                    type: public
+                  - date: '2025-12-31 00:00:00'
+                    start: '2025-12-31T05:00:00Z'
+                    end: '2026-01-01T05:00:00Z'
+                    name: New Year's Eve
+                    type: observance
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Calendar
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
+externalDocs:
+  description: APIVerve Documentation
+  url: https://docs.apiverve.com

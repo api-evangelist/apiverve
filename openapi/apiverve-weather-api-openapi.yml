@@ -1,0 +1,538 @@
+openapi: 3.2.0
+info:
+  title: APIVerve Weather API
+  description: One API key, 370+ real-world REST endpoints — weather, geocoding, finance, DNS, validation, text processing and more. Every endpoint returns JSON. Full documentation at https://docs.apiverve.com.
+  termsOfService: https://apiverve.com/terms/
+  contact:
+    name: APIVerve Support
+    email: hello@apiverve.com
+    url: https://apiverve.com/contact
+  license:
+    name: APIVerve Terms of Service
+    url: https://apiverve.com/terms/
+  version: 1.0.0
+  x-logo:
+    url: https://apiverve.com/images/favicon.png
+    altText: APIVerve
+servers:
+- url: https://api.apiverve.com
+security:
+- api_key: []
+tags:
+- name: Weather
+paths:
+  /v1/airquality:
+    get:
+      summary: Air Quality
+      description: Get the air quality data for a city
+      operationId: airquality
+      parameters:
+      - name: city
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The city name for which you want to get the air quality data (e.g., New York)
+        example: San Francisco
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  pm2_5: 16.75
+                  pm10: 18.85
+                  carbonMonoxide: 387.85
+                  ozone: 9
+                  nitrogenDioxide: 38.55
+                  sulfurdioxide: 5.95
+                  usEpaIndex: 2
+                  gbDefraIndex: 2
+                  recommendation: The air quality in San Francisco is good. It is safe to go outside.
+                  city: San Francisco
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Weather
+  /v1/earthquake:
+    get:
+      summary: Worldwide Earthquakes
+      description: Earthquake is a simple tool for getting earthquake data. It returns the earthquake data for the past hour.
+      operationId: earthquake
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  earthquakes_LastUpdated: '2026-02-18T12:00:00.000Z'
+                  earthquakes_LastHour: 9
+                  count24h: 187
+                  largestMagnitude24h: 5.2
+                  avgMagnitude24h: 1.84
+                  earthquakes:
+                  - mag: 3.4
+                    place: 153 km SSW of Channel Islands Beach, California
+                    time: 1765921110756
+                    felt: 1
+                    cdi: 2.2
+                    mmi: 2.538
+                    status: reviewed
+                    tsunami: 0
+                    sig: 178
+                    net: us
+                    types: ',dyfi,nearby-cities,origin,phase-data,scitech-link,shakemap,'
+                    nst: 36
+                    dmin: 0.479
+                    rms: 0.65
+                    gap: 247
+                    magType: ml
+                    type: earthquake
+                    title: M 3.4 - 153 km SSW of Channel Islands Beach, California
+                    coordinates:
+                    - -119.931
+                    - 32.9103
+                  - mag: 2.25
+                    place: 6 km NW of The Geysers, CA
+                    time: 1765921522850
+                    status: automatic
+                    tsunami: 0
+                    sig: 78
+                    net: nc
+                    types: ',focal-mechanism,nearby-cities,origin,phase-data,'
+                    nst: 54
+                    dmin: 0.01126
+                    rms: 0.05
+                    gap: 23
+                    magType: md
+                    type: earthquake
+                    title: M 2.3 - 6 km NW of The Geysers, CA
+                    coordinates:
+                    - -122.792831
+                    - 38.819332
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Weather
+  /v1/marineweather:
+    get:
+      summary: Marine Weather
+      description: Get the marine weather data for a location using latitude and longitude coordinates
+      operationId: marineweather
+      parameters:
+      - name: lat
+        in: query
+        schema:
+          type: number
+        required: true
+        description: The latitude coordinate of the location
+        example: 29.48003
+      - name: lon
+        in: query
+        schema:
+          type: number
+        required: true
+        description: The longitude coordinate of the location
+        example: -37.62424
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  location:
+                    lat: 29.48003
+                    lon: -37.62424
+                  weather:
+                    date: '2026-09-17'
+                    avghumidity: 86
+                    condition: Moderate or heavy rain shower
+                    uv: 5
+                    sunrise: 05:53 AM
+                    sunset: 06:08 PM
+                    moonrise: 12:04 PM
+                    moonset: 10:42 PM
+                    maxtempc: 25.9
+                    maxtempf: 78.6
+                    mintempc: 21.3
+                    mintempf: 70.3
+                    avgtempc: 24.9
+                    avgtempf: 76.8
+                    maxwindmph: 15.4
+                    maxwindkph: 24.7
+                    totalprecipmm: 14.89
+                    totalprecipin: 0.59
+                    totalsnowcm: 0
+                    avgviskm: 7.4
+                    avgvismiles: 4
+                    moonphase: First Quarter
+                    moonillumination: 42
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Weather
+  /v1/moonrisemoonset:
+    get:
+      summary: Moonrise Moonset
+      description: Get moonrise and moonset times based on the location
+      operationId: moonrisemoonset
+      parameters:
+      - name: lat
+        in: query
+        schema:
+          type: number
+        required: true
+        description: The latitude of the location
+        example: 37.7749
+      - name: lon
+        in: query
+        schema:
+          type: number
+        required: true
+        description: The longitude of the location
+        example: -122.4194
+      - name: date
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The date to get the moonrise and moonset times for (MM-dd-yyyy)
+        example: 01-16-2026
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  coordinates:
+                    latitude: 37.7749
+                    longitude: -122.4194
+                  phase: Waning Crescent
+                  moonrise: '2025-12-16T12:24:41.532Z'
+                  moonset: '2025-12-16T22:22:04.027Z'
+                  moonAlwaysUp: false
+                  moonAlwaysDown: false
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Weather
+  /v1/solarpotential:
+    get:
+      summary: Solar Potential
+      description: Solar Potential is a simple tool for getting the estimated annual energy production of a PV system. It returns the estimated annual energy production of a PV system.
+      operationId: solarpotential
+      parameters:
+      - name: lat
+        in: query
+        schema:
+          type: number
+        required: true
+        description: The latitude of the location
+        example: 37.7749
+      - name: lon
+        in: query
+        schema:
+          type: number
+        required: true
+        description: The longitude of the location
+        example: -122.4194
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  coordinates:
+                    latitude: 37.7749
+                    longitude: -122.4194
+                  usableHours:
+                    avgDailyUsableSunlightHours: 12.19
+                    yearlyUsableSunlightHoursRaw: 4448
+                    adjustedYearlyUsableSunlightHours: 1557
+                  bestDirection: South
+                  cloudFactor: 0.35
+                  disclaimer: This is a rough estimate based on coordinates and general climate patterns. For precise solar potential, consider local weather patterns, obstructions, and professional assessments.
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Weather
+  /v1/sunrisesunset:
+    get:
+      summary: Sunrise Sunset
+      description: Get the sunrise and sunset times for a given location
+      operationId: sunrisesunset
+      parameters:
+      - name: lat
+        in: query
+        schema:
+          type: number
+        required: true
+        description: The latitude of the location
+        example: 36.72016
+      - name: lon
+        in: query
+        schema:
+          type: number
+        required: true
+        description: The longitude of the location
+        example: -4.42034
+      - name: date
+        in: query
+        schema:
+          type: string
+        required: false
+        description: 'The date for which you want to get the sunrise and sunset times (e.g., MM-DD-YYYY : 01-01-2022)'
+        example: 01-16-2026
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  solarNoon: '2025-12-16T12:14:40.51Z'
+                  sunrise: '2025-12-16T07:24:56.165Z'
+                  sunset: '2025-12-16T17:04:24.854Z'
+                  sunriseEnd: '2025-12-16T07:27:58.828Z'
+                  sunsetStart: '2025-12-16T17:01:22.192Z'
+                  dawn: '2025-12-16T06:56:02.774Z'
+                  dusk: '2025-12-16T17:33:18.245Z'
+                  nauticalDawn: '2025-12-16T06:23:38.134Z'
+                  nauticalDusk: '2025-12-16T18:05:42.886Z'
+                  nightEnd: '2025-12-16T05:52:07.048Z'
+                  night: '2025-12-16T18:37:13.971Z'
+                  goldenHourEnd: '2025-12-16T08:05:08.406Z'
+                  goldenHour: '2025-12-16T16:24:12.613Z'
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Weather
+  /v1/weatherforecast:
+    get:
+      summary: Weather
+      description: Get the current weather for a given location
+      operationId: weatherforecast
+      parameters:
+      - name: city
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The city for which you want to get the current weather (e.g., San Francisco)
+        example: San Francisco
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  tempC: 13.3
+                  tempF: 55.9
+                  windMph: 4.7
+                  windKph: 7.6
+                  windDegree: 273
+                  windDir: W
+                  pressureMb: 1022
+                  pressureIn: 30.17
+                  precipMm: 0
+                  precipIn: 0
+                  feelslikeC: 13
+                  feelslikeF: 55.3
+                  visKm: 16
+                  visMiles: 9
+                  gustMph: 7.2
+                  gustKph: 11.6
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Weather
+  /v1/weatherseasons:
+    get:
+      summary: Weather Seasons
+      description: Get the dates of the solstice and equinox for a given year
+      operationId: weatherseasons
+      parameters:
+      - name: year
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: The year to get the dates of the solstice and equinox
+        example: 2024
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  year: 2024
+                  timezone: UTC
+                  march_equinox: '2024-03-20 03:06:24'
+                  june_solstice: '2024-06-20 20:50:58'
+                  september_equinox: '2024-09-22 12:43:55'
+                  december_solstice: '2024-12-21 09:20:18'
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Weather
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
+externalDocs:
+  description: APIVerve Documentation
+  url: https://docs.apiverve.com

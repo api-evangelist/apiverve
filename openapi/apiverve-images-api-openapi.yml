@@ -1,0 +1,609 @@
+openapi: 3.2.0
+info:
+  title: APIVerve Images API
+  description: One API key, 370+ real-world REST endpoints — weather, geocoding, finance, DNS, validation, text processing and more. Every endpoint returns JSON. Full documentation at https://docs.apiverve.com.
+  termsOfService: https://apiverve.com/terms/
+  contact:
+    name: APIVerve Support
+    email: hello@apiverve.com
+    url: https://apiverve.com/contact
+  license:
+    name: APIVerve Terms of Service
+    url: https://apiverve.com/terms/
+  version: 1.0.0
+  x-logo:
+    url: https://apiverve.com/images/favicon.png
+    altText: APIVerve
+servers:
+- url: https://api.apiverve.com
+security:
+- api_key: []
+tags:
+- name: Images
+paths:
+  /v1/facedetect:
+    post:
+      summary: Face Detector
+      description: Detect all faces in an uploaded image and return their bounding box coordinates
+      operationId: facedetect
+      parameters:
+      - name: confidence
+        in: query
+        schema:
+          type: number
+        required: false
+        description: Minimum confidence threshold for face detection (0.1 to 1.0)
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  faces:
+                  - x: 142
+                    y: 85
+                    width: 98
+                    height: 112
+                    confidence: 0.9847
+                  - x: 312
+                    y: 92
+                    width: 87
+                    height: 103
+                    confidence: 0.9623
+                  - x: 478
+                    y: 78
+                    width: 95
+                    height: 118
+                    confidence: 0.9412
+                  faceCount: 3
+                  hasFaces: true
+                  imageWidth: 640
+                  imageHeight: 480
+                  averageConfidence: 0.9627
+                  imageCoverage: 10.23
+                code: 200
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: false
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  description: 'File to upload (accepted: .jpg, .jpeg, .png, .gif, .webp, max 10MB)'
+                  x-acceptedTypes:
+                  - .jpg
+                  - .jpeg
+                  - .png
+                  - .gif
+                  - .webp
+                  x-maxSizeMB: 10
+      tags:
+      - Images
+  /v1/heicconverter:
+    post:
+      summary: HEIC Converter
+      description: Convert a HEIC/HEIF image to another format. Upload an image file to convert.
+      operationId: heicconverter
+      parameters:
+      - name: outputFormat
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Target format
+        example: png
+      - name: quality
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Output quality (applies to jpg/webp)
+        example: 90
+      - name: maxWidth
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Maximum width in pixels (maintains aspect ratio)
+        example: 1920
+      - name: maxHeight
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Maximum height in pixels (maintains aspect ratio)
+        example: 1080
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  id: f8e7d6c5-4321-09ab-fedc-ba0987654321
+                  inputFormat: heic
+                  outputFormat: jpg
+                  inputSize: 3145728
+                  outputSize: 892456
+                  mimeType: image/jpeg
+                  expires: 1707350400000
+                  downloadURL: https://storage.googleapis.com/apiverve/heicconverter/f8e7d6c5.jpg
+                code: 200
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  description: 'File to upload (accepted: .heic, .heif, max 10MB)'
+                  x-acceptedTypes:
+                  - .heic
+                  - .heif
+                  x-maxSizeMB: 10
+              required:
+              - image
+      tags:
+      - Images
+  /v1/imageconverter:
+    post:
+      summary: Image Converter
+      description: Convert an image from one format to another. Upload an image file to convert.
+      operationId: imageconverter
+      parameters:
+      - name: outputFormat
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Target format
+        example: png
+      - name: quality
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Output quality (applies to jpg/webp)
+        example: 90
+      - name: maxWidth
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Maximum width in pixels (maintains aspect ratio)
+        example: 1920
+      - name: maxHeight
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Maximum height in pixels (maintains aspect ratio)
+        example: 1080
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  id: a1b2c3d4-5678-90ab-cdef-1234567890ab
+                  inputFormat: heic
+                  outputFormat: png
+                  inputSize: 2456789
+                  outputSize: 1834567
+                  mimeType: image/png
+                  expires: 1707350400000
+                  downloadURL: https://storage.googleapis.com/apiverve/imageconverter/a1b2c3d4.png
+                code: 200
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  description: 'File to upload (accepted: .heic, .heif, .avif, .webp, .png, .jpg, .jpeg, .gif, .tiff, .tif, .bmp, .pdf, .svg, max 10MB)'
+                  x-acceptedTypes:
+                  - .heic
+                  - .heif
+                  - .avif
+                  - .webp
+                  - .png
+                  - .jpg
+                  - .jpeg
+                  - .gif
+                  - .tiff
+                  - .tif
+                  - .bmp
+                  - .pdf
+                  - .svg
+                  x-maxSizeMB: 10
+              required:
+              - image
+      tags:
+      - Images
+  /v1/nsfwimagedetector:
+    post:
+      summary: NSFW Image Detector
+      description: NSFW Detector is a simple tool for detecting NSFW content. It returns a boolean
+      operationId: nsfwimagedetector
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  isNSFW: false
+                  isSafe: true
+                  confidence: 0.987
+                  category: neutral
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  description: 'File to upload (accepted: .jpg, .jpeg, .png, .gif, max 10MB)'
+                  x-acceptedTypes:
+                  - .jpg
+                  - .jpeg
+                  - .png
+                  - .gif
+                  x-maxSizeMB: 10
+              required:
+              - image
+      tags:
+      - Images
+  /v1/qrcodereader:
+    post:
+      summary: QR Code Reader
+      description: QR Code Reader is a powerful tool that extracts text and data from QR codes in images. Simply provide an image URL or upload an image containing a QR code to decode its contents.
+      operationId: qrcodereader
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  text: '''Twas brillig'
+                  location:
+                    topLeft:
+                      x: 9.927694968294492
+                      y: 9.927694968294492
+                    topRight:
+                      x: 215.24999999999997
+                      y: 9.749999999999996
+                    bottomLeft:
+                      x: 9.749999999999996
+                      y: 215.24999999999997
+                    bottomRight:
+                      x: 216.14779062994094
+                      y: 216.14779062994094
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  description: 'File to upload (accepted: .jpg, .jpeg, .png, .gif, max 10MB)'
+                  x-acceptedTypes:
+                  - .jpg
+                  - .jpeg
+                  - .png
+                  - .gif
+                  x-maxSizeMB: 10
+              required:
+              - image
+      tags:
+      - Images
+  /v1/svgconverter:
+    post:
+      summary: SVG Converter
+      description: Convert an SVG vector image to a raster format. Upload an SVG file to convert.
+      operationId: svgconverter
+      parameters:
+      - name: outputFormat
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Target format
+        example: png
+      - name: quality
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Output quality (applies to jpg/webp)
+        example: 90
+      - name: maxWidth
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Maximum width in pixels (maintains aspect ratio)
+        example: 1920
+      - name: maxHeight
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Maximum height in pixels (maintains aspect ratio)
+        example: 1080
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  id: a1b2c3d4-5678-90ab-cdef-1234567890ab
+                  inputFormat: svg
+                  outputFormat: png
+                  inputSize: 12456
+                  outputSize: 89012
+                  mimeType: image/png
+                  expires: 1707350400000
+                  downloadURL: https://storage.googleapis.com/apiverve/svgconverter/a1b2c3d4.png
+                code: 200
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  description: 'File to upload (accepted: .svg, max 10MB)'
+                  x-acceptedTypes:
+                  - .svg
+                  x-maxSizeMB: 10
+              required:
+              - image
+      tags:
+      - Images
+  /v1/webpconverter:
+    post:
+      summary: WebP Converter
+      description: Convert a WebP image to another format, or convert other formats to WebP. Upload an image file to convert.
+      operationId: webpconverter
+      parameters:
+      - name: outputFormat
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Target format
+        example: png
+      - name: quality
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Output quality (applies to jpg/webp)
+        example: 90
+      - name: maxWidth
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Maximum width in pixels (maintains aspect ratio)
+        example: 1920
+      - name: maxHeight
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Maximum height in pixels (maintains aspect ratio)
+        example: 1080
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  id: c9d8e7f6-5432-10ba-dcfe-210987654321
+                  inputFormat: webp
+                  outputFormat: png
+                  inputSize: 156789
+                  outputSize: 234567
+                  mimeType: image/png
+                  expires: 1707350400000
+                  downloadURL: https://storage.googleapis.com/apiverve/webpconverter/c9d8e7f6.png
+                code: 200
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  description: 'File to upload (accepted: .webp, .png, .jpg, .jpeg, .gif, max 10MB)'
+                  x-acceptedTypes:
+                  - .webp
+                  - .png
+                  - .jpg
+                  - .jpeg
+                  - .gif
+                  x-maxSizeMB: 10
+              required:
+              - image
+      tags:
+      - Images
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
+externalDocs:
+  description: APIVerve Documentation
+  url: https://docs.apiverve.com

@@ -1,0 +1,2113 @@
+openapi: 3.2.0
+info:
+  title: APIVerve Data Conversion API
+  description: One API key, 370+ real-world REST endpoints — weather, geocoding, finance, DNS, validation, text processing and more. Every endpoint returns JSON. Full documentation at https://docs.apiverve.com.
+  termsOfService: https://apiverve.com/terms/
+  contact:
+    name: APIVerve Support
+    email: hello@apiverve.com
+    url: https://apiverve.com/contact
+  license:
+    name: APIVerve Terms of Service
+    url: https://apiverve.com/terms/
+  version: 1.0.0
+  x-logo:
+    url: https://apiverve.com/images/favicon.png
+    altText: APIVerve
+servers:
+- url: https://api.apiverve.com
+security:
+- api_key: []
+tags:
+- name: Data Conversion
+paths:
+  /v1/ascii85encoder:
+    get:
+      summary: ASCII85 Encoder
+      description: Encode text using ASCII85 (Base85) encoding
+      operationId: ascii85encoder
+      parameters:
+      - name: text
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Text to encode
+        example: Hello World
+      - name: action
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Action to perform
+        example: encode
+      - name: format
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Output format
+        example: standard
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  original_text: Hello World
+                  encoded: 87cURD]i,"Ebo7
+                  format: standard
+                  original_length: 11
+                  encoded_length: 14
+                  compression_ratio: 127.27%
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Conversion
+  /v1/base64:
+    get:
+      summary: Base64 Encoder/Decoder
+      description: Encode text to Base64 format
+      operationId: base64
+      parameters:
+      - name: text
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The text to encode
+        example: Hello World
+      - name: action
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The action to perform
+        example: encode
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  action: encode
+                  original: Hello World
+                  encoded: SGVsbG8gV29ybGQ=
+                  length: 16
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Conversion
+  /v1/colorconverter:
+    get:
+      summary: Color Converter
+      description: Convert a color to a different format
+      operationId: colorconverter
+      parameters:
+      - name: hex
+        in: query
+        schema:
+          type: string
+        required: true
+        description: 'The color in hexadecimal format (e.g., FF0000). Make sure you ommit the #'
+        example: FF0000
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  hex: '#FF0000'
+                  rgb: 255, 0, 0
+                  hsl: 0, 100, 50
+                  cmyk: 0, 100, 100, 0
+                  ansi16: 91
+                  name: red
+                  channels:
+                    rgbChannels: 3
+                    cmykChannels: 4
+                    ansiChannels: 1
+                    hexChannels: 1
+                    hslChannels: 3
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Conversion
+  /v1/csvtojson:
+    post:
+      summary: CSV to JSON Converter
+      description: Convert CSV data to JSON format with custom delimiter support
+      operationId: csvtojson
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  row_count: 2
+                  column_count: 3
+                  columns:
+                  - name
+                  - age
+                  - city
+                  inferredTypes:
+                    name: string
+                    age: integer
+                    city: string
+                  json:
+                  - name: John Doe
+                    age: '30'
+                    city: New York
+                  - name: Jane Smith
+                    age: '25'
+                    city: Los Angeles
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                csv:
+                  type: string
+                  description: The CSV data to convert to JSON
+                delimiter:
+                  type: string
+                  description: The delimiter used in the CSV
+                has_header:
+                  type: boolean
+                  description: 'Whether the first row contains column headers (default: true)'
+              required:
+              - csv
+      tags:
+      - Data Conversion
+  /v1/filesizeformatter:
+    get:
+      summary: File Size Formatter
+      description: Convert bytes to human-readable file size
+      operationId: filesizeformatter
+      parameters:
+      - name: bytes
+        in: query
+        schema:
+          type: integer
+        required: true
+        description: Number of bytes to format
+        example: 1073741824
+      - name: unit
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Specific target unit (optional, auto-selects best unit if not specified)
+        example: GB
+      - name: precision
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Decimal places (0-10)
+        example: 2
+      - name: standard
+        in: query
+        schema:
+          type: string
+        required: false
+        description: 'Standard to use: binary (1024) or decimal (1000)'
+        example: binary
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  bytes: 1073741824
+                  formatted: 1 GiB
+                  value: 1
+                  unit: GiB
+                  standard: binary
+                  precision: 2
+                  conversions:
+                    B: 1073741824
+                    KiB: 1048576
+                    MiB: 1024
+                    GiB: 1
+                    TiB: 0
+                    PiB: 0
+                    EiB: 0
+                    ZiB: 0
+                    YiB: 0
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Conversion
+  /v1/htmlentities:
+    post:
+      summary: HTML Entities Encoder/Decoder
+      description: Encode HTML special characters to entities for XSS prevention
+      operationId: htmlentities
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  action: encode
+                  original: <div class="test">Hello & World</div>
+                  encoded: '&lt;div class=&quot;test&quot;&gt;Hello &amp; World&lt;&#x2F;div&gt;'
+                  entities_replaced:
+                  - <
+                  - '"'
+                  - '>'
+                  - '&'
+                  - /
+                  count: 8
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                html:
+                  type: string
+                  description: The HTML content to encode
+                action:
+                  type: string
+                  description: The action to perform
+              required:
+              - html
+      tags:
+      - Data Conversion
+  /v1/htmltoimage:
+    post:
+      summary: HTML to Image
+      description: Convert HTML code to image with customizable dimensions
+      operationId: htmltoimage
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  width: 800
+                  height: 600
+                  format: png
+                  imageName: bf3d3d67-bc6e-477b-a916-560b895f8091.png
+                  expires: 1789676439207
+                  downloadURL: https://storage.googleapis.com/apiverve/APIData/htmltoimage/bf3d3d67-bc6e-477b-a916-560b895f8091.png?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1789676439&Signature=Uw7imp8TVuygEgWhdLAmK8%2Byk0NoZmtdLEX9MrDHjlWDYyB28y7zbCxVuD%2BF%2F6Iij5zi%2FhvDoJnuhNT6a2Yl85gw5nWGt750Ai4gup46dQQt0vrsUpD99IPTfTh21DWd4WqE7VCWlIlou7WwNUn620WgWM3ScGi13dCB81Qyb4WuxrdcNal8WrUYX9nZ12h%2B7BZs65Tyw0V4StbvsYxXKqySkF4aQ8J1QbdhUny9WyptE3qNT%2FyM4m2%2F%2FJAOq32bQsSWj8%2BycWEhtifIgpJe4LTBBeqtHBePrIQSrYNRdOwhjaTzj%2BShSeox5wPztiaoRyi1DGIx4FIIstS2dAdQ6Q%3D%3D
+                  htmlLength: 197
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                html:
+                  type: string
+                  description: HTML code to convert
+                width:
+                  type: integer
+                  description: Image width in pixels
+                height:
+                  type: integer
+                  description: Image height in pixels
+                format:
+                  type: string
+                  description: Output image format
+              required:
+              - html
+      tags:
+      - Data Conversion
+  /v1/jsontocsv:
+    post:
+      summary: JSON to CSV Converter
+      description: Convert JSON array data to CSV format
+      operationId: jsontocsv
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  row_count: 2
+                  column_count: 3
+                  columns:
+                  - name
+                  - age
+                  - city
+                  csv: 'name,age,city
+
+                    John Doe,30,New York
+
+                    Jane Smith,25,Los Angeles'
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                json:
+                  type: string
+                  description: The JSON array to convert to CSV (must be array of objects)
+                delimiter:
+                  type: string
+                  description: The delimiter to use in the CSV
+                include_header:
+                  type: boolean
+                  description: 'Whether to include column headers in the output (default: true)'
+              required:
+              - json
+      tags:
+      - Data Conversion
+  /v1/jsontojsonp:
+    post:
+      summary: JSON to JSONP
+      description: JSON to JSONP is a simple tool for converting JSON data into JSONP format. It returns the converted JSONP data.
+      operationId: jsontojsonp
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  callback: callbackFunction
+                  jsonp: callbackFunction({"menu":{"id":"file","value":"File","popup":false}});
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                json:
+                  type: string
+                  description: The JSON data you want converted into JSONP format. Send it as an object or as a JSON-encoded string.
+                callback:
+                  type: string
+                  description: The callback function name to wrap the JSON data. Must be a JavaScript identifier, optionally dotted (e.g. myCallback or window.myCallback).
+              required:
+              - json
+      tags:
+      - Data Conversion
+  /v1/jwtdecoder:
+    post:
+      summary: JWT Decoder
+      description: Decode JWT token without verification
+      operationId: jwtdecoder
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  header:
+                    alg: HS256
+                    typ: JWT
+                  payload:
+                    sub: '1234567890'
+                    name: John Doe
+                    iat: 1516239022
+                  signature: SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+                  isExpired: false
+                  expiresAt: null
+                  issuedAt: '2018-01-18T01:30:22.000Z'
+                  tokenAge: 2557 days
+                  algorithm: HS256
+                  expiresIn: null
+                  notYetValid: false
+                  securityAnalysis:
+                    isUnsecured: false
+                    hasExpiration: false
+                    isLongLived: false
+                    issues:
+                    - Token has no expiration (exp) claim — it never expires
+                  warning: This API only decodes JWT tokens. It does NOT verify signatures. Do not use for security validation.
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                  description: JWT token to decode
+              required:
+              - token
+      tags:
+      - Data Conversion
+  /v1/markdowntable:
+    post:
+      summary: Markdown Table Generator
+      description: Convert data to a formatted markdown table
+      operationId: markdowntable
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  markdown: '| Name | Age | City |
+
+                    | --- | --- | --- |
+
+                    | John Doe | 30 | New York |
+
+                    | Jane Smith | 25 | Los Angeles |
+
+                    | Bob Johnson | 35 | Chicago |'
+                  columnCount: 3
+                  rowCount: 3
+                  cellCount: 12
+                  headers:
+                  - Name
+                  - Age
+                  - City
+                  alignments:
+                  - left
+                  - left
+                  - left
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                headers:
+                  type: string
+                  description: Array of column header names
+                rows:
+                  type: string
+                  description: Array of row arrays containing cell values
+                alignment:
+                  type: string
+                  description: 'Column alignment: left, center, right, or array of alignments per column'
+              required:
+              - headers
+              - rows
+      tags:
+      - Data Conversion
+  /v1/markdowntohtml:
+    post:
+      summary: Markdown to HTML
+      description: Convert markdown text to HTML
+      operationId: markdowntohtml
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  html: '<h1>Hello World</h1>
+
+                    <p>This is a <strong>bold</strong> statement and this is <em>italic</em>.</p>
+
+                    <h2>Features</h2>
+
+                    <ul>
+
+                    <li>Easy to use</li>
+
+                    <li>Fast conversion</li>
+
+                    <li>Supports common markdown syntax</li>
+
+                    </ul>
+
+                    <p><a href="https://example.com">Link to example</a></p>
+
+                    '
+                  markdownLength: 185
+                  htmlLength: 272
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                markdown:
+                  type: string
+                  description: Markdown text to convert (max 100,000 characters)
+              required:
+              - markdown
+      tags:
+      - Data Conversion
+  /v1/markdowntoimage:
+    post:
+      summary: Markdown to Image
+      description: Convert markdown text to image file
+      operationId: markdowntoimage
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  imageName: 31e86a48-125a-464a-8ea5-8b342226944f.png
+                  format: .png
+                  downloadURL: https://storage.googleapis.com/apiverve/APIData/markdowntoimage/31e86a48-125a-464a-8ea5-8b342226944f.png?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1766010365&Signature=PXD9Zct7HearzSJvxZcNlnlnPdga8qH1Mln4I7tTDmrzSolUdwDxZx3Xdsy6LVu8B%2F1es7keTFKcnNnBm2Er9Kqbmg5j9BeTX3lQnJsIVh5gAlsEheT%2B%2FpWjWnjRWc%2FdtqurbUR%2BcSYMELqufs%2FPcrK62OAl0lmf6zARA2KtUP8qop%2FORbG81h%2BkFIoy3VaaRVXiceewF6HQzBz%2FFBhmc1oOAiEPiQZl7PQRu%2Fz4oX%2BtMbnWPUoUmIXVVfDmMw4XsyWlckQo%2BfZ34B79aOaBznpuJ0Z%2BlN1upsHPvBO33WRdQHECEUMJmGB7KgRZU%2Bjqco4LSEOO9kfkLlMxYyl3pQ%3D%3D
+                  expires: 1766010365188
+                  markdownLength: 282
+                  htmlLength: 376
+                  dimensions:
+                    width: 1280
+                    height: 800
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                markdown:
+                  type: string
+                  description: Markdown text to convert
+                width:
+                  type: integer
+                  description: Image width in pixels
+                height:
+                  type: integer
+                  description: Image height in pixels
+                format:
+                  type: string
+                  description: Output image format
+              required:
+              - markdown
+      tags:
+      - Data Conversion
+  /v1/markdowntopdf:
+    post:
+      summary: Markdown to PDF
+      description: Convert markdown text to PDF document
+      operationId: markdowntopdf
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  marginLeft: 0.4in
+                  marginRight: 0.4in
+                  marginTop: 0.4in
+                  marginBottom: 0.4in
+                  landscape: false
+                  pdfName: b3ce14f5-1c44-4d2d-8a10-77430b679dae.pdf
+                  expires: 1766096769188
+                  downloadURL: https://storage.googleapis.com/apiverve-helpers.appspot.com/htmltopdf/b3ce14f5-1c44-4d2d-8a10-77430b679dae.pdf?GoogleAccessId=1089020767582-compute%40developer.gserviceaccount.com&Expires=1766096769&Signature=q%2Fe4YUCniLQIRCPSO82LhTJ%2BSfqZSPNq8nSblE0LW6%2B546R9kXIowaQD7k%2BOhFzQi9q3nb8QcUNtZijHpEkIIcy6OOayWInWMzMF8ooXQ7Gch4YJL6iAURSIFZpfEw3XqyYuWXP1dw372kmiYVfTBgaRed0apeRwjeF8bGciLm%2FOsYKcsRrYlJtuyFwqeNw4G2aQKgLkxUw%2FP6L5Av%2BZssRkRqIWvQ6eNmwpUJZ48hJZYY6%2BRFhTYwnN4dEPWYSd9TSiJf6C%2BEWReWQJlgBy7BUK0H%2B9pyn4872PV1N3eI9VHhg89g4dimbieOQUF%2BhG%2Bkhcd5z0inaMml7DBdbF4g%3D%3D
+                  markdownLength: 278
+                  htmlLength: 380
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                markdown:
+                  type: string
+                  description: Markdown text to convert (max 100,000 characters)
+              required:
+              - markdown
+      tags:
+      - Data Conversion
+  /v1/math:
+    post:
+      summary: Math Calculator
+      description: 'Perform basic math operations: add, subtract, multiply, divide, power, modulo'
+      operationId: math
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  result: 15
+                  operation: add
+                  input:
+                    a: 10
+                    b: 5
+                  steps:
+                  - 10 + 5 = 15
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                operation:
+                  type: string
+                  description: Operation to perform
+                a:
+                  type: number
+                  description: First number
+                b:
+                  type: number
+                  description: Second number
+              required:
+              - operation
+              - a
+              - b
+      tags:
+      - Data Conversion
+  /v1/meetingtimeconverter:
+    get:
+      summary: Meeting Time Converter
+      description: Convert meeting time between timezones
+      operationId: meetingtimeconverter
+      parameters:
+      - name: time
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Time in HH:MM format (24-hour)
+        example: '14:30'
+      - name: fromTimezone
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Source IANA timezone identifier
+        example: America/New_York
+      - name: toTimezone
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Target IANA timezone identifier
+        example: Europe/London
+      - name: date
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Optional date in YYYY-MM-DD format (defaults to today)
+        example: '2024-03-15'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  originalTime: '14:30'
+                  convertedTime: '19:30:00'
+                  date: '2026-09-18'
+                  fromTimezone: America/New_York
+                  toTimezone: Europe/London
+                  timeDifference: 5
+                  fromOffset: -04:00
+                  toOffset: +01:00
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Conversion
+  /v1/numberbaseconverter:
+    get:
+      summary: Number Base Converter
+      description: Convert a number from one base to another
+      operationId: numberbaseconverter
+      parameters:
+      - name: value
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The number to convert
+        example: '255'
+      - name: from
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: 'Source base (default: 10)'
+        example: 10
+      - name: to
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Target base (returns all common bases if not specified)
+        example: 10
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  input_value: FF
+                  input_base: 16
+                  input_base_name: hexadecimal
+                  decimal_value: 255
+                  decimal_value_exact: '255'
+                  output_value: '255'
+                  output_base: 10
+                  output_base_name: decimal
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Conversion
+  /v1/numbertowords:
+    get:
+      summary: Number to Words
+      description: Convert a number to words, including each word and the orginal equivalent
+      operationId: numbertowords
+      parameters:
+      - name: number
+        in: query
+        schema:
+          type: number
+        required: true
+        description: The number to convert to words
+        example: 975.07
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  number: 975.07
+                  words: nine hundred seventy-five point zero seven
+                  ordinal: nine hundred seventy-fifth point zero seven
+                  numberOfDigits_numeric: 3
+                  numberOfDigits_words: three
+                  eachNumber:
+                  - nine
+                  - seven
+                  - five
+                  afterDecimal:
+                    number: '07'
+                    words:
+                    - zero
+                    - seven
+                    numberOfDigits_numeric: 2
+                    numberOfDigits_words: two
+                  locale: en-US
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Conversion
+  /v1/placeholdertext:
+    get:
+      summary: Placeholder Text Generator
+      description: Generate placeholder text in various styles
+      operationId: placeholdertext
+      parameters:
+      - name: style
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The style of placeholder text
+        example: tech
+      - name: paragraphs
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of paragraphs to generate
+        example: 3
+      - name: sentences
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of sentences per paragraph
+        example: 5
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  style: tech
+                  paragraphs:
+                  - Docker latency interface debugging API git protocol module REST latency. DevOps API optimization javascript variable cache query blockchain. Scalability typescript API throughput typescript package refactor microservice blockchain docker compiler typescript. Algorithm query throughput scalability scalability microservice. DevOps algorithm XML throughput framework optimization API deployment docker deployment query sprint refactor stack.
+                  - Neural deployment hardware bandwidth protocol stack variable algorithm iteration throughput algorithm kubernetes repository. Frontend server stack javascript CI/CD container module latency load balancer compiler cache DevOps. Server DevOps kubernetes bandwidth REST agile neural module repository. Database protocol stack bandwidth scalability optimization load balancer backend. Debugging DevOps webhook REST stack protocol hardware blockchain docker server agile microservice.
+                  - Backend javascript throughput docker javascript stack debugging algorithm microservice cloud REST compiler DevOps runtime middleware. Deployment load balancer javascript query SDK bandwidth refactor typescript runtime throughput stack virtualization algorithm server. Backend cloud sprint latency repository microservice API hardware virtualization cache git. Middleware sprint module compiler query encryption debugging backend docker throughput microservice. Compiler variable latency iteration compiler frontend package agile microservice latency throughput API compiler XML DevOps.
+                  paragraph_count: 3
+                  sentences_per_paragraph: 5
+                  total_sentences: 15
+                  total_words: 173
+                  total_characters: 1503
+                  full_text: 'Docker latency interface debugging API git protocol module REST latency. DevOps API optimization javascript variable cache query blockchain. Scalability typescript API throughput typescript package refactor microservice blockchain docker compiler typescript. Algorithm query throughput scalability scalability microservice. DevOps algorithm XML throughput framework optimization API deployment docker deployment query sprint refactor stack.
+
+
+                    Neural deployment hardware bandwidth protocol stack variable algorithm iteration throughput algorithm kubernetes repository. Frontend server stack javascript CI/CD container module latency load balancer compiler cache DevOps. Server DevOps kubernetes bandwidth REST agile neural module repository. Database protocol stack bandwidth scalability optimization load balancer backend. Debugging DevOps webhook REST stack protocol hardware blockchain docker server agile microservice.
+
+
+                    Backend javascript throughput docker javascript stack debugging algorithm microservice cloud REST compiler DevOps runtime middleware. Deployment load balancer javascript query SDK bandwidth refactor typescript runtime throughput stack virtualization algorithm server. Backend cloud sprint latency repository microservice API hardware virtualization cache git. Middleware sprint module compiler query encryption debugging backend docker throughput microservice. Compiler variable latency iteration compiler frontend package agile microservice latency throughput API compiler XML DevOps.'
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Conversion
+  /v1/punycode:
+    get:
+      summary: Punycode Converter
+      description: Encode Unicode text to Punycode (ASCII-compatible encoding)
+      operationId: punycode
+      parameters:
+      - name: text
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Unicode text or domain to encode (max 1000 characters)
+        example: münchen.de
+      - name: mode
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Conversion mode
+        example: encode
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  input: münchen.de
+                  output: xn--mnchen-3ya.de
+                  mode: encode
+                  isIDN: true
+                  isDomain: true
+                  scripts:
+                  - Latin
+                  mixedScript: false
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Conversion
+  /v1/querystringbuilder:
+    post:
+      summary: Query String Builder
+      description: Build URL query string from JSON parameters
+      operationId: querystringbuilder
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  queryString: name=John%20Doe&age=30&city=New%20York&interests=coding&interests=music&interests=travel
+                  fullURL: ?name=John%20Doe&age=30&city=New%20York&interests=coding&interests=music&interests=travel
+                  encoded: true
+                  paramCount: 4
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                params:
+                  type: string
+                  description: JSON object of parameters
+                encode:
+                  type: boolean
+                  description: URL encode parameter values
+              required:
+              - params
+      tags:
+      - Data Conversion
+  /v1/relativetimeformatter:
+    get:
+      summary: Relative Time Formatter
+      description: Convert Unix timestamp to relative time format
+      operationId: relativetimeformatter
+      parameters:
+      - name: timestamp
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Unix timestamp in seconds or milliseconds
+        example: '1609459200'
+      - name: reference
+        in: query
+        schema:
+          type: string
+        required: false
+        description: 'Reference time to compare against (default: current time)'
+        example: '2024-06-01T00:00:00Z'
+      - name: style
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Output style
+        example: short
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  target_date: '2021-01-01T00:00:00Z'
+                  reference_date: '2025-12-16T22:28:24.459Z'
+                  relative_time: 4 years ago
+                  is_past: true
+                  is_future: false
+                  difference_ms: -156464904459
+                  primary_unit: year
+                  primary_value: 4
+                  all_units:
+                    years: 4
+                    months: 59
+                    weeks: 258
+                    days: 1810
+                    hours: 43462
+                    minutes: 2607748
+                    seconds: 156464904
+                    milliseconds: 156464904459
+                  style: short
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Conversion
+  /v1/romanconverter:
+    get:
+      summary: Roman Numeral Converter
+      description: Convert a number to Roman numerals
+      operationId: romanconverter
+      parameters:
+      - name: number
+        in: query
+        schema:
+          type: integer
+        required: true
+        description: The number to convert to Roman numerals
+        example: 2024
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  number: 2024
+                  roman: MMXXIV
+                  breakdown:
+                    M: 2
+                    X: 2
+                    IV: 1
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Conversion
+  /v1/texttocolor:
+    get:
+      summary: Text to Color
+      description: Generate a color from text
+      operationId: texttocolor
+      parameters:
+      - name: color
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The text to convert the color from
+        example: turquoise
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  color: turquoise
+                  hex: '#66c8b8'
+                  rgb: 102, 200, 184
+                  hsl: 170, 47, 59
+                  cmyk: 49, 0, 8, 22
+                  ansi16: 96
+                  channels:
+                    rgbChannels: 3
+                    cmykChannels: 4
+                    ansiChannels: 1
+                    hexChannels: 1
+                    hslChannels: 3
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Conversion
+  /v1/unicodeescape:
+    post:
+      summary: Unicode Escape/Unescape
+      description: Convert characters to Unicode escape sequences (\uXXXX format)
+      operationId: unicodeescape
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  action: escape
+                  original: Hello World
+                  escaped: \u0048\u0065\u006C\u006C\u006F\u0020\u0057\u006F\u0072\u006C\u0064
+                  character_count: 11
+                  unicode_points:
+                  - char: H
+                    unicode: \u0048
+                    codepoint: U+0048
+                  - char: e
+                    unicode: \u0065
+                    codepoint: U+0065
+                  - char: l
+                    unicode: \u006C
+                    codepoint: U+006C
+                  - char: l
+                    unicode: \u006C
+                    codepoint: U+006C
+                  - char: o
+                    unicode: \u006F
+                    codepoint: U+006F
+                  - char: ' '
+                    unicode: \u0020
+                    codepoint: U+0020
+                  - char: W
+                    unicode: \u0057
+                    codepoint: U+0057
+                  - char: o
+                    unicode: \u006F
+                    codepoint: U+006F
+                  - char: r
+                    unicode: \u0072
+                    codepoint: U+0072
+                  - char: l
+                    unicode: \u006C
+                    codepoint: U+006C
+                  - char: d
+                    unicode: \u0064
+                    codepoint: U+0064
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to escape
+                action:
+                  type: string
+                  description: The action to perform
+              required:
+              - text
+      tags:
+      - Data Conversion
+  /v1/unitconverter:
+    get:
+      summary: Unit Converter
+      description: Convert units from one to another
+      operationId: unitconverter
+      parameters:
+      - name: value
+        in: query
+        schema:
+          type: number
+        required: true
+        description: The value to convert
+        example: 100
+      - name: from
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The unit to convert from
+        example: lb
+      - name: to
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The unit to convert to
+        example: kg
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  result:
+                    result: 45.36
+                    from: 100 lb
+                    to: kg
+                  unitDefinitions:
+                    from:
+                      abbr: lb
+                      measure: mass
+                      system: imperial
+                      singular: Pound
+                      plural: Pounds
+                    to:
+                      abbr: kg
+                      measure: mass
+                      system: metric
+                      singular: Kilogram
+                      plural: Kilograms
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Conversion
+  /v1/unixtimestamp:
+    get:
+      summary: Unix Timestamp Converter
+      description: Convert Unix timestamp to human-readable date
+      operationId: unixtimestamp
+      parameters:
+      - name: timestamp
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Unix timestamp to convert
+        example: '1609459200'
+      - name: format
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Timestamp format
+        example: seconds
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  timestamp: 1609459200
+                  timestamp_format: seconds
+                  iso_8601: '2021-01-01T00:00:00Z'
+                  rfc_2822: Fri, 01 Jan 2021 00:00:00 GMT
+                  date: 1/1/2021
+                  time: 12:00:00 AM
+                  unix_seconds: 1609459200
+                  unix_milliseconds: 1609459200000
+                  year: 2021
+                  month: 1
+                  day: 1
+                  hour: 0
+                  minute: 0
+                  second: 0
+                  day_of_week: Friday
+                  timezone: UTC
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Conversion
+  /v1/urlencode:
+    post:
+      summary: URL Encoder/Decoder
+      description: Encode text to URL-safe format (percent-encoding)
+      operationId: urlencode
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  action: encode
+                  original: Hello World & Goodbye
+                  encoded: Hello%20World%20%26%20Goodbye
+                  length: 29
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to encode
+                action:
+                  type: string
+                  description: The action to perform
+              required:
+              - text
+      tags:
+      - Data Conversion
+  /v1/urltomarkdown:
+    post:
+      summary: URL to Markdown
+      description: Convert a webpage URL to Markdown format
+      operationId: urltomarkdown
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  url: https://example.com/
+                  title: Example Domain
+                  markdown: '# Example Domain
+
+
+
+                    This domain is for use in documentation examples without needing permission. Avoid use in operations.
+
+
+
+                    [Learn more](https://iana.org/domains/example)'
+                  wordCount: 20
+                  imageCount: 0
+                  linkCount: 1
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: The URL of the webpage to convert to Markdown
+                includeImages:
+                  type: boolean
+                  description: Whether to include image references in the Markdown output
+                includeLinks:
+                  type: boolean
+                  description: Whether to include hyperlinks in the Markdown output
+              required:
+              - url
+      tags:
+      - Data Conversion
+  /v1/variablenameconverter:
+    post:
+      summary: Variable Name Converter
+      description: Convert variable names between naming conventions
+      operationId: variablenameconverter
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  results:
+                  - original: myVariableName
+                    converted: my_variable_name
+                  - original: another_var_name
+                    converted: another_var_name
+                  - original: SomeClassName
+                    converted: some_class_name
+                  - original: kebab-case-name
+                    converted: kebab_case_name
+                  - original: CONSTANT_VALUE
+                    converted: c_o_n_s_t_a_n_t__v_a_l_u_e
+                  count: 5
+                  targetFormat: snake_case
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                variables:
+                  type: string
+                  description: Array of variable names to convert (max 100). Every entry must be a string.
+                to:
+                  type: string
+                  description: Target naming convention
+              required:
+              - variables
+              - to
+      tags:
+      - Data Conversion
+  /v1/websitetotext:
+    post:
+      summary: Website to Text
+      description: Convert a given webiste content to simple text
+      operationId: websitetotext
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  date: null
+                  description: Use Amazon EC2 for scalable computing capacity in the AWS Cloud so you can develop and deploy applications without hardware constraints.
+                  title: What is Amazon EC2?
+                  title_alt: What is Amazon EC2?
+                  text: "Amazon Elastic Compute Cloud (Amazon EC2) provides on-demand, scalable computing capacity in the Amazon Web \t\tServices (AWS) Cloud. Using Amazon EC2 reduces hardware costs so you can develop and deploy \t\tapplications faster. You can use Amazon EC2 to launch as many or as few virtual servers as you \t\tneed, configure security and networking, and manage storage. You can add capacity (scale up) \t\tto handle compute-heavy tasks, such as monthly or yearly processes, or spikes in website \t\ttraffic. When usage decreases, you can reduce capacity (scale down) again.  An EC2 instance is a virtual server in the AWS Cloud. When you launch an EC2 instance,     \tthe instance type that you specify determines the hardware available to your instance.      \tEach instance type offers a different balance of compute, memory, network, and storage      \tresources. For more information, see the Amazon EC2 Instance Types Guide.  Amazon EC2 provides the following high-level features:  Amazon EC2 supports the processing, storage, and transmission  of credit card data by a merchant or service provider, and has been  validated as being compliant with Payment Card Industry (PCI) Data Security Standard (DSS).  For more information about PCI DSS, including how to request a copy of the AWS PCI Compliance Package,  see PCI DSS Level 1.  You can create and manage your Amazon EC2 instances using the following interfaces:  Amazon EC2 provides the following pricing options:  For a complete list of charges and prices for Amazon EC2 and more information about the purchase \t\t\tmodels, see Amazon EC2 pricing.  To create estimates for your AWS use cases, use the AWS Pricing Calculator.  To estimate the cost of transforming Microsoft  workloads to a modern architecture that uses open source and \t\t\t\tcloud-native services deployed on AWS, use the AWS  Modernization Calculator for Microsoft Workloads.  To see your bill, go to the Billing and Cost Management  Dashboard in the AWS Billing and Cost Management  console. Your bill contains links to usage reports that provide details \t\t\t\tabout your bill. To learn more about AWS account billing, see AWS Billing and Cost Management User  Guide.  If you have questions concerning AWS billing, accounts, and events, contact AWS Support.  To calculate the cost of a sample provisioned \t\t\t\t\tenvironment, see . When calculating the cost of a provisioned \t\t\t\tenvironment, remember to include incidental costs such as snapshot storage for EBS \t\t\t\tvolumes.  You can optimize the cost, security, and performance of your AWS environment \t\t\t\tusing AWS Trusted Advisor.  You can use AWS Cost Explorer to analyze the cost and usage of your EC2 instances. You can view  \t\t\t\tdata up to the last 13 months, and forecast how much you are likely to spend for the next  \t\t\t\t12 months. For more information, see \t\t\t\tAnalyzing your costs and usage with  AWS Cost Explorer in the AWS Cost Management User Guide."
+                  language: en
+                  publisher: null
+                  url: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: The URL of the website to convert to text
+              required:
+              - url
+      tags:
+      - Data Conversion
+  /v1/wordstonumbers:
+    get:
+      summary: Words to Numbers
+      description: Convert words to numbers, including each word and the orginal equivalent
+      operationId: wordstonumbers
+      parameters:
+      - name: words
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The words to convert to numbers
+        example: seven thousand six hundred and twenty
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  number: '7620'
+                  words: seven thousand, six hundred twenty
+                  ordinal: seven thousand, six hundred twentieth
+                  numberOfDigits_numeric: 4
+                  numberOfDigits_words: four
+                  eachNumber:
+                  - seven
+                  - six
+                  - two
+                  - zero
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Conversion
+  /v1/xmltojson:
+    post:
+      summary: XML to JSON
+      description: Convert XML to JSON
+      operationId: xmltojson
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  note:
+                    children:
+                    - to:
+                        content: Tove
+                    - from:
+                        content: Jani
+                    - heading:
+                        content: Reminder
+                    - body:
+                        content: Don't forget me this weekend!
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                xml:
+                  type: string
+                  description: The XML content to convert to JSON
+              required:
+              - xml
+      tags:
+      - Data Conversion
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
+externalDocs:
+  description: APIVerve Documentation
+  url: https://docs.apiverve.com

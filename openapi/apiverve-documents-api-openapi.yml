@@ -1,0 +1,291 @@
+openapi: 3.2.0
+info:
+  title: APIVerve Documents API
+  description: One API key, 370+ real-world REST endpoints — weather, geocoding, finance, DNS, validation, text processing and more. Every endpoint returns JSON. Full documentation at https://docs.apiverve.com.
+  termsOfService: https://apiverve.com/terms/
+  contact:
+    name: APIVerve Support
+    email: hello@apiverve.com
+    url: https://apiverve.com/contact
+  license:
+    name: APIVerve Terms of Service
+    url: https://apiverve.com/terms/
+  version: 1.0.0
+  x-logo:
+    url: https://apiverve.com/images/favicon.png
+    altText: APIVerve
+servers:
+- url: https://api.apiverve.com
+security:
+- api_key: []
+tags:
+- name: Documents
+paths:
+  /v1/htmltopdf:
+    post:
+      summary: HTML to PDF
+      description: Convert HTML content to a PDF file
+      operationId: htmltopdf
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  marginLeft: 0.4in
+                  marginRight: 0.4in
+                  marginTop: 0.4in
+                  marginBottom: 0.4in
+                  landscape: false
+                  pdfName: c064eacc-c29f-43a1-8375-a4b2562ea9d8.pdf
+                  expires: 1766096665366
+                  downloadURL: https://storage.googleapis.com/apiverve-helpers.appspot.com/htmltopdf/c064eacc-c29f-43a1-8375-a4b2562ea9d8.pdf?GoogleAccessId=1089020767582-compute%40developer.gserviceaccount.com&Expires=1766096665&Signature=R%2Ft%2FXcR%2B8bXzCi5ztc01YeE%2Bbn1ZR%2BCyeoqgHpSB1z0LO3SetOSoWYVoon5IG4vUU9W30Rmw6owErorZal%2FHdgpmcPAYx3eTx5dPaD45tFSCgIfpRloi0DBLse%2Fzy4sb0k3XgweiHZUdZu3jKMi1HVDJa2j2ervAFfwDfxGHUDXH5wwFKqnv%2BIw%2Fu7MBsKMDCNMWYESE7Aicz6eL0Lxz8P6oazJX0akKlLDhkgKiIqF3VtjGIh36RzK4WGBpU36JFZ7SCZZGHNiHyt3%2FBdyjPRA8N1fky%2Bv%2BjR%2BTTlO9BpWcjImNJM6nvVfmICEfcbLqL2MvVldfPAFKyEv2zCrCLA%3D%3D
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                html:
+                  type: string
+                  description: The HTML content to convert to PDF. Ensure that the HTML is escaped properly
+                marginTop:
+                  type: number
+                  description: The top margin of the PDF in inches (e.g., 0.5)
+                marginRight:
+                  type: number
+                  description: The right margin of the PDF in inches (e.g., 0.5)
+                marginBottom:
+                  type: number
+                  description: The bottom margin of the PDF in inches (e.g., 0.5)
+                marginLeft:
+                  type: number
+                  description: The left margin of the PDF in inches (e.g., 0.5)
+                landscape:
+                  type: boolean
+                  description: Set to true for landscape orientation
+              required:
+              - html
+      tags:
+      - Documents
+  /v1/invoicegenerator:
+    post:
+      summary: Invoice Generator
+      description: Generate an invoice
+      operationId: invoicegenerator
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  pdfName: fc17c4bd-e660-4078-94ae-f46be56c9006.pdf
+                  expires: 1766096689189
+                  downloadURL: https://storage.googleapis.com/apiverve-helpers.appspot.com/htmltopdf/fc17c4bd-e660-4078-94ae-f46be56c9006.pdf?GoogleAccessId=1089020767582-compute%40developer.gserviceaccount.com&Expires=1766096689&Signature=zZYB17Rj1yfbfhM3Epmjc9PEfmsVpgsCATX5%2Bx2yAo%2FV45xUatVzkAjUkPC48PkR4m%2BF7uIJBToUY2QAZMzNIOre4T0Md2eToXtcYF%2F%2FefS3sZocODRdiC%2BmEuMZjsAPMfkhbCMQZT4lZczQn9sfaWJlWJi%2FGWXKVUwZby3yn06Ed7OqianYbxQj87ENoqYudZFe5qFpI0hmwh4lBrnIM40hb4eZwwbGEvZL2WejNdBgD0cKb3C%2BHwJHkPvd2PAzFfNvuJolBxMN4jE3QCx9DN2MdHGUqb7t3vlP0Kder8m0lMpac%2BPbwZsDVmlF595cFzkKaE928uxzA1Mzkenffg%3D%3D
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                invoiceNumber:
+                  type: string
+                  description: The invoice number
+                date:
+                  type: string
+                  description: The invoice date (YYYY-MM-DD format)
+                from_name:
+                  type: string
+                  description: The name of the person or company issuing the invoice
+                from_street:
+                  type: string
+                  description: The street address of the person or company issuing the invoice
+                from_city:
+                  type: string
+                  description: The city of the person or company issuing the invoice
+                from_state:
+                  type: string
+                  description: The state of the person or company issuing the invoice
+                from_zip:
+                  type: string
+                  description: The zip code of the person or company issuing the invoice
+                to_name:
+                  type: string
+                  description: The name of the person or company being invoiced
+                to_street:
+                  type: string
+                  description: The street address of the person or company being invoiced
+                to_city:
+                  type: string
+                  description: The city of the person or company being invoiced
+                to_state:
+                  type: string
+                  description: The state of the person or company being invoiced
+                to_zip:
+                  type: string
+                  description: The zip code of the person or company being invoiced
+                job:
+                  type: string
+                  description: The job or project associated with the invoice
+                paymentTerms:
+                  type: string
+                  description: The payment terms for the invoice
+                dueDate:
+                  type: string
+                  description: The due date for the invoice (YYYY-MM-DD format)
+                discount:
+                  type: number
+                  description: The discount to be applied to the invoice
+                salesTax:
+                  type: number
+                  description: The sales tax rate for the invoice as a percentage, applied to the subtotal after discount (e.g. 7.5 for 7.5%)
+                logoURL:
+                  type: string
+                  description: Public http(s) URL of an image to use as the invoice logo (max 2 MB, fetched with a 5 second timeout; a placeholder logo is used if it can't be loaded)
+                currency:
+                  type: string
+                  description: The currency for the invoice
+                items:
+                  type: string
+                  description: The items being invoiced (qty, description, unit_price)
+              required:
+              - invoiceNumber
+              - from_name
+              - from_street
+              - from_city
+              - from_state
+              - from_zip
+              - to_name
+              - to_street
+              - to_city
+              - to_state
+              - to_zip
+              - items
+      tags:
+      - Documents
+  /v1/websitetopdf:
+    post:
+      summary: Website to PDF
+      description: Convert a website to a PDF file
+      operationId: websitetopdf
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  marginLeft: 0.4in
+                  marginRight: 0.4in
+                  marginTop: 0.4in
+                  marginBottom: 0.4in
+                  landscape: false
+                  pdfName: 128deceb-c515-444b-8863-82cb3f6ba632.pdf
+                  expires: 1766097122116
+                  url: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts
+                  downloadURL: https://storage.googleapis.com/apiverve-helpers.appspot.com/websitetopdf/128deceb-c515-444b-8863-82cb3f6ba632.pdf?GoogleAccessId=1089020767582-compute%40developer.gserviceaccount.com&Expires=1766097122&Signature=LI747FKqKj5i5TYX3KIoVy%2FHgXsLOSXfVEUM0Ekqz2SiiYOZWuk3Of7QBDUklSrcbjiHV0AjbzFTKt6oDU83UkN282HbmhxwrolN6v1Zb9twVi1y7gmTpapCiJi%2BpA1r89ioe%2Fe0%2FV7KrIWaqsorzpdJrnMqe2izMWBaZq%2FYkSO2qlwSyhg2R8EsfxYNAANtd%2FuNS0RuIzqTdhNCiTrRirnDAKS3dMCySQJRznHFnyqzNj1OXwVjvdpSMn9XhWCUa%2FDRR8q%2BE9B0yF8eTvIrDSe2OzJT%2FJLc9rxcLfXAny21gtNqrzMJPU4yM9Ge%2BEbepmDnNZf9xpODNsnq5eLF0g%3D%3D
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: The URL of the website to convert to PDF
+                marginTop:
+                  type: number
+                  description: The top margin of the PDF in inches (e.g., 0.4)
+                marginRight:
+                  type: number
+                  description: The right margin of the PDF in inches (e.g., 0.4)
+                marginBottom:
+                  type: number
+                  description: The bottom margin of the PDF in inches (e.g., 0.4)
+                marginLeft:
+                  type: number
+                  description: The left margin of the PDF in inches (e.g., 0.4)
+                landscape:
+                  type: boolean
+                  description: Set to true for landscape orientation
+              required:
+              - url
+      tags:
+      - Documents
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
+externalDocs:
+  description: APIVerve Documentation
+  url: https://docs.apiverve.com

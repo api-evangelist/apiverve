@@ -1,0 +1,471 @@
+openapi: 3.2.0
+info:
+  title: APIVerve Astrology API
+  description: One API key, 370+ real-world REST endpoints — weather, geocoding, finance, DNS, validation, text processing and more. Every endpoint returns JSON. Full documentation at https://docs.apiverve.com.
+  termsOfService: https://apiverve.com/terms/
+  contact:
+    name: APIVerve Support
+    email: hello@apiverve.com
+    url: https://apiverve.com/contact
+  license:
+    name: APIVerve Terms of Service
+    url: https://apiverve.com/terms/
+  version: 1.0.0
+  x-logo:
+    url: https://apiverve.com/images/favicon.png
+    altText: APIVerve
+servers:
+- url: https://api.apiverve.com
+security:
+- api_key: []
+tags:
+- name: Astrology
+paths:
+  /v1/chinesezodiac:
+    get:
+      summary: Chinese Zodiac
+      description: Get Chinese zodiac information for a specific date
+      operationId: chinesezodiac
+      parameters:
+      - name: date
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The date in YYYY-MM-DD format (years 1900-2100)
+        example: '1990-01-15'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  date: '1990-01-15'
+                  zodiacYear: 1989
+                  animal: Snake
+                  animalChinese: 蛇
+                  element: Earth
+                  elementChinese: 土
+                  elementColor: Yellow/Brown
+                  polarity: Yin
+                  traits:
+                  - Enigmatic
+                  - Intelligent
+                  - Wise
+                  - Decisive
+                  sexagenaryCyclePosition: 6
+                  fullName: Earth Snake
+                  chineseNewYear: '1990-01-27'
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Astrology
+  /v1/horoscope:
+    get:
+      summary: Horoscope
+      description: Get the horoscope of the day for a specific zodiac sign
+      operationId: horoscope
+      parameters:
+      - name: sign
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The zodiac sign for which you want to get the horoscope
+        example: aries
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  color: green
+                  compatibility:
+                  - leo
+                  - sagittarius
+                  horoscope: Today, the celestial alignment initiates a deep dive into your emotional landscapes, prompting you to analyze your hidden sentiments to strengthen existing links and navigate difficulties with loved ones more successfully. Open communication becomes essential, allowing you to gracefully balance individual desires. Financially, shrewd judgments keep a cautious route, reducing unnecessary risks and consolidating existing assets. Pay concentrated consideration not to let minor grievances cloud your judgement, strive to discover common understanding and resolve internal clashes diplomatically to facilitate individual advancement, reinforcing your bonds through vulnerability while navigating the ups and downs of interpersonal relationships cautiously keeping everything in balance.
+                  luckyNumber: 12
+                  luckyTime: 8:00 AM
+                  mood: excited
+                  sign: aries
+                  zodiac:
+                    element: fire
+                    name: Aries
+                    stone: bloodstone
+                    symbol: ♈
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Astrology
+  /v1/moonphases:
+    get:
+      summary: Moon Phases
+      description: Get the moon phase for today
+      operationId: moonphases
+      parameters:
+      - name: today
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Get the moon phase for today
+        example: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  phase: Waning Crescent
+                  phaseEmoji: 🌘
+                  illumination: 9.9
+                  waxing: false
+                  waning: true
+                  lunarAge: 26.61193415670738
+                  lunarAgePercent: 0.9011650706672754
+                  lunationNumber: 1274
+                  lunarDistance: 63.77810628163608
+                  nextFullMoon: '2026-01-16T00:00:00Z'
+                  lastFullMoon: '2025-11-17T00:00:00Z'
+                  daysToFullMoon: 28
+                  daysSinceFullMoon: 2
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Astrology
+  /v1/moonposition:
+    get:
+      summary: Moon Position
+      description: Get moon position data based on the location
+      operationId: moonposition
+      parameters:
+      - name: lat
+        in: query
+        schema:
+          type: number
+        required: true
+        description: The latitude of the location
+        example: 37.7749
+      - name: lon
+        in: query
+        schema:
+          type: number
+        required: true
+        description: The longitude of the location
+        example: -122.4194
+      - name: date
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The date to get the moon position data for (MM-dd-yyyy)
+        example: 01-16-2026
+      - name: time
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The time of day for the calculation (HH:mm format, 24-hour). Defaults to 00:00 if not provided
+        example: '14:30'
+      - name: timezone
+        in: query
+        schema:
+          type: string
+        required: false
+        description: IANA timezone name the date and time are given in. Defaults to the timezone of the supplied coordinates
+        example: America/Los_Angeles
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  date: 01-22-2026
+                  time: '14:30'
+                  coordinates:
+                    latitude: 37.7749
+                    longitude: -122.4194
+                  moon:
+                    altitude: -0.407908976399288
+                    azimuth: 1.4720499058762104
+                    distance: 404332.6834067969
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Astrology
+  /v1/planetpositions:
+    post:
+      summary: Planet Positions
+      description: Planet Positions is a simple tool for getting the position of planets in the solar system. It returns the position of planets in the solar system.
+      operationId: planetpositions
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  planet: Moon
+                  isBelowHorizon: false
+                  date: '2025-04-15T10:37:00Z'
+                  observer:
+                    latitude: 37.7749
+                    longitude: -122.4194
+                  rightAscension:
+                    hours: 15
+                    minutes: 13
+                    seconds: 11
+                  declination:
+                    degrees: -23
+                    minutes: 10
+                    seconds: 56
+                  distance:
+                    km: 402457.36
+                    lightTravelSeconds: 1.342
+                    astronomicalUnits: 0.003
+                  siderealTime:
+                    hours: 16
+                    minutes: 2
+                    seconds: 42
+                  hourAngle:
+                    hours: 0
+                    minutes: 49
+                    seconds: 31
+                  vectors:
+                    x: -0.0016452947779903913
+                    y: -0.0018463324771434563
+                    z: -0.0010590407236111441
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                  description: The date to get planetary position data for (MM-DD-YYYY)
+                time:
+                  type: string
+                  description: The time of day for the calculation (HH:mm format, 24-hour). Defaults to 00:00 if not provided
+                lat:
+                  type: number
+                  description: The latitude of the observer
+                lon:
+                  type: number
+                  description: The longitude of the observer
+                alt:
+                  type: number
+                  description: The altitude of the observer in meters
+                planet:
+                  type: string
+                  description: The planet to get position data for
+              required:
+              - lat
+              - lon
+              - planet
+      tags:
+      - Astrology
+  /v1/sunposition:
+    get:
+      summary: Sun Position
+      description: Get sun position data based on the location
+      operationId: sunposition
+      parameters:
+      - name: lat
+        in: query
+        schema:
+          type: number
+        required: true
+        description: The latitude of the location
+        example: 37.7749
+      - name: lon
+        in: query
+        schema:
+          type: number
+        required: true
+        description: The longitude of the location
+        example: -122.4194
+      - name: date
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The date to get the sun position data for (MM-DD-YYYY)
+        example: 01-16-2026
+      - name: time
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The time of day for the calculation (HH:mm format, 24-hour), read in the timezone of the coordinates. Defaults to 00:00 if not provided
+        example: '14:30'
+      - name: timezone
+        in: query
+        schema:
+          type: string
+        required: false
+        description: IANA timezone to read the date and time in, such as America/Los_Angeles. Defaults to the timezone of the coordinates
+        example: America/Los_Angeles
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  date: 01-16-2026
+                  time: '14:30'
+                  timezone: America/Los_Angeles
+                  timestampUTC: '2026-01-16T22:30:00.000Z'
+                  coordinates:
+                    latitude: 37.7749
+                    longitude: -122.4194
+                  sun:
+                    altitude: 0.41616137328975444
+                    azimuth: 0.5817558808515568
+                    altitudeDegrees: 23.844
+                    azimuthDegrees: 33.332
+                    compassBearing: 213.332
+                    isDaylight: true
+                    declination: -20.7961
+                    rightAscension: 19.9228
+                    hourAngle: 2.174
+                    distance: 0.983786
+                  equationOfTime: -9.88
+                  airMass: 2.454
+                  clearSky:
+                    directNormal: 702.4
+                    globalHorizontal: 284.9
+                  shadowRatio: 2.254
+                  panelAim:
+                    tilt: 66.07
+                    azimuth: 213.44
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Astrology
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
+externalDocs:
+  description: APIVerve Documentation
+  url: https://docs.apiverve.com

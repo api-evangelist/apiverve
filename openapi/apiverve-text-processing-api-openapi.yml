@@ -1,0 +1,2916 @@
+openapi: 3.2.0
+info:
+  title: APIVerve Text Processing API
+  description: One API key, 370+ real-world REST endpoints — weather, geocoding, finance, DNS, validation, text processing and more. Every endpoint returns JSON. Full documentation at https://docs.apiverve.com.
+  termsOfService: https://apiverve.com/terms/
+  contact:
+    name: APIVerve Support
+    email: hello@apiverve.com
+    url: https://apiverve.com/contact
+  license:
+    name: APIVerve Terms of Service
+    url: https://apiverve.com/terms/
+  version: 1.0.0
+  x-logo:
+    url: https://apiverve.com/images/favicon.png
+    altText: APIVerve
+servers:
+- url: https://api.apiverve.com
+security:
+- api_key: []
+tags:
+- name: Text Processing
+paths:
+  /v1/acronymexpander:
+    get:
+      summary: Acronym Expander
+      description: Expand an acronym to its full meaning with AI assistance
+      operationId: acronymexpander
+      parameters:
+      - name: acronym
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The acronym to expand (max 20 characters)
+        example: API
+      - name: context
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Optional context to help determine the correct meaning
+        example: software
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  acronym: API
+                  expansions:
+                  - expansion: Application Programming Interface
+                    description: A set of protocols for building software
+                    category: technology
+                  most_common:
+                    expansion: Application Programming Interface
+                    description: A set of protocols for building software
+                    category: technology
+                  source: dictionary
+                  context_provided: software
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Text Processing
+  /v1/anagramdetector:
+    get:
+      summary: Anagram Detector
+      description: Check if two texts are anagrams with detailed analysis
+      operationId: anagramdetector
+      parameters:
+      - name: text1
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The first text to compare
+        example: listen
+      - name: text2
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The second text to compare
+        example: silent
+      - name: ignorecase
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: 'Ignore case when comparing (default: true)'
+        example: true
+      - name: ignorespaces
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: 'Ignore spaces when comparing (default: true)'
+        example: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  text1: listen
+                  text2: silent
+                  is_anagram: true
+                  cleaned_text1: listen
+                  cleaned_text2: silent
+                  sorted_text1: eilnst
+                  sorted_text2: eilnst
+                  length_text1: 6
+                  length_text2: 6
+                  similarity_percentage: 100
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Text Processing
+  /v1/antonym:
+    get:
+      summary: Antonym Finder
+      description: Antonym is a simple tool for getting the antonyms of a word. It returns a list of antonyms for the given word.
+      operationId: antonym
+      parameters:
+      - name: word
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The word to get the antonyms for
+        example: happy
+      - name: language
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Language to return the antonyms in. Defaults to English
+        example: Spanish
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  partOfSpeech: adjective
+                  word: happy
+                  language: en
+                  antonyms:
+                  - sad
+                  - unhappy
+                  - miserable
+                  - depressed
+                  - glum
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Text Processing
+  /v1/cronparser:
+    get:
+      summary: Cron Expression Parser
+      description: Parse and validate cron expressions with detailed field analysis
+      operationId: cronparser
+      parameters:
+      - name: expression
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The cron expression to parse (5-field or 6-field format)
+        example: 0 9 * * 1-5
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  expression: 0 9 * * 1-5
+                  isValid: true
+                  format: 5-field
+                  fields:
+                    second:
+                      expression: '0'
+                      description: At 0
+                      values:
+                      - 0
+                    minute:
+                      expression: '0'
+                      description: At 0
+                      values:
+                      - 0
+                    hour:
+                      expression: '9'
+                      description: At 9
+                      values:
+                      - 9
+                    dayOfMonth:
+                      expression: '*'
+                      description: Every
+                      values:
+                      - 1
+                      - 2
+                      - 3
+                      - 4
+                      - 5
+                      - 6
+                      - 7
+                      - 8
+                      - 9
+                      - 10
+                      - 11
+                      - 12
+                      - 13
+                      - 14
+                      - 15
+                      - 16
+                      - 17
+                      - 18
+                      - 19
+                      - 20
+                      - 21
+                      - 22
+                      - 23
+                      - 24
+                      - 25
+                      - 26
+                      - 27
+                      - 28
+                      - 29
+                      - 30
+                      - 31
+                    month:
+                      expression: '*'
+                      description: Every
+                      values:
+                      - 1
+                      - 2
+                      - 3
+                      - 4
+                      - 5
+                      - 6
+                      - 7
+                      - 8
+                      - 9
+                      - 10
+                      - 11
+                      - 12
+                    dayOfWeek:
+                      expression: 1-5
+                      description: From 1 to 5
+                      values:
+                      - 1
+                      - 2
+                      - 3
+                      - 4
+                      - 5
+                  description: At 9:00 AM on Monday, Tuesday, Wednesday, Thursday, Friday
+                  frequency:
+                    type: Daily
+                    interval: day
+                  nextRuns:
+                  - '2026-02-19T09:00:00.000Z'
+                  - '2026-02-20T09:00:00.000Z'
+                  - '2026-02-21T09:00:00.000Z'
+                  - '2026-02-24T09:00:00.000Z'
+                  - '2026-02-25T09:00:00.000Z'
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Text Processing
+  /v1/datamasking:
+    post:
+      summary: Data Masking
+      description: Detect and mask sensitive information in text
+      operationId: datamasking
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  masked: Contact John Doe at [EMAIL] or call [PHONE]. His SSN is [SSN].
+                  detected:
+                    email: 1
+                    phone: 1
+                    ssn: 1
+                    credit_card: 0
+                    ip_address: 0
+                    url: 0
+                    date: 0
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text containing sensitive data to mask
+                types:
+                  type: string
+                  description: 'Array of data types to mask (default: all types)'
+              required:
+              - text
+      tags:
+      - Text Processing
+  /v1/didyoumean:
+    get:
+      summary: Did You Mean
+      description: Did You Mean is a simple tool for correcting spelling mistakes. It returns the corrected text.
+      operationId: didyoumean
+      parameters:
+      - name: query
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The text you want to check for spelling mistakes
+        example: what weather today is
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  query: what weather today is
+                  didYouMean:
+                  - what is the weather today
+                  - what's the weather like today
+                  - what will be the weather today
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Text Processing
+  /v1/emojidecorator:
+    post:
+      summary: Emoji Decorator
+      description: Emoji Decorator is a simple tool for decorating text with emojis. It returns the text decorated with emojis.
+      operationId: emojidecorator
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  decorated: I am so excited 🥂 to go 😄🙌🏽 to the lake 🤘🏻🇺🇸 and swim 🏊
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text you want decorated with emojis
+              required:
+              - text
+      tags:
+      - Text Processing
+  /v1/gibberishdetector:
+    post:
+      summary: Gibberish Detector
+      description: Analyze text to detect gibberish content
+      operationId: gibberishdetector
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  isGibberish: false
+                  score: 0.12
+                  confidence: 88
+                  confidenceLevel: high
+                  text: The quick brown fox jumps over the lazy dog
+                  textLength: 43
+                  wordCount: 9
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: Text to analyze (max 10,000 characters)
+              required:
+              - text
+      tags:
+      - Text Processing
+  /v1/grammarcheck:
+    post:
+      summary: Grammar Check
+      description: Grammar Check is a simple tool for checking the grammar and spelling of a text. It returns the corrected text.
+      operationId: grammarcheck
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  modified: true
+                  corrected: The pig snorted when I saw it on the barn gate. I was a little mad because it woke up my puppy
+                  errorCount: 3
+                  corrections:
+                  - rule: repeated_word
+                    message: Did you mean to repeat the word "The"?
+                    position:
+                      start: 0
+                      end: 7
+                    suggestions:
+                    - The
+                  - rule: spelling
+                    message: Did you mean "because"?
+                    position:
+                      start: 67
+                      end: 74
+                    suggestions:
+                    - because
+                  - rule: spelling
+                    message: Did you mean "puppy"?
+                    position:
+                      start: 92
+                      end: 101
+                    suggestions:
+                    - puppy
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text you want to check for grammatical and spelling errors
+              required:
+              - text
+      tags:
+      - Text Processing
+  /v1/isbnvalidator:
+    get:
+      summary: ISBN Validator
+      description: Validate and parse ISBN-10 or ISBN-13 numbers
+      operationId: isbnvalidator
+      parameters:
+      - name: isbn
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The ISBN number to validate (ISBN-10 or ISBN-13, with or without separators)
+        example: 978-0-306-40615-7
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  valid: true
+                  isbn: 978-0-306-40615-7
+                  type: ISBN-13
+                  normalized: '9780306406157'
+                  formatted: 978-0-306-40615-7
+                  checksum_valid: true
+                  prefix: '978'
+                  group: '0'
+                  publisher: '306'
+                  title: '40615'
+                  check_digit: '7'
+                  error: null
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Text Processing
+  /v1/jsonschemavalidator:
+    post:
+      summary: JSON Schema Validator
+      description: Validate JSON data against a JSON schema
+      operationId: jsonschemavalidator
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  valid: true
+                  errors: []
+                  error_count: 0
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                schema:
+                  type: string
+                  description: The JSON Schema to validate against
+                json:
+                  type: string
+                  description: The JSON data to validate. An empty object is a valid document and is accepted.
+              required:
+              - schema
+              - json
+      tags:
+      - Text Processing
+  /v1/keywordextractor:
+    post:
+      summary: Keyword Extractor
+      description: Extract keywords from a body of text
+      operationId: keywordextractor
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  url: https://en.wikipedia.org/wiki/Email_address
+                  keywordCount: 50
+                  topKeyword: email
+                  totalOccurrences: 672
+                  keywords:
+                    email: 94
+                    address: 61
+                    mail: 52
+                    domain: 34
+                    addresses: 34
+                    characters: 27
+                    retrieved: 27
+                    internet: 17
+                    message: 15
+                    validation: 12
+                  topKeywords:
+                  - keyword: email
+                    count: 94
+                    percentage: 14
+                  - keyword: address
+                    count: 61
+                    percentage: 9.1
+                  - keyword: mail
+                    count: 52
+                    percentage: 7.7
+                  - keyword: domain
+                    count: 34
+                    percentage: 5.1
+                  - keyword: addresses
+                    count: 34
+                    percentage: 5.1
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to extract keywords from
+              required:
+              - text
+      tags:
+      - Text Processing
+  /v1/leetspeak:
+    post:
+      summary: Leet Speak
+      description: Leet Speak is a simple tool for encoding and decoding Leet Speak. It returns the encoded or decoded Leet Speak.
+      operationId: leetspeak
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  text: 7h!5 !5 4 5!mp13 p!3c3 0f 73x7
+                  mode: encode
+                  changedCharacters: 17
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to encode or decode in Leet Speak
+                mode:
+                  type: string
+                  description: The mode to use
+              required:
+              - text
+              - mode
+      tags:
+      - Text Processing
+  /v1/lemmatizer:
+    post:
+      summary: Text Lemmatizer
+      description: Lemmatize text
+      operationId: lemmatizer
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  found: 3
+                  lemmas:
+                    cat: 1
+                    ran: 1
+                    door: 2
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to lemmatize
+              required:
+              - text
+      tags:
+      - Text Processing
+  /v1/levenshteindistance:
+    post:
+      summary: Levenshtein Distance
+      description: Calculate Levenshtein distance between two strings
+      operationId: levenshteindistance
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  distance: 3
+                  similarity: 57.14
+                  matchLevel: medium
+                  string1Length: 6
+                  string2Length: 7
+                  string1: kitten
+                  string2: sitting
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                string1:
+                  type: string
+                  description: First string to compare (max 10,000 characters)
+                string2:
+                  type: string
+                  description: Second string to compare (max 10,000 characters)
+              required:
+              - string1
+              - string2
+      tags:
+      - Text Processing
+  /v1/lexicon:
+    get:
+      summary: Word Lexicon Analyzer
+      description: Lexicon is a simple tool for analyzing words. It returns various properties of the word.
+      operationId: lexicon
+      parameters:
+      - name: word
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The word to analyze
+        example: listen
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  word: listen
+                  isAlphagram: false
+                  sortedForm: eilnst
+                  isPalindrome: false
+                  hasAnagram: false
+                  isIsogram: true
+                  isPangramCandidate: false
+                  isScrabbleValid: true
+                  canBePalindromeAnagram: false
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Text Processing
+  /v1/linesorter:
+    post:
+      summary: Line Sorter
+      description: Sort lines of text alphabetically
+      operationId: linesorter
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  sorted:
+                  - An apple a day keeps the doctor away
+                  - banana
+                  - Cherry blossoms bloom in spring
+                  - date
+                  - The quick brown fox jumps over the lazy dog
+                  lineCount: 5
+                  order: asc
+                  caseSensitive: false
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                lines:
+                  type: string
+                  description: Array of text lines to sort (max 10,000)
+                order:
+                  type: string
+                  description: Sort order
+                caseSensitive:
+                  type: boolean
+                  description: Enable case-sensitive sorting
+              required:
+              - lines
+      tags:
+      - Text Processing
+  /v1/markdownlinkextractor:
+    post:
+      summary: Markdown Link Extractor
+      description: Parse markdown and extract all links with categorization
+      operationId: markdownlinkextractor
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  totalLinks: 6
+                  links:
+                  - text: this link
+                    url: https://example.com
+                    type: inline
+                  - text: another one
+                    url: https://test.com
+                    type: inline
+                  - text: Image
+                    url: https://example.com/image.png
+                    type: inline
+                  - text: Reference link
+                    url: https://reference.com
+                    type: reference
+                    reference: ref1
+                  - text: https://autolink.com
+                    url: https://autolink.com
+                    type: autolink
+                  - text: https://bare-url.com
+                    url: https://bare-url.com
+                    type: bare
+                  categories:
+                    internal:
+                      count: 0
+                      links: []
+                    external:
+                      count: 6
+                      links:
+                      - text: this link
+                        url: https://example.com
+                        type: inline
+                      - text: another one
+                        url: https://test.com
+                        type: inline
+                      - text: Image
+                        url: https://example.com/image.png
+                        type: inline
+                      - text: Reference link
+                        url: https://reference.com
+                        type: reference
+                        reference: ref1
+                      - text: https://autolink.com
+                        url: https://autolink.com
+                        type: autolink
+                      - text: https://bare-url.com
+                        url: https://bare-url.com
+                        type: bare
+                    email:
+                      count: 0
+                      links: []
+                    other:
+                      count: 0
+                      links: []
+                  markdownLength: 253
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                markdown:
+                  type: string
+                  description: Markdown text to parse (max 100,000 characters)
+              required:
+              - markdown
+      tags:
+      - Text Processing
+  /v1/palindromechecker:
+    get:
+      summary: Palindrome Checker
+      description: Check if text is a palindrome with customizable options
+      operationId: palindromechecker
+      parameters:
+      - name: text
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The text to check for palindrome. Maximum 20000 characters
+        example: A man a plan a canal Panama
+      - name: ignorecase
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: 'Ignore case when checking (default: true)'
+        example: true
+      - name: ignorespaces
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: 'Ignore spaces when checking (default: true)'
+        example: true
+      - name: ignorepunctuation
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: 'Ignore punctuation when checking (default: true)'
+        example: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  text: A man a plan a canal Panama
+                  is_palindrome: true
+                  cleaned_text: amanaplanacanalpanama
+                  reversed_text: amanaplanacanalpanama
+                  length: 21
+                  options:
+                    ignore_case: true
+                    ignore_spaces: true
+                    ignore_punctuation: true
+                  longest_palindrome_substring: amanaplanacanalpanama
+                  longest_palindrome_length: 21
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Text Processing
+  /v1/partsofspeech:
+    post:
+      summary: Parts Of Speech
+      description: Extract nouns, verbs, adjectives, adverbs, etc. from text
+      operationId: partsofspeech
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  partofspeech: verbs
+                  result:
+                  - located
+                  - had
+                  - visit
+                  - packed up
+                  - boarded
+                  - bound
+                  count: 6
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to extract words from
+                partofspeech:
+                  type: string
+                  description: The part of speech to extract. Defaults to nouns
+              required:
+              - text
+      tags:
+      - Text Processing
+  /v1/phonetic:
+    get:
+      summary: Phonetic Encoder
+      description: Get phonetic codes for a word
+      operationId: phonetic
+      parameters:
+      - name: word
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The word to encode phonetically
+        example: smith
+      - name: algorithm
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Algorithm to use
+        example: both
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  word: smith
+                  soundex: S530
+                  metaphone: SM0
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Text Processing
+  /v1/piglatin:
+    post:
+      summary: Pig Latin
+      description: Pig Latin is a simple tool for encoding Pig Latin. It returns the encoded Pig Latin.
+      operationId: piglatin
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  text: Ethay uaresqay oodenway crate asway ackedpay otay ebay ippedshay. Otay avehay isyay etterbay anthay otay aitway andyay hope.
+                  exclusions:
+                  - crate
+                  - hope
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to encode in Pig Latin
+                exclusions:
+                  type: string
+                  description: Words to exclude from encoding
+              required:
+              - text
+      tags:
+      - Text Processing
+  /v1/profanityfilter:
+    post:
+      summary: Profanity Filter
+      description: Filter out profanity words from a body of text
+      operationId: profanityfilter
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  isProfane: true
+                  filteredText: Today is so **** hot! Why the **** would anyone go outside?
+                  mask: '*'
+                  trimmed: false
+                  profaneWords: 2
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to filter profanity words from
+                mask:
+                  type: string
+                  description: The mask to replace the profanity words with. Should be a Single Character (e.g., *)
+              required:
+              - text
+      tags:
+      - Text Processing
+  /v1/readabilityscore:
+    post:
+      summary: Text Readability Score
+      description: Calculate the readability score of text
+      operationId: readabilityscore
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  textCounts:
+                    syllableCount: 82
+                    lexiconCount: 49
+                    sentenceCount: 1
+                  readability:
+                    fleschReadingEase: 13.28
+                    fleschKincaidGrade: 23.6
+                    gunningFog: 26.95
+                    colemanLiauIndex: 13.19
+                    smogIndex: 22.08
+                    automatedReadabilityIndex: 27.8
+                    daleChallReadabilityScore: 17
+                  readabilityText:
+                    fleschReadingEase: very confusing
+                    daleChallReadabilityScore: average 13th to 15th-grade (college) student
+                  averageGradeLevel: 22.7
+                  targetAudience: post-graduate
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to calculate the readability score of
+              required:
+              - text
+      tags:
+      - Text Processing
+  /v1/readingtime:
+    post:
+      summary: Reading Time Calculator
+      description: Calculate estimated reading time for text content
+      operationId: readingtime
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  text_length: 257
+                  word_count: 41
+                  reading_time_minutes: 1
+                  reading_time_seconds: 10
+                  reading_time_text: 1 min read
+                  words_per_minute: 250
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to calculate reading time for
+                wpm:
+                  type: integer
+                  description: Words per minute reading speed
+              required:
+              - text
+      tags:
+      - Text Processing
+  /v1/regextester:
+    post:
+      summary: Regex Tester
+      description: Test regular expressions with detailed analysis and results
+      operationId: regextester
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  pattern: \d{3}-\d{2}-\d{4}
+                  text: My SSN is 123-45-6789 and my friend's is 987-65-4321
+                  flags: g
+                  test_type: test
+                  replacement: null
+                  is_valid_regex: true
+                  regex_info:
+                    pattern: \d{3}-\d{2}-\d{4}
+                    flags:
+                      global: true
+                      ignore_case: false
+                      multiline: false
+                      sticky: false
+                      unicode: false
+                      dot_all: false
+                    source: \d{3}-\d{2}-\d{4}
+                    last_index: 21
+                    pattern_length: 17
+                    complexity: Medium
+                  test_results:
+                    operation: test
+                    result: true
+                    execution_time_ms: 0
+                    description: Returns true if pattern matches anywhere in text, false otherwise
+                  performance:
+                    iterations: 192
+                    total_time_ms: 0
+                    average_time_ms: 0
+                    performance_rating: Excellent
+                  pattern_analysis:
+                    contains_anchors:
+                      start_anchor: false
+                      end_anchor: false
+                      word_boundary: false
+                    contains_quantifiers:
+                      zero_or_more: false
+                      one_or_more: false
+                      zero_or_one: false
+                      specific_count: true
+                      range_count: false
+                    contains_groups:
+                      capturing_groups: 0
+                      non_capturing_groups: 0
+                      named_groups: 0
+                    contains_character_classes:
+                      predefined_classes: true
+                      custom_classes: false
+                      negated_classes: false
+                    contains_special_chars:
+                      wildcard: false
+                      pipe: false
+                      escape_sequences: 3
+                  suggestions:
+                  - Consider anchoring with ^ or $ if you need exact matches
+                  common_patterns:
+                  - name: Email Address
+                    pattern: ^[\w\.-]+@[\w\.-]+\.[a-zA-Z]{2,}$
+                    description: Matches valid email addresses
+                    example: user@example.com
+                  - name: Phone Number (US)
+                    pattern: ^\(?(\d{3})\)?[-.\s]?(\d{3})[-.\s]?(\d{4})$
+                    description: Matches US phone numbers in various formats
+                    example: (123) 456-7890
+                  - name: URL
+                    pattern: ^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$
+                    description: Matches HTTP and HTTPS URLs
+                    example: https://www.example.com
+                  - name: IP Address (IPv4)
+                    pattern: ^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$
+                    description: Matches valid IPv4 addresses
+                    example: 192.168.1.1
+                  - name: Credit Card Number
+                    pattern: ^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|3[0-9]{13}|6(?:011|5[0-9]{2})[0-9]{12})$
+                    description: Matches major credit card formats
+                    example: '4532123456789012'
+                  - name: Social Security Number
+                    pattern: ^\d{3}-?\d{2}-?\d{4}$
+                    description: Matches SSN with or without dashes
+                    example: 123-45-6789
+                  - name: Date (MM/DD/YYYY)
+                    pattern: ^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/(19|20)\d{2}$
+                    description: Matches MM/DD/YYYY date format
+                    example: 12/31/2023
+                  - name: Time (24-hour)
+                    pattern: ^([01]?[0-9]|2[0-3]):[0-5][0-9]$
+                    description: Matches 24-hour time format
+                    example: '14:30'
+                  - name: Hexadecimal Color
+                    pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+                    description: Matches hex color codes
+                    example: '#FF5733'
+                  - name: Strong Password
+                    pattern: ^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$
+                    description: At least 8 chars with uppercase, lowercase, digit, and special char
+                    example: MyP@ssw0rd
+                  regex_guide:
+                    basic_syntax:
+                    - symbol: .
+                      description: Matches any single character except newline
+                    - symbol: '*'
+                      description: Matches 0 or more of the preceding character
+                    - symbol: +
+                      description: Matches 1 or more of the preceding character
+                    - symbol: '?'
+                      description: Matches 0 or 1 of the preceding character
+                    - symbol: ^
+                      description: Matches start of string
+                    - symbol: $
+                      description: Matches end of string
+                    - symbol: '|'
+                      description: OR operator
+                    - symbol: \
+                      description: Escape character
+                    character_classes:
+                    - symbol: '[abc]'
+                      description: Matches any character in the set
+                    - symbol: '[^abc]'
+                      description: Matches any character NOT in the set
+                    - symbol: '[a-z]'
+                      description: Matches any lowercase letter
+                    - symbol: '[A-Z]'
+                      description: Matches any uppercase letter
+                    - symbol: '[0-9]'
+                      description: Matches any digit
+                    - symbol: \d
+                      description: Matches any digit (equivalent to [0-9])
+                    - symbol: \w
+                      description: Matches any word character [a-zA-Z0-9_]
+                    - symbol: \s
+                      description: Matches any whitespace character
+                    quantifiers:
+                    - symbol: '{n}'
+                      description: Matches exactly n times
+                    - symbol: '{n,}'
+                      description: Matches n or more times
+                    - symbol: '{n,m}'
+                      description: Matches between n and m times
+                    - symbol: '*?'
+                      description: 'Non-greedy: matches 0 or more (lazy)'
+                    - symbol: +?
+                      description: 'Non-greedy: matches 1 or more (lazy)'
+                    - symbol: ??
+                      description: 'Non-greedy: matches 0 or 1 (lazy)'
+                    groups:
+                    - symbol: (abc)
+                      description: Capturing group
+                    - symbol: (?:abc)
+                      description: Non-capturing group
+                    - symbol: (?<name>abc)
+                      description: Named capturing group
+                    - symbol: (?=abc)
+                      description: Positive lookahead
+                    - symbol: (?!abc)
+                      description: Negative lookahead
+                    - symbol: (?<=abc)
+                      description: Positive lookbehind
+                    - symbol: (?<!abc)
+                      description: Negative lookbehind
+                    flags:
+                    - flag: g
+                      description: Global - find all matches
+                    - flag: i
+                      description: Case insensitive
+                    - flag: m
+                      description: Multiline - ^ and $ match line breaks
+                    - flag: s
+                      description: Dot matches newline characters
+                    - flag: u
+                      description: Unicode mode
+                    - flag: y
+                      description: Sticky - matches from lastIndex position
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pattern:
+                  type: string
+                  description: The regular expression pattern to test. Maximum 500 characters
+                text:
+                  type: string
+                  description: The text to test the pattern against. Maximum 20000 characters
+                flags:
+                  type: string
+                  description: 'Regex flags: g (global), i (case insensitive), m (multiline), s (dotall), u (unicode), y (sticky)'
+                test_type:
+                  type: string
+                  description: Operation type
+                replacement:
+                  type: string
+                  description: Replacement text for 'replace' operation
+              required:
+              - pattern
+              - text
+      tags:
+      - Text Processing
+  /v1/removepunctuation:
+    post:
+      summary: Remove Punctuation
+      description: Remove all punctuation marks from text
+      operationId: removepunctuation
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  cleaned: Hello world How are you doing today Im great thanks for asking This text has lots of punctuation periods commas hyphens more
+                  punctuation_removed:
+                  - '!'
+                  - '&'
+                  - ''''
+                  - ','
+                  - '-'
+                  - .
+                  - ':'
+                  - '?'
+                  count: 11
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to remove punctuation from
+              required:
+              - text
+      tags:
+      - Text Processing
+  /v1/reversetext:
+    post:
+      summary: Reverse Text
+      description: Reverse text character by character
+      operationId: reversetext
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  reversed: dlroW olleH
+                  original: Hello World
+                  mode: characters
+                  length: 11
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: Text to reverse
+                mode:
+                  type: string
+                  description: Reversal mode
+              required:
+              - text
+      tags:
+      - Text Processing
+  /v1/slugify:
+    post:
+      summary: Slugify
+      description: Convert text to a URL-friendly slug
+      operationId: slugify
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  original: Hello World! This is a Test & Example
+                  slug: hello-world-this-is-a-test-example
+                  separator: '-'
+                  lowercase: true
+                  length: 34
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to convert to a slug
+                separator:
+                  type: string
+                  description: The separator character
+                lowercase:
+                  type: boolean
+                  description: 'Convert to lowercase (default: true)'
+              required:
+              - text
+      tags:
+      - Text Processing
+  /v1/spellchecker:
+    post:
+      summary: Spell Checker
+      description: Check the spelling of a body of text
+      operationId: spellchecker
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  spellPass: false
+                  mispellingsFound: 2
+                  corrections:
+                  - word: neeed
+                    suggestions:
+                    - needed
+                    - need
+                    - needy
+                    - Neel
+                    - needs
+                  - word: telephine
+                    suggestions:
+                    - telephone
+                    - telephoned
+                    - telephoner
+                    - telephones
+                    - telephony
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to check the spelling of
+              required:
+              - text
+      tags:
+      - Text Processing
+  /v1/syllablecounter:
+    post:
+      summary: Syllable Counter
+      description: Count syllables in words and text
+      operationId: syllablecounter
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  text: The quick brown fox jumps over the lazy dog
+                  total_syllables: 11
+                  word_count: 9
+                  average_syllables_per_word: 1.22
+                  words:
+                  - word: the
+                    syllables: 1
+                  - word: quick
+                    syllables: 1
+                  - word: brown
+                    syllables: 1
+                  - word: fox
+                    syllables: 1
+                  - word: jumps
+                    syllables: 1
+                  - word: over
+                    syllables: 2
+                  - word: the
+                    syllables: 1
+                  - word: lazy
+                    syllables: 2
+                  - word: dog
+                    syllables: 1
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to count syllables in (max 500 characters)
+              required:
+              - text
+      tags:
+      - Text Processing
+  /v1/taxidvalidator:
+    get:
+      summary: Tax ID Validator
+      description: Validate US Tax IDs (SSN, EIN, ITIN)
+      operationId: taxidvalidator
+      parameters:
+      - name: taxid
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The US Tax ID to validate (SSN, EIN, or ITIN format)
+        example: 123-45-6789
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  valid: true
+                  taxid: 123-45-6789
+                  type: SSN
+                  type_full: Social Security Number
+                  format: XXX-XX-XXXX
+                  normalized: 123-45-6789
+                  digits_only: '123456789'
+                  masked: '***-**-6789'
+                  last4: '6789'
+                  is_placeholder: true
+                  validation_details:
+                    format_valid: true
+                    area_number_valid: true
+                    group_number_valid: true
+                    serial_number_valid: true
+                  risk_score: 35
+                  risk_level: medium
+                  error: null
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Text Processing
+  /v1/tenseconverter:
+    post:
+      summary: Tense Converter
+      description: Convert text to past or future tense
+      operationId: tenseconverter
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  tense: past
+                  result: I was walking down the street, and I could see a dog
+                  changed: true
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to convert to past or future tense
+                tense:
+                  type: string
+                  description: The tense to convert the text to
+              required:
+              - text
+      tags:
+      - Text Processing
+  /v1/textlanguage:
+    post:
+      summary: Text Language
+      description: Detect the language of a body of text
+      operationId: textlanguage
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  language: french
+                  iso: fr
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to detect the language of
+              required:
+              - text
+      tags:
+      - Text Processing
+  /v1/textsimilarity:
+    post:
+      summary: Text Similarity
+      description: Check the similarity between two texts
+      operationId: textsimilarity
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  simiarity: 45.83
+                  similarityCaseSensitive: 47.22
+                  difference:
+                    count: 7
+                    percentage: 58.33
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text1:
+                  type: string
+                  description: The first text to compare. Must be less than 1000 characters
+                text2:
+                  type: string
+                  description: The second text to compare. Must be less than 1000 characters
+              required:
+              - text1
+              - text2
+      tags:
+      - Text Processing
+  /v1/textstyler:
+    post:
+      summary: Text Styler
+      description: Text Styler is a simple tool for styling text in various ways. It returns the styled text.
+      operationId: textstyler
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  style: bubbles
+                  text: Ⓣⓗⓘⓢ ⓘⓢ ⓐ ⓥⓔⓡⓨ ⓢⓣⓨⓛⓘⓢⓗ ⓟⓘⓔⓒⓔ ⓞⓕ ⓣⓔⓧⓣ
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to style
+                style:
+                  type: string
+                  description: The style to apply
+              required:
+              - text
+              - style
+      tags:
+      - Text Processing
+  /v1/textsummarizer:
+    post:
+      summary: Text Summarizer
+      description: Summarize a body of text. Useful for generating summaries of articles, reports, and more.
+      operationId: textsummarizer
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  originalWords: 67
+                  summaryWords: 30
+                  percentDifference: 44.78
+                  summary: Headlines can be used to focus the reader's attention on a particular (or main) part of the article. A news article can include accounts of eyewitnesses to the happening event.
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to summarize (up to 5000 characters)
+                sentences:
+                  type: number
+                  description: The length of the summary (number of sentences)
+              required:
+              - text
+      tags:
+      - Text Processing
+  /v1/texttoemoji:
+    post:
+      summary: Text to Emoji
+      description: Text to Emoji is a simple tool for converting text into emojis. It returns the emojis that represent the given text.
+      operationId: texttoemoji
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  emojis:
+                  - 👈🏾
+                  - ✨👏
+                  - 🔥👏🏽
+                  - 👊🏾💪🏾
+                  - 🔥🤙🏼
+                  - 🤌🏽🔥
+                  - 🤩👏🏻
+                  - 😁📚🙌
+                  - 😞
+                  - 👉🏽👈🏽
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text you want converted into emojis
+              required:
+              - text
+      tags:
+      - Text Processing
+  /v1/titlecapitalization:
+    post:
+      summary: Title Case Converter
+      description: Convert text to title case
+      operationId: titlecapitalization
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  style: title-case
+                  text: Comprehensive Analysis of Quarterly Financial Performance and Strategic Initiatives for Sustainable Growth
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to convert to title case
+                style:
+                  type: string
+                  description: The case to convert the text to
+              required:
+              - text
+              - style
+      tags:
+      - Text Processing
+  /v1/translator:
+    post:
+      summary: Translator
+      description: Translate text from one language to another
+      operationId: translator
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  sourceLang: en
+                  targetLang: es
+                  translatedText: ¡Qué emoción que mañana hará sol! ¡Qué ganas!
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to translate
+                target:
+                  type: string
+                  description: The language code to translate the text to (e.g., fr, es, de)
+                source:
+                  type: string
+                  description: The language code of the text to translate (e.g., en). If left blank, language will be auto-detected
+              required:
+              - text
+              - target
+      tags:
+      - Text Processing
+  /v1/vowelcounter:
+    post:
+      summary: Vowel Counter
+      description: Count vowels and consonants in text with detailed breakdown
+      operationId: vowelcounter
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  vowels: 31
+                  consonants: 58
+                  totalLetters: 89
+                  vowelPercentage: 34.83
+                  consonantPercentage: 65.17
+                  vowelBreakdown:
+                    a: 8
+                    e: 11
+                    i: 3
+                    o: 7
+                    u: 2
+                  textLength: 110
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: Text to analyze (max 50,000 characters)
+              required:
+              - text
+      tags:
+      - Text Processing
+  /v1/websitereadability:
+    post:
+      summary: Website Readability
+      description: Analyze the readability of a web page
+      operationId: websitereadability
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  fleschReadingEase: 24.34
+                  fleschReadingEaseText: Very Confusing
+                  fleschKincaidGrade: 19.3
+                  gunningFog: 19.62
+                  colemanLiauIndex: 13.12
+                  smogIndex: 14.37
+                  automatedReadabilityIndex: 22.6
+                  daleChallReadabilityScore: 17
+                  daleChallReadabilityScoreText: average 13th to 15th-grade (college) student
+                  wordCount: 634
+                  sentenceCount: 29
+                  readingTimeMinutes: 3
+                  averageGradeLevel: 17.8
+                  targetAudience: post-graduate
+                  url: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: The URL of the web page to analyze
+              required:
+              - url
+      tags:
+      - Text Processing
+  /v1/wordopposite:
+    get:
+      summary: Word Opposites
+      description: Word Opposites is a simple tool for getting the opposites of a word. It returns a list of opposites for the given word.
+      operationId: wordopposite
+      parameters:
+      - name: word
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The word to get the opposites for
+        example: hot
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  word: hot
+                  opposites:
+                  - cold
+                  - cool
+                  - chilly
+                  - frozen
+                  - frigid
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Text Processing
+  /v1/wordpronunciation:
+    get:
+      summary: Word Pronunciation
+      description: Get the pronunciation of a word
+      operationId: wordpronunciation
+      parameters:
+      - name: word
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The word to get the pronunciation of
+        example: hello
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  word: hello
+                  pronounciation: HH AH0 L OW1
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Text Processing
+  /v1/wordrhymes:
+    get:
+      summary: Rhyming Words
+      description: Get a list of words that rhyme with the specified word
+      operationId: wordrhymes
+      parameters:
+      - name: word
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The word for which you want to get rhyming words
+        example: blue
+      - name: limit
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Limit the number of word rhymes returned
+        example: 30
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  word: blue
+                  rhymeCount: 10
+                  rhymes:
+                  - deblois
+                  - ballou
+                  - bellew
+                  - carilou
+                  - chaloux
+                  - clue
+                  - flew
+                  - flu
+                  - flue
+                  - glew
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Text Processing
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
+externalDocs:
+  description: APIVerve Documentation
+  url: https://docs.apiverve.com

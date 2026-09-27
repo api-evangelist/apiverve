@@ -1,0 +1,712 @@
+openapi: 3.2.0
+info:
+  title: APIVerve Reference Data API
+  description: One API key, 370+ real-world REST endpoints — weather, geocoding, finance, DNS, validation, text processing and more. Every endpoint returns JSON. Full documentation at https://docs.apiverve.com.
+  termsOfService: https://apiverve.com/terms/
+  contact:
+    name: APIVerve Support
+    email: hello@apiverve.com
+    url: https://apiverve.com/contact
+  license:
+    name: APIVerve Terms of Service
+    url: https://apiverve.com/terms/
+  version: 1.0.0
+  x-logo:
+    url: https://apiverve.com/images/favicon.png
+    altText: APIVerve
+servers:
+- url: https://api.apiverve.com
+security:
+- api_key: []
+tags:
+- name: Reference Data
+paths:
+  /v1/birthstones:
+    get:
+      summary: Birthstones
+      description: Get birthstone information for a specific month
+      operationId: birthstones
+      parameters:
+      - name: month
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The month number (1-12) or name
+        example: '5'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  count: 1
+                  birthstones:
+                  - month: 5
+                    monthName: May
+                    primaryStone: Emerald
+                    alternateStones:
+                    - Chrysoprase
+                    - Agate
+                    color: Green
+                    meaning: Rebirth, love, fertility
+                    zodiacSigns:
+                    - Taurus
+                    - Gemini
+                    hardness: 7.5
+                    mineralFamily: Beryl
+                    anniversaryYear: 55
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Reference Data
+  /v1/caaparser:
+    post:
+      summary: CAA Record Parser
+      description: Parse a DNS CAA record and extract authorization details
+      operationId: caaparser
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  raw_record: example.com. 3600 IN CAA 0 issue "letsencrypt.org"
+                  parsed:
+                    domain: example.com
+                    ttl: 3600
+                    class: IN
+                    flags: 0
+                    tag: issue
+                    value: letsencrypt.org
+                  ca_info:
+                    name: Let's Encrypt
+                    type: Free
+                    wildcard_support: true
+                  interpretation:
+                    meaning: Only letsencrypt.org is authorized to issue certificates
+                    restriction: Restricted to specific CA
+                    critical: false
+                    critical_explanation: Non-critical - CA may proceed if not understood
+                  tag_description: Authorizes a CA to issue certificates (any type)
+                  is_valid: true
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                record:
+                  type: string
+                  description: The CAA record string to parse
+              required:
+              - record
+      tags:
+      - Reference Data
+  /v1/colorbrightness:
+    get:
+      summary: Color Brightness Calculator
+      description: Calculate brightness, luminance, and contrast ratios for a color
+      operationId: colorbrightness
+      parameters:
+      - name: hex
+        in: query
+        schema:
+          type: string
+        required: true
+        description: 'Hex color value (with or without # prefix)'
+        example: FF5733
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  hex: '#FF5733'
+                  rgb:
+                    r: 255
+                    g: 87
+                    b: 51
+                  luminance: 0.2832
+                  perceived_brightness: 131
+                  yiq: 133.13
+                  is_light: false
+                  is_dark: true
+                  brightness_category: dark
+                  recommended_text_color: '#FFFFFF'
+                  contrast_ratio_with_white: 3.15
+                  contrast_ratio_with_black: 6.66
+                  wcag_aa_compliant_with_white: false
+                  wcag_aa_compliant_with_black: true
+                  wcag_aaa_compliant_with_white: false
+                  wcag_aaa_compliant_with_black: false
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Reference Data
+  /v1/colornamefinder:
+    get:
+      summary: Color Name Finder
+      description: Find the closest named color for a hex color value
+      operationId: colornamefinder
+      parameters:
+      - name: hex
+        in: query
+        schema:
+          type: string
+        required: true
+        description: 'Hex color value (with or without # prefix)'
+        example: FF5733
+      - name: closest
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of closest color matches to return
+        example: 3
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  input_hex: '#FF5733'
+                  input_rgb:
+                    r: 255
+                    g: 87
+                    b: 51
+                  exact_match: false
+                  closest_color:
+                    name: Tomato
+                    hex: FF6347
+                    distance: 23.32
+                    similarity: 94.72
+                    rgb:
+                      r: 255
+                      g: 99
+                      b: 71
+                  closest_matches:
+                  - name: Tomato
+                    hex: FF6347
+                    distance: 23.32
+                    similarity: 94.72
+                    rgb:
+                      r: 255
+                      g: 99
+                      b: 71
+                  - name: Coral
+                    hex: FF7F50
+                    distance: 49.41
+                    similarity: 88.81
+                    rgb:
+                      r: 255
+                      g: 127
+                      b: 80
+                  - name: Chocolate
+                    hex: D2691E
+                    distance: 52.82
+                    similarity: 88.04
+                    rgb:
+                      r: 210
+                      g: 105
+                      b: 30
+                  total_named_colors: 141
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Reference Data
+  /v1/httpstatuslookup:
+    get:
+      summary: HTTP Status Code Lookup
+      description: Get information about an HTTP status code
+      operationId: httpstatuslookup
+      parameters:
+      - name: code
+        in: query
+        schema:
+          type: integer
+        required: true
+        description: HTTP status code to lookup
+        example: 404
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  code: 404
+                  name: Not Found
+                  description: The requested resource could not be found
+                  category: Client Error
+                  is_error: true
+                  is_success: false
+                  is_redirect: false
+                  is_informational: false
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Reference Data
+  /v1/mayancalendar:
+    get:
+      summary: Mayan Calendar
+      description: Convert a Gregorian date to Mayan calendar formats
+      operationId: mayancalendar
+      parameters:
+      - name: date
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The Gregorian date in YYYY-MM-DD format
+        example: '2024-12-21'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  gregorian: '2024-12-21'
+                  longCount:
+                    formatted: 13.0.12.3.3
+                    baktun: 13
+                    katun: 0
+                    tun: 12
+                    winal: 3
+                    kin: 3
+                  tzolkin:
+                    number: 6
+                    dayName: Akbal
+                    formatted: 6 Akbal
+                  haab:
+                    day: 6
+                    monthName: Kankin
+                    formatted: 6 Kankin
+                  calendarRound: 6 Akbal 6 Kankin
+                  daysSinceEpoch: 1876383
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Reference Data
+  /v1/mimetypelookup:
+    get:
+      summary: MIME Type Lookup
+      description: Look up MIME type by file extension
+      operationId: mimetypelookup
+      parameters:
+      - name: extension
+        in: query
+        schema:
+          type: string
+        required: true
+        description: File extension to lookup (without the leading dot)
+        example: pdf
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  extension: pdf
+                  mime_type: application/pdf
+                  category: document
+                  description: PDF document
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Reference Data
+  /v1/portnumberlookup:
+    get:
+      summary: Port Number Lookup
+      description: Look up service information by port number
+      operationId: portnumberlookup
+      parameters:
+      - name: port
+        in: query
+        schema:
+          type: integer
+        required: true
+        description: Port number to lookup
+        example: 443
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  count: 1
+                  ports:
+                  - port: 443
+                    service: HTTPS
+                    protocol: TCP
+                    description: HTTP Secure (HTTP over TLS/SSL)
+                    category: Web
+                    is_well_known: true
+                    is_registered: false
+                    is_dynamic: false
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Reference Data
+  /v1/ringsizeconverter:
+    get:
+      summary: Ring Size Converter
+      description: Convert ring size between international standards
+      operationId: ringsizeconverter
+      parameters:
+      - name: size
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The ring size to convert
+        example: '7'
+      - name: from
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Source region
+        example: us
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  input_diameter_mm: 17.3
+                  circumference_mm: 54.3
+                  conversions:
+                    diameter_mm: 17.3
+                    circumference_mm: 54.3
+                    us: 7
+                    uk: N
+                    eu: 52
+                    jp: 17
+                    ch: -22
+                    au: N
+                  note: Sizes are approximate. For accurate sizing, visit a jeweler.
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Reference Data
+  /v1/shoesizeconverter:
+    get:
+      summary: Shoe Size Converter
+      description: Convert shoe size between international standards
+      operationId: shoesizeconverter
+      parameters:
+      - name: size
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The shoe size to convert
+        example: '9'
+      - name: from
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Source region
+        example: us
+      - name: gender
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Gender sizing
+        example: men
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  input_size: 9
+                  input_region: US
+                  gender: men
+                  conversions:
+                    cm: 29.1
+                    jp: 29.1
+                    us: 9
+                    uk: 8.1
+                    au: 8.1
+                    eu: 43.7
+                    mx: 13.7
+                    kr: 43.7
+                  note: Sizes are approximate and may vary by manufacturer
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Reference Data
+  /v1/srvparser:
+    post:
+      summary: SRV Record Parser
+      description: Parse a DNS SRV record and extract service information
+      operationId: srvparser
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  raw_record: _http._tcp.example.com. 86400 IN SRV 10 60 80 server.example.com.
+                  parsed:
+                    name: _http._tcp.example.com.
+                    service: _http
+                    protocol: tcp
+                    domain: example.com.
+                    ttl: 86400
+                    class: IN
+                    priority: 10
+                    weight: 60
+                    port: 80
+                    target: server.example.com
+                  service_info:
+                    name: HTTP
+                    description: Web service
+                    default_port: 80
+                  interpretation:
+                    priority_explanation: Priority level 10 (lower is better)
+                    weight_explanation: Weight 60 for load balancing
+                    target_explanation: Connect to server.example.com:80
+                  is_valid: true
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                record:
+                  type: string
+                  description: The SRV record string to parse
+              required:
+              - record
+      tags:
+      - Reference Data
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
+externalDocs:
+  description: APIVerve Documentation
+  url: https://docs.apiverve.com

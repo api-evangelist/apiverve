@@ -1,0 +1,1159 @@
+openapi: 3.2.0
+info:
+  title: APIVerve Data Lookup API
+  description: One API key, 370+ real-world REST endpoints — weather, geocoding, finance, DNS, validation, text processing and more. Every endpoint returns JSON. Full documentation at https://docs.apiverve.com.
+  termsOfService: https://apiverve.com/terms/
+  contact:
+    name: APIVerve Support
+    email: hello@apiverve.com
+    url: https://apiverve.com/contact
+  license:
+    name: APIVerve Terms of Service
+    url: https://apiverve.com/terms/
+  version: 1.0.0
+  x-logo:
+    url: https://apiverve.com/images/favicon.png
+    altText: APIVerve
+servers:
+- url: https://api.apiverve.com
+security:
+- api_key: []
+tags:
+- name: Data Lookup
+paths:
+  /v1/asnlookup:
+    get:
+      summary: ASN Lookup
+      description: ASN Lookup is a simple tool for getting information on Autonomous System Numbers (ASNs). It returns information on various ASNs.
+      operationId: asnlookup
+      parameters:
+      - name: asn
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The ASN you want to get information about
+        example: AS15169
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  asn: AS15169
+                  simple: '15169'
+                  handle: GOOGLE
+                  description: Google LLC
+                  country: US
+                  ipv4RangeCount: 152
+                  ipv6RangeCount: 33
+                  ipv4AddressCount: 1314816
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Lookup
+  /v1/bible:
+    get:
+      summary: Bible
+      description: Get a bible chapter or verse based on the book, chapter, and or verse
+      operationId: bible
+      parameters:
+      - name: book
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The name of the book in the bible (e.g., Genesis)
+        example: Genesis
+      - name: version
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The Bible translation version
+        example: KJV
+      - name: chapter
+        in: query
+        schema:
+          type: integer
+        required: true
+        description: The chapter number in the book
+        example: 5
+      - name: verse
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: The verse number in the chapter
+        example: 17
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  text: But with thee will I establish my covenant; and thou shalt come into the ark, thou, and thy sons, and thy wife, and thy sons' wives with thee.
+                  book: Genesis
+                  abbr: gn
+                  chapter: 6
+                  verses:
+                  - 18
+                  version: KJV
+                  testament: Old Testament
+                  bookNumber: 1
+                  totalChapters: 50
+                  totalVersesInChapter: 22
+                  wordCount: 29
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Lookup
+  /v1/callingcode:
+    get:
+      summary: Country Calling Code
+      description: Country Calling Code is a simple tool for getting the country's international dialing codes. It returns the country's international dialing codes.
+      operationId: callingcode
+      parameters:
+      - name: country
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The 2 letter ISO code for the country (e.g. FR)
+        example: FR
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  country: France
+                  officialName: French Republic
+                  countryCode: FR
+                  callingcodes:
+                  - '+33'
+                  region: Europe
+                  subregion: Western Europe
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Lookup
+  /v1/dictionary:
+    get:
+      summary: Dictionary
+      description: Get the definition of a word
+      operationId: dictionary
+      parameters:
+      - name: word
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The word for which you want to get the definition (e.g., apple)
+        example: apple
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  word: apple
+                  definitionCount: 5
+                  definitions:
+                  - 'The fleshy pome or fruit of a rosaceous tree (Pyrus malus) cultivated in numberless varieties in the temperate zones. Note: The European crab apple is supposed to be the original kind, from which all others have sprung.'
+                  - (bot.)  Any tree genus Pyrus which has the stalk sunken into the base of the fruit; an apple tree.
+                  - Any fruit or other vegetable production resembling, or supposed to resemble, the apple; as, apple of love, or love apple (a tomato), balsam apple, egg apple, oak apple.
+                  - 'Anything round like an apple; as, an apple of gold. Note: Apple is used either adjectively or in combination; as, apple paper or apple-paper, apple-shaped, apple blossom, apple dumpling, apple pudding. Apple blight, an aphid which injures apple trees. See Blight, n. -- Apple borer (Zoöl.), a coleopterous insect (Saperda candida or bivittata), the larva of which bores into the trunk of the apple tree and pear tree. -- Apple brandy, brandy made from apples. -- Apple butter, a sauce made of apples stewed down in cider. Bartlett. -- Apple corer, an instrument for removing the cores from apples. -- Apple fly (Zoöl.), any dipterous insect, the larva of which burrows in apples. Apple flies belong to the genera Drosophila and Trypeta. -- Apple midge (Zoöl.) a small dipterous insect (Sciara mali), the larva of which bores in apples. -- Apple of the eye, the pupil. -- Apple of discord, a subject of contention and envy, so called from the mythological golden apple, inscribed "For the fairest," which was thrown into an assembly of the gods by Eris, the goddess of discord. It was contended for by Juno, Minerva, and Venus, and was adjudged to the latter. -- Apple of love, or Love apple, the tomato (Lycopersicum esculentum). -- Apple of Peru, a large coarse herb (Nicandra physaloides) bearing pale blue flowers, and a bladderlike fruit inclosing a dry berry. -- Apples of Sodom, a fruit described by ancient writers as externally of air appearance but dissolving into smoke and ashes plucked; Dead Sea apples. The name is often given to the fruit of Solanum Sodomæum, a prickly shrub with fruit not unlike a small yellow tomato. -- Apple sauce, stewed apples. [U. S.] -- Apple snail or Apple shell (Zoöl.), a fresh-water, operculated, spiral shell of the genus Ampullaria. -- Apple tart, a tart containing apples. -- Apple tree, a tree naturally bears apples. See Apple,'
+                  - -- Apple wine, cider. -- Apple worm (Zoöl.), the larva of a small moth (Carpocapsa pomonella) which burrows in the interior of apples. See Codling moth. -- Dead Sea Apple. (a) pl. Apples of Sodom. Also Fig. "To seek the Dead Sea apples of politics." S. B. Griffin. (b) A kind of gallnut coming from Arabia. See Gallnut.  To grow like an apple; to bear apples. Holland.
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Lookup
+  /v1/dogbreeds:
+    get:
+      summary: Dog Breeds
+      description: Get information about a specific dog breed
+      operationId: dogbreeds
+      parameters:
+      - name: breed
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The name of the dog breed to get information about
+        example: beagle
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  breed: beagle
+                  foundCount: 1
+                  foundBreeds:
+                  - name: Beagle
+                    weight:
+                      lowerLbs: 20
+                      upperLbs: 35
+                    height:
+                      lowerInches: 13
+                      upperInches: 15
+                    bredFor: rabbit, hare hunting
+                    group: hound
+                    life_span:
+                      lowerYears: 13
+                      upperYears: 16
+                    traits:
+                    - amiable
+                    - even tempered
+                    - excitable
+                    - determined
+                    - gentle
+                    - intelligent
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Lookup
+  /v1/emoji:
+    get:
+      summary: Emoji Lookup
+      description: Lookup the text representation of an emoji
+      operationId: emoji
+      parameters:
+      - name: emoji
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The emoji for which you want to get the text representation (e.g., 🥳)
+        example: 🥳
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  count: 1
+                  emojisFound:
+                  - emoji: 🥳
+                    description: partying face
+                    category: Smileys & Emotion
+                    aliases:
+                    - partying_face
+                    tags:
+                    - celebration
+                    - birthday
+                    unicode_version: '11.0'
+                    ios_version: '12.1'
+                    codePoint: 1f973
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Lookup
+  /v1/genderdetector:
+    get:
+      summary: Gender Detector
+      description: Detect the likely gender based on a given name
+      operationId: genderdetector
+      parameters:
+      - name: name
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The name for which you want to detect the gender
+        example: John Mcdonald
+      - name: country
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The country code for the name (e.g., US). Recorded and echoed back in the response, but detection does not yet vary by country - the same name returns the same gender whichever code you pass
+        example: US
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  name: John Mcdonald
+                  country: US
+                  detected: true
+                  gender: male
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Lookup
+  /v1/gravatarlookup:
+    get:
+      summary: Gravatar Lookup
+      description: Lookup the Gravatar profile of an email address
+      operationId: gravatarlookup
+      parameters:
+      - name: email
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The email address to lookup the Gravatar profile of
+        example: hello@apiverve.com
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  profileUrl: https://gravatar.com/apiverve
+                  thumbnailUrl: https://0.gravatar.com/avatar/f4d2e1d9263acab05f6a553dfdd4884a1efb8e6d76bd276a50996b3a41e1d6e5
+                  photos:
+                  - value: https://0.gravatar.com/avatar/f4d2e1d9263acab05f6a553dfdd4884a1efb8e6d76bd276a50996b3a41e1d6e5
+                    type: thumbnail
+                  displayName: APIVerve
+                  aboutMe: 'APIVerve stands out as a premier source for cloud-based API and Software-as-a-Service (SaaS) solutions catering to developers, startups and products.
+
+
+                    At APIVerve, we take pride in being a leading provider of cutting-edge cloud-based API and Software-as-a-Service (SaaS) solutions tailored to meet the diverse needs and unlock new possibilities across various industries.'
+                  currentLocation: United States
+                  company: APIVerve
+                  jobTitle: ''
+                  username: apiverve
+                  contactInfo: []
+                  accounts:
+                  - domain: twitter
+                    display: X
+                    url: https://x.com/apivervehq
+                    verified: true
+                    name: Twitter
+                  - domain: calendly
+                    display: Calendly
+                    url: https://calendly.com/apiverve
+                    verified: true
+                    name: Calendly
+                  - domain: github
+                    display: GitHub
+                    url: https://github.com/apivervehq
+                    verified: true
+                    name: Github
+                  accountCount: 3
+                  verifiedAccountCount: 3
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Lookup
+  /v1/ipdemographics:
+    get:
+      summary: IP Demographics
+      description: Get location and demographic data for an IP address
+      operationId: ipdemographics
+      parameters:
+      - name: ip
+        in: query
+        schema:
+          type: string
+        required: true
+        description: IPv4 or IPv6 address
+        example: 173.172.81.20
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  ip: 8.8.8.8
+                  location:
+                    zip: '94043'
+                    city: Mountain View
+                    state: California
+                    stateCode: CA
+                    country: United States
+                    countryCode: US
+                    latitude: 37.4056
+                    longitude: -122.0775
+                    timezone: America/Los_Angeles
+                  demographics:
+                    population: 81234
+                    medianAge: 34.5
+                    medianHouseholdIncome: 142567
+                    perCapitaIncome: 78234
+                    medianHomeValue: 1875000
+                    collegeEducatedPct: 68.3
+                    unemploymentRate: 3.2
+                    homeOwnershipRate: 45.6
+                  acsYear: 2022
+                  formatted:
+                    medianHouseholdIncome: $142,567
+                    perCapitaIncome: $78,234
+                    medianHomeValue: $1,875,000
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Lookup
+  /v1/lottery:
+    get:
+      summary: Lottery Numbers
+      description: Lookup the latest winning lottery numbers for Powerball, Mega Millions, EuroMillions, or Lotto Max — pick the game with the numbers parameter. Optionally provide a date for historical results.
+      operationId: lottery
+      parameters:
+      - name: numbers
+        in: query
+        schema:
+          type: string
+        required: true
+        description: 'The lottery game to lookup: powerball, megamillions, euromillions, or lottomax'
+        example: powerball
+      - name: date
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Optional date for historical lookup (YYYY-MM-DD). Returns the nearest draw to this date.
+        example: '2024-01-15'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  lotteryType: megamillions
+                  drawDate: '2026-02-04'
+                  numbers:
+                  - 10
+                  - 50
+                  - 55
+                  - 58
+                  - 59
+                  - 5
+                  megaBall: 5
+                  jackpot: $70 Million
+                  jackpotValue: 70000000
+                  jackpotFormatted: $70 Million
+                  nextDraw:
+                    drawDate: '2026-02-07'
+                    jackpot: $82 Million
+                    jackpotValue: 82000000
+                    cashValue: $37.2 Million
+                    cashValueValue: 37200000
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Lookup
+  /v1/nobelprizes:
+    get:
+      summary: Nobel Prizes
+      description: Nobel Prizes is a simple tool for getting information on Nobel Prizes. It returns information on various Nobel Prizes.
+      operationId: nobelprizes
+      parameters:
+      - name: firstname
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The first name of the Nobel Prize winner to get information about
+        example: Albert
+      - name: lastname
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The last name of the Nobel Prize winner to get information about
+        example: Einstein
+      - name: category
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The category of the Nobel Prize to get information about
+        example: Physics
+      - name: year
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: The year of the Nobel Prize to get information about
+        example: 1921
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  count: 1
+                  filteredOn:
+                  - firstName
+                  - lastName
+                  - category
+                  - year
+                  nobelPrizes:
+                  - firstName: Albert
+                    lastName: Einstein
+                    born: '1879-03-14'
+                    died: '1955-04-18'
+                    countryborn: Germany
+                    countrybornCode: DE
+                    born city: Ulm
+                    diedCountry: USA
+                    diedCountryCode: US
+                    diedCity: Princeton NJ
+                    gender: male
+                    year: '1921'
+                    category: Physics
+                    motivation: for his services to Theoretical Physics and especially for his discovery of the law of the photoelectric effect
+                    organization: Kaiser-Wilhelm-Institut (now Max-Planck-Institut) für Physik
+                    organizationCity: Berlin
+                    organizationCountry: Germany
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Lookup
+  /v1/openlicenses:
+    get:
+      summary: Open Source Licenses
+      description: Open Source Licenses is a simple tool for getting information on open source licenses. It returns information on various open source licenses.
+      operationId: openlicenses
+      parameters:
+      - name: name
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The name of the open source license to get information about
+        example: MIT
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  domain_content: false
+                  domain_data: false
+                  domain_software: true
+                  legacy_ids:
+                  - mit-license
+                  license: MIT
+                  name: MIT License
+                  license_url: https://opensource.org/licenses/MIT
+                  license_status: active
+                  isOsiApproved: true
+                  compatibleDomains:
+                  - software
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Lookup
+  /v1/thesaurus:
+    get:
+      summary: Thesaurus
+      description: Get a list of similar words for the specified word
+      operationId: thesaurus
+      parameters:
+      - name: word
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The word for which you want to get synonyms
+        example: big
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  word: big
+                  similarCount: 50
+                  similarWords:
+                  - large
+                  - ample
+                  - sizable
+                  - sizeable
+                  - astronomic
+                  - astronomical
+                  - galactic
+                  - bigger
+                  - larger
+                  - biggest
+                  - greatest
+                  - largest
+                  - biggish
+                  - largish
+                  - blown-up
+                  - enlarged
+                  - bouffant
+                  - puffy
+                  - bulky
+                  - capacious
+                  - colossal
+                  - prodigious
+                  - stupendous
+                  - cosmic
+                  - deep
+                  - double
+                  - elephantine
+                  - gargantuan
+                  - giant
+                  - jumbo
+                  - enormous
+                  - tremendous
+                  - epic
+                  - heroic
+                  - larger-than-life
+                  - extensive
+                  - extended
+                  - gigantic
+                  - mammoth
+                  - great
+                  - hulking
+                  - hulky
+                  - huge
+                  - immense
+                  - vast
+                  - Brobdingnagian
+                  - humongous
+                  - banging
+                  - thumping
+                  - whopping
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Lookup
+  /v1/timezonelookup:
+    get:
+      summary: Timezone Lookup
+      description: Lookup timezone data based on the city name
+      operationId: timezonelookup
+      parameters:
+      - name: city
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The city name for which you want to get the data (e.g., Harare)
+        example: Harare
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  timezone: Africa/Harare
+                  timezone_offset: 120
+                  date: '2025-12-17'
+                  time: 00:30
+                  time24: 00:30:23
+                  time12: 12:30:23 AM
+                  day: Wednesday
+                  month: December
+                  year: '2025'
+                  unix: '1765924223'
+                  dst: false
+                  dst_start: '2025-12-17 00:30:23'
+                  dst_end: '2025-12-17 00:30:23'
+                  dst_name: CAT
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Lookup
+  /v1/unicodelookup:
+    get:
+      summary: Unicode Character Lookup
+      description: Get detailed information about a Unicode character
+      operationId: unicodelookup
+      parameters:
+      - name: character
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The Unicode character to lookup. Supply either character or codepoint.
+        example: 👋
+      - name: codepoint
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The Unicode codepoint in hex (e.g., '1F44B' or 'U+1F44B'). Supply either character or codepoint.
+        example: 1F44B
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  character: �
+                  codepoint: U+D83D
+                  decimal: 55357
+                  hex: D83D
+                  utf16: \uD83D
+                  category: Control
+                  name: null
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Lookup
+  /v1/worldtime:
+    get:
+      summary: World Time
+      description: Get the current time in any city
+      operationId: worldtime
+      parameters:
+      - name: city
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The city name for which you want to get the current time (e.g., New York)
+        example: San Francisco
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  search: San Francisco
+                  foundCities:
+                  - city: San Francisco
+                    city_ascii: San Francisco
+                    country: Argentina
+                    iso2: AR
+                    iso3: ARG
+                    province: Córdoba
+                    timezone: America/Argentina/Cordoba
+                    time: '19:33'
+                    time24: '19:33:04'
+                    time12: 07:33:04 PM
+                    date: '2025-12-16'
+                    day: Tuesday
+                    month: December
+                    year: '2025'
+                    unix: '1765924384'
+                    dst: false
+                    dst_start: '2025-12-16 19:33:04'
+                    dst_end: '2025-12-16 19:33:04'
+                    dst_name: '-03'
+                  - city: San Francisco
+                    city_ascii: San Francisco
+                    country: United States of America
+                    iso2: US
+                    iso3: USA
+                    province: California
+                    state_ansi: CA
+                    timezone: America/Los_Angeles
+                    time: '14:33'
+                    time24: '14:33:04'
+                    time12: 02:33:04 PM
+                    date: '2025-12-16'
+                    day: Tuesday
+                    month: December
+                    year: '2025'
+                    unix: '1765924384'
+                    dst: false
+                    dst_start: '2025-12-16 14:33:04'
+                    dst_end: '2025-12-16 14:33:04'
+                    dst_name: PST
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Lookup
+  /v1/zipdemographics:
+    get:
+      summary: ZIP Demographics
+      description: Get demographic data for a ZIP code
+      operationId: zipdemographics
+      parameters:
+      - name: zip
+        in: query
+        schema:
+          type: string
+        required: true
+        description: 5-digit US ZIP code
+        example: '90210'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  zip: '90210'
+                  name: ZCTA5 90210
+                  acsYear: 2024
+                  population:
+                    total: 19004
+                    male: 9417
+                    female: 9587
+                    medianAge: 51
+                  income:
+                    medianHousehold: 187801
+                    perCapita: 147098
+                  housing:
+                    medianHomeValue: 2000001
+                    medianRent: 3251
+                    totalUnits: 9531
+                    occupiedUnits: 8029
+                    vacantUnits: 1502
+                    ownerOccupied: 5679
+                    renterOccupied: 2350
+                    homeOwnershipRate: 70.7
+                  education:
+                    collegeEducatedPct: 68.1
+                    bachelors: 4837
+                    masters: 2389
+                    professional: 1962
+                    doctorate: 929
+                  employment:
+                    laborForce: 9017
+                    unemployed: 468
+                    unemploymentRate: 5.2
+                  race:
+                    white:
+                      count: 15147
+                      percent: 79.7
+                    black:
+                      count: 403
+                      percent: 2.1
+                    asian:
+                      count: 1628
+                      percent: 8.6
+                    hispanic:
+                      count: 1138
+                      percent: 6
+                  formatted:
+                    medianHouseholdIncome: $187,801
+                    perCapitaIncome: $147,098
+                    medianHomeValue: $2,000,001
+                    medianRent: $3,251
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Lookup
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
+externalDocs:
+  description: APIVerve Documentation
+  url: https://docs.apiverve.com

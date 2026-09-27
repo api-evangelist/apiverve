@@ -1,0 +1,3733 @@
+openapi: 3.2.0
+info:
+  title: APIVerve Games API
+  description: One API key, 370+ real-world REST endpoints — weather, geocoding, finance, DNS, validation, text processing and more. Every endpoint returns JSON. Full documentation at https://docs.apiverve.com.
+  termsOfService: https://apiverve.com/terms/
+  contact:
+    name: APIVerve Support
+    email: hello@apiverve.com
+    url: https://apiverve.com/contact
+  license:
+    name: APIVerve Terms of Service
+    url: https://apiverve.com/terms/
+  version: 1.0.0
+  x-logo:
+    url: https://apiverve.com/images/favicon.png
+    altText: APIVerve
+servers:
+- url: https://api.apiverve.com
+security:
+- api_key: []
+tags:
+- name: Games
+paths:
+  /v1/acrostic:
+    get:
+      summary: Acrostic Puzzle Generator
+      description: Create an acrostic puzzle
+      operationId: acrostic
+      parameters:
+      - name: word
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The keyword to spell out (3-15 letters)
+        example: HAPPY
+      - name: theme
+        in: query
+        schema:
+          type: string
+        required: false
+        description: 'Theme: random, positive, nature, adventure, friendship, learning'
+        example: positive
+      - name: image
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Set to true to generate a downloadable puzzle image
+        example: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  keyword: HAPPY
+                  theme: positive
+                  lines:
+                  - position: 1
+                    letter: H
+                    answer: HAPPY
+                    letterCount: 5
+                    clue: 1. Favored by hap, luck, or fortune; lucky; fortunate; successful; prosperous; s...
+                  - position: 2
+                    letter: A
+                    answer: AMAZING
+                    letterCount: 7
+                    clue: Causing amazement; very wonderful; as, amazing grace. -- A*maz"ing*ly, adv.
+                  - position: 3
+                    letter: P
+                    answer: PEACEFUL
+                    letterCount: 8
+                    clue: 1. Possessing or enjoying peace; not disturbed by war, tumult, agitation, anxiet...
+                  - position: 4
+                    letter: P
+                    answer: PEACEFUL
+                    letterCount: 8
+                    clue: 1. Possessing or enjoying peace; not disturbed by war, tumult, agitation, anxiet...
+                  - position: 5
+                    letter: Y
+                    answer: YOUTHFUL
+                    letterCount: 8
+                    clue: 1. Not yet mature or aged; young. "Two youthful knights." Dryden.  Also used fig...
+                  lineCount: 5
+                  html: '<html><head><title>Acrostic Puzzle</title><style>body {font-family: Arial, sans-serif; padding: 20px; max-width: 700px; margin: 0 auto;}h1 {text-align: center; color: #FF5722;}.intro {text-align: center; color: #666; margin-bottom: 30px;}.puzzle {margin: 20px 0;}.line {display: flex; align-items: center; margin: 10px 0; padding: 10px; background: #f5f5f5; border-radius: 5px;}.number {width: 30px; font-weight: bold; color: #FF5722;}.first-letter {width: 40px; height: 40px; background: #FF5722; color: white; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; border-radius: 5px; margin-right: 10px;}.blanks {display: flex; gap: 3px; margin-right: 15px;}.blank {width: 25px; height: 30px; border-bottom: 2px solid #333;}.clue {flex: 1; font-size: 14px; color: #666; font-style: italic;}.keyword {text-align: center; margin-top: 30px; padding: 20px; background: #FFF3E0; border-radius: 10px;}.keyword-letters {display: flex; justify-content: center; gap: 10px;}.keyword-letter {width: 40px; height: 40px; background: #FF5722; color: white; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; border-radius: 5px;}</style></head><body><h1>Acrostic Puzzle</h1><div class=''intro''>Solve the clues. The first letters spell a word!</div><div class=''puzzle''><div class=''line''><span class=''number''>1.</span><span class=''first-letter''>H</span><span class=''blanks''><span class=''blank''></span><span class=''blank''></span><span class=''blank''></span><span class=''blank''></span></span><span class=''clue''>1. Favored by hap, luck, or fortune; lucky; fortunate; successful; prosperous; s...</span></div><div class=''line''><span class=''number''>2.</span><span class=''first-letter''>A</span><span class=''blanks''><span class=''blank''></span><span class=''blank''></span><span class=''blank''></span><span class=''blank''></span><span class=''blank''></span><span class=''blank''></span></span><span class=''clue''>Causing amazement; very wonderful; as, amazing grace. -- A*maz''ing*ly, adv.</span></div><div class=''line''><span class=''number''>3.</span><span class=''first-letter''>P</span><span class=''blanks''><span class=''blank''></span><span class=''blank''></span><span class=''blank''></span><span class=''blank''></span><span class=''blank''></span><span class=''blank''></span><span class=''blank''></span></span><span class=''clue''>1. Possessing or enjoying peace; not disturbed by war, tumult, agitation, anxiet...</span></div><div class=''line''><span class=''number''>4.</span><span class=''first-letter''>P</span><span class=''blanks''><span class=''blank''></span><span class=''blank''></span><span class=''blank''></span><span class=''blank''></span><span class=''blank''></span><span class=''blank''></span><span class=''blank''></span></span><span class=''clue''>1. Possessing or enjoying peace; not disturbed by war, tumult, agitation, anxiet...</span></div><div class=''line''><span class=''number''>5.</span><span class=''first-letter''>Y</span><span class=''blanks''><span class=''blank''></span><span class=''blank''></span><span class=''blank''></span><span class=''blank''></span><span class=''blank''></span><span class=''blank''></span><span class=''blank''></span></span><span class=''clue''>1. Not yet mature or aged; young. ''Two youthful knights.'' Dryden.  Also used fig...</span></div></div><div class=''keyword''><p>Hidden word:</p><div class=''keyword-letters''><div class=''keyword-letter''>?</div><div class=''keyword-letter''>?</div><div class=''keyword-letter''>?</div><div class=''keyword-letter''>?</div><div class=''keyword-letter''>?</div></div></div></body></html>'
+                  image:
+                    imageName: 8b67d4ec-c262-4f7b-9cf1-b8c2766e8c54_acrostic.png
+                    format: .png
+                    downloadURL: https://storage.googleapis.com/apiverve/APIData/acrostic/8b67d4ec-c262-4f7b-9cf1-b8c2766e8c54_acrostic.png?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1766009969&Signature=IBbnpk61J5uW7bsfoqRwceF7weeBO%2Bq63BKH7LZpXLhZJk1vYISzRXy%2BPeZnH0t4h%2FvK%2BIJCv84THbV5ym9KkdLUXJK3wYkh8XoyZz%2FyFsBNJ6YCtFLkb0F3AULXyOGEcJ3F3mz4f2oS9P6Wtx4bX8NKVs3B316pY0aJzKo%2Fm5Lnv81i9y%2BRA7EMc9f7M8N9Nin08T%2F4K3W3LxO%2FJUcwocs7UTAORbhCSTqbSn2eIhJLKAN%2B4gSvDghzigwHT9THBVAD1VHgmkfxPNKMqFcarnah7Lfh78RcZM5Zfubl50YgBLVwwwQ%2Bp0Sxbjgeb0osdEkHwAfXbKP2bmA9%2B3TrLA%3D%3D
+                    expires: 1766009969599
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Games
+  /v1/anagrampuzzle:
+    get:
+      summary: Anagram Puzzle Generator
+      description: Create anagram puzzles
+      operationId: anagrampuzzle
+      parameters:
+      - name: word
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Specific word to create anagram for
+        example: listen
+      - name: count
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of puzzles
+        example: 1
+      - name: difficulty
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Difficulty level
+        example: medium
+      - name: image
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Set to true to generate a downloadable puzzle image
+        example: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  puzzles:
+                  - original: DESPAIR
+                    scrambled: PDAISRE
+                    anagrams:
+                    - ASPIRED
+                    - DIAPERS
+                    letterCount: 7
+                  - original: GREATS
+                    scrambled: RSGETA
+                    anagrams:
+                    - GASTER
+                    - GATERS
+                    - GRATES
+                    letterCount: 6
+                  - original: GROANS
+                    scrambled: SOGNRA
+                    anagrams:
+                    - ARGONS
+                    letterCount: 6
+                  - original: BARGEES
+                    scrambled: ABEREGS
+                    anagrams:
+                    - BAREGES
+                    letterCount: 7
+                  - original: CANINES
+                    scrambled: NISNCEA
+                    anagrams:
+                    - ENCINAS
+                    letterCount: 7
+                  count: 5
+                  difficulty: medium
+                  html: '<html><head><title>Anagram Puzzle</title><style>body {font-family: Arial, sans-serif; padding: 20px; max-width: 700px; margin: 0 auto;}h1 {text-align: center;}.puzzle {background: #f5f5f5; padding: 25px; margin: 20px 0; border-radius: 10px;}.scrambled {font-size: 32px; font-weight: bold; letter-spacing: 8px; color: #9C27B0; text-align: center; margin: 15px 0;}.letters {display: flex; justify-content: center; gap: 5px; margin: 15px 0;}.letter {width: 40px; height: 40px; background: #fff; border: 2px solid #9C27B0; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold;}.hint {font-size: 14px; color: #666; font-style: italic; margin-top: 15px;}.info {font-size: 12px; color: #999; margin-top: 10px;}.answer-area {margin-top: 15px; padding: 10px; border: 2px dashed #ccc; border-radius: 5px; min-height: 30px;}</style></head><body><h1>Anagram Puzzle</h1><p style=''text-align:center;''>Rearrange the letters to form a word</p><div class=''puzzle''><div class=''info''>#1 - 7 letters</div><div class=''letters''><div class=''letter''>P</div><div class=''letter''>D</div><div class=''letter''>A</div><div class=''letter''>I</div><div class=''letter''>S</div><div class=''letter''>R</div><div class=''letter''>E</div></div><div class=''answer-area''></div><div class=''info''>Bonus: This word has 2 anagram(s)!</div></div><div class=''puzzle''><div class=''info''>#2 - 6 letters</div><div class=''letters''><div class=''letter''>R</div><div class=''letter''>S</div><div class=''letter''>G</div><div class=''letter''>E</div><div class=''letter''>T</div><div class=''letter''>A</div></div><div class=''answer-area''></div><div class=''info''>Bonus: This word has 3 anagram(s)!</div></div><div class=''puzzle''><div class=''info''>#3 - 6 letters</div><div class=''letters''><div class=''letter''>S</div><div class=''letter''>O</div><div class=''letter''>G</div><div class=''letter''>N</div><div class=''letter''>R</div><div class=''letter''>A</div></div><div class=''answer-area''></div><div class=''info''>Bonus: This word has 1 anagram(s)!</div></div><div class=''puzzle''><div class=''info''>#4 - 7 letters</div><div class=''letters''><div class=''letter''>A</div><div class=''letter''>B</div><div class=''letter''>E</div><div class=''letter''>R</div><div class=''letter''>E</div><div class=''letter''>G</div><div class=''letter''>S</div></div><div class=''answer-area''></div><div class=''info''>Bonus: This word has 1 anagram(s)!</div></div><div class=''puzzle''><div class=''info''>#5 - 7 letters</div><div class=''letters''><div class=''letter''>N</div><div class=''letter''>I</div><div class=''letter''>S</div><div class=''letter''>N</div><div class=''letter''>C</div><div class=''letter''>E</div><div class=''letter''>A</div></div><div class=''answer-area''></div><div class=''info''>Bonus: This word has 1 anagram(s)!</div></div></body></html>'
+                  image:
+                    imageName: d52a76c7-fe99-498f-b616-ab376cc920a5_anagram.png
+                    format: .png
+                    downloadURL: https://storage.googleapis.com/apiverve/APIData/anagrampuzzle/d52a76c7-fe99-498f-b616-ab376cc920a5_anagram.png?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1766009991&Signature=cHugsZLx%2BpnY0TrRpTdO%2Bfh48%2Bw8E1zzZt3SNLI2dNgM%2BZj%2FiC%2FZZjvoyahZdBlBkz6pHxuLRX55%2FLszTxTxyhNLJzUcjDOCjoATtWKevbzyLmwaEyFXLDjdzikxUWjVt9g8MyiPEKSFK6%2BpgY6WCvvSeI%2Fox%2B6lQawatWFMB7k0OKSTr9FO%2Fhqqu5M4%2B37bW0zvBuNtcORufXKayE7Z2KcW%2F2wkk9YwGXrVIvn2xLcOYjdY49GAQ2HW0qxRHLDtYYMY6T32jKz1KC6KBLZzrji7v3N%2FVkxfbECzXNgZB5WcCisCoHrUyj7BO14lLr7ZC4XttlYe70ak4QTqa3qNCw%3D%3D
+                    expires: 1766009991438
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Games
+  /v1/carddeckshuffler:
+    get:
+      summary: Card Deck Shuffler
+      description: Shuffle one or more standard card decks with optional jokers
+      operationId: carddeckshuffler
+      parameters:
+      - name: decks
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of decks to shuffle
+        example: 1
+      - name: jokers
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Include jokers in the deck
+        example: false
+      - name: method
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Shuffling method
+        example: fisher-yates
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  total_cards: 52
+                  decks_used: 1
+                  includes_jokers: false
+                  shuffle_method: fisher-yates
+                  cards:
+                  - rank: '8'
+                    suit: Spades
+                    card: 8 of Spades
+                    short: 8♠
+                  - rank: '2'
+                    suit: Spades
+                    card: 2 of Spades
+                    short: 2♠
+                  - rank: Queen
+                    suit: Hearts
+                    card: Queen of Hearts
+                    short: Q♥
+                  - rank: '7'
+                    suit: Clubs
+                    card: 7 of Clubs
+                    short: 7♣
+                  - rank: Queen
+                    suit: Spades
+                    card: Queen of Spades
+                    short: Q♠
+                  - rank: King
+                    suit: Hearts
+                    card: King of Hearts
+                    short: K♥
+                  - rank: '6'
+                    suit: Spades
+                    card: 6 of Spades
+                    short: 6♠
+                  - rank: Queen
+                    suit: Diamonds
+                    card: Queen of Diamonds
+                    short: Q♦
+                  - rank: King
+                    suit: Diamonds
+                    card: King of Diamonds
+                    short: K♦
+                  - rank: '4'
+                    suit: Hearts
+                    card: 4 of Hearts
+                    short: 4♥
+                  - rank: '7'
+                    suit: Hearts
+                    card: 7 of Hearts
+                    short: 7♥
+                  - rank: '8'
+                    suit: Clubs
+                    card: 8 of Clubs
+                    short: 8♣
+                  - rank: '4'
+                    suit: Spades
+                    card: 4 of Spades
+                    short: 4♠
+                  - rank: '9'
+                    suit: Hearts
+                    card: 9 of Hearts
+                    short: 9♥
+                  - rank: Ace
+                    suit: Diamonds
+                    card: Ace of Diamonds
+                    short: A♦
+                  - rank: Jack
+                    suit: Diamonds
+                    card: Jack of Diamonds
+                    short: J♦
+                  - rank: Jack
+                    suit: Hearts
+                    card: Jack of Hearts
+                    short: J♥
+                  - rank: '2'
+                    suit: Clubs
+                    card: 2 of Clubs
+                    short: 2♣
+                  - rank: Jack
+                    suit: Clubs
+                    card: Jack of Clubs
+                    short: J♣
+                  - rank: Queen
+                    suit: Clubs
+                    card: Queen of Clubs
+                    short: Q♣
+                  - rank: '9'
+                    suit: Spades
+                    card: 9 of Spades
+                    short: 9♠
+                  - rank: '8'
+                    suit: Diamonds
+                    card: 8 of Diamonds
+                    short: 8♦
+                  - rank: '10'
+                    suit: Spades
+                    card: 10 of Spades
+                    short: 10♠
+                  - rank: '9'
+                    suit: Clubs
+                    card: 9 of Clubs
+                    short: 9♣
+                  - rank: '4'
+                    suit: Clubs
+                    card: 4 of Clubs
+                    short: 4♣
+                  - rank: Ace
+                    suit: Clubs
+                    card: Ace of Clubs
+                    short: A♣
+                  - rank: '7'
+                    suit: Diamonds
+                    card: 7 of Diamonds
+                    short: 7♦
+                  - rank: '7'
+                    suit: Spades
+                    card: 7 of Spades
+                    short: 7♠
+                  - rank: '5'
+                    suit: Diamonds
+                    card: 5 of Diamonds
+                    short: 5♦
+                  - rank: '10'
+                    suit: Clubs
+                    card: 10 of Clubs
+                    short: 10♣
+                  - rank: '10'
+                    suit: Diamonds
+                    card: 10 of Diamonds
+                    short: 10♦
+                  - rank: '6'
+                    suit: Hearts
+                    card: 6 of Hearts
+                    short: 6♥
+                  - rank: King
+                    suit: Spades
+                    card: King of Spades
+                    short: K♠
+                  - rank: Jack
+                    suit: Spades
+                    card: Jack of Spades
+                    short: J♠
+                  - rank: Ace
+                    suit: Hearts
+                    card: Ace of Hearts
+                    short: A♥
+                  - rank: '5'
+                    suit: Hearts
+                    card: 5 of Hearts
+                    short: 5♥
+                  - rank: King
+                    suit: Clubs
+                    card: King of Clubs
+                    short: K♣
+                  - rank: '10'
+                    suit: Hearts
+                    card: 10 of Hearts
+                    short: 10♥
+                  - rank: '2'
+                    suit: Diamonds
+                    card: 2 of Diamonds
+                    short: 2♦
+                  - rank: Ace
+                    suit: Spades
+                    card: Ace of Spades
+                    short: A♠
+                  - rank: '3'
+                    suit: Clubs
+                    card: 3 of Clubs
+                    short: 3♣
+                  - rank: '5'
+                    suit: Clubs
+                    card: 5 of Clubs
+                    short: 5♣
+                  - rank: '8'
+                    suit: Hearts
+                    card: 8 of Hearts
+                    short: 8♥
+                  - rank: '3'
+                    suit: Spades
+                    card: 3 of Spades
+                    short: 3♠
+                  - rank: '6'
+                    suit: Clubs
+                    card: 6 of Clubs
+                    short: 6♣
+                  - rank: '4'
+                    suit: Diamonds
+                    card: 4 of Diamonds
+                    short: 4♦
+                  - rank: '2'
+                    suit: Hearts
+                    card: 2 of Hearts
+                    short: 2♥
+                  - rank: '3'
+                    suit: Diamonds
+                    card: 3 of Diamonds
+                    short: 3♦
+                  - rank: '9'
+                    suit: Diamonds
+                    card: 9 of Diamonds
+                    short: 9♦
+                  - rank: '5'
+                    suit: Spades
+                    card: 5 of Spades
+                    short: 5♠
+                  - rank: '3'
+                    suit: Hearts
+                    card: 3 of Hearts
+                    short: 3♥
+                  - rank: '6'
+                    suit: Diamonds
+                    card: 6 of Diamonds
+                    short: 6♦
+                  top_card:
+                    rank: '8'
+                    suit: Spades
+                    card: 8 of Spades
+                    short: 8♠
+                  bottom_card:
+                    rank: '6'
+                    suit: Diamonds
+                    card: 6 of Diamonds
+                    short: 6♦
+                  sample_hand:
+                  - rank: '8'
+                    suit: Spades
+                    card: 8 of Spades
+                    short: 8♠
+                  - rank: '2'
+                    suit: Spades
+                    card: 2 of Spades
+                    short: 2♠
+                  - rank: Queen
+                    suit: Hearts
+                    card: Queen of Hearts
+                    short: Q♥
+                  - rank: '7'
+                    suit: Clubs
+                    card: 7 of Clubs
+                    short: 7♣
+                  - rank: Queen
+                    suit: Spades
+                    card: Queen of Spades
+                    short: Q♠
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Games
+  /v1/coinflipper:
+    get:
+      summary: Coin Flipper
+      description: Flip one or more coins and get detailed results
+      operationId: coinflipper
+      parameters:
+      - name: flips
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of coins to flip
+        example: 10
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  total_flips: 10
+                  flips:
+                  - Tails
+                  - Heads
+                  - Heads
+                  - Tails
+                  - Tails
+                  - Heads
+                  - Tails
+                  - Tails
+                  - Tails
+                  - Tails
+                  heads_count: 3
+                  tails_count: 7
+                  heads_percentage: 30
+                  tails_percentage: 70
+                  longest_streak:
+                    length: 4
+                    type: Tails
+                  first_flip: Tails
+                  last_flip: Tails
+                  is_fair: false
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Games
+  /v1/crossword:
+    get:
+      summary: Crossword Generator
+      description: Create a crossword puzzle
+      operationId: crossword
+      parameters:
+      - name: size
+        in: query
+        schema:
+          type: string
+        required: false
+        description: 'Grid size: small, medium, large'
+        example: medium
+      - name: theme
+        in: query
+        schema:
+          type: string
+        required: false
+        description: 'Theme: random, animals, food, sports, science, geography'
+        example: animals
+      - name: difficulty
+        in: query
+        schema:
+          type: string
+        required: false
+        description: 'Difficulty: easy, medium, hard'
+        example: medium
+      - name: image
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Set to true to generate a downloadable puzzle image
+        example: true
+      - name: solutionImage
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Set to true to generate a downloadable solution image
+        example: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  size: 15
+                  difficulty: medium
+                  theme: animals
+                  grid:
+                  - - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                  - - null
+                    - T
+                    - I
+                    - G
+                    - E
+                    - R
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - D
+                    - null
+                  - - null
+                    - null
+                    - null
+                    - I
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - R
+                    - null
+                    - null
+                    - E
+                    - null
+                  - - Z
+                    - E
+                    - B
+                    - R
+                    - A
+                    - null
+                    - null
+                    - D
+                    - null
+                    - null
+                    - A
+                    - null
+                    - null
+                    - E
+                    - null
+                  - - null
+                    - null
+                    - null
+                    - A
+                    - null
+                    - L
+                    - I
+                    - O
+                    - N
+                    - null
+                    - B
+                    - E
+                    - A
+                    - R
+                    - null
+                  - - W
+                    - O
+                    - L
+                    - F
+                    - null
+                    - null
+                    - null
+                    - L
+                    - null
+                    - null
+                    - B
+                    - null
+                    - null
+                    - null
+                    - null
+                  - - null
+                    - W
+                    - null
+                    - F
+                    - null
+                    - P
+                    - null
+                    - P
+                    - null
+                    - null
+                    - I
+                    - null
+                    - null
+                    - null
+                    - null
+                  - - null
+                    - L
+                    - null
+                    - E
+                    - L
+                    - E
+                    - P
+                    - H
+                    - A
+                    - N
+                    - T
+                    - null
+                    - null
+                    - null
+                    - null
+                  - - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - N
+                    - null
+                    - I
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                  - - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - G
+                    - null
+                    - N
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                  - - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - U
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                  - - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - I
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                  - - null
+                    - null
+                    - null
+                    - P
+                    - A
+                    - N
+                    - D
+                    - A
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                  - - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                  - - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                    - null
+                  across:
+                  - number: 1
+                    clue: Striped big cat
+                    answer: TIGER
+                    length: 5
+                  - number: 5
+                    clue: Striped horse-like animal
+                    answer: ZEBRA
+                    length: 5
+                  - number: 7
+                    clue: King of the jungle
+                    answer: LION
+                    length: 4
+                  - number: 8
+                    clue: Large furry mammal
+                    answer: BEAR
+                    length: 4
+                  - number: 9
+                    clue: Wild canine that howls
+                    answer: WOLF
+                    length: 4
+                  - number: 12
+                    clue: Large gray mammal with trunk
+                    answer: ELEPHANT
+                    length: 8
+                  - number: 13
+                    clue: Black and white bear from China
+                    answer: PANDA
+                    length: 5
+                  down:
+                  - number: 2
+                    clue: Tallest land animal
+                    answer: GIRAFFE
+                    length: 7
+                  - number: 3
+                    clue: Forest animal with antlers
+                    answer: DEER
+                    length: 4
+                  - number: 4
+                    clue: Hopping animal with long ears
+                    answer: RABBIT
+                    length: 6
+                  - number: 6
+                    clue: Intelligent marine mammal
+                    answer: DOLPHIN
+                    length: 7
+                  - number: 10
+                    clue: Nocturnal bird of prey
+                    answer: OWL
+                    length: 3
+                  - number: 11
+                    clue: Flightless bird from Antarctica
+                    answer: PENGUIN
+                    length: 7
+                  wordCount: 13
+                  html: '<html><head><title>Crossword Puzzle</title><style>body {font-family: Arial, sans-serif; padding: 20px;}h1 {text-align: center; color: #333;}.container {display: flex; gap: 30px; flex-wrap: wrap; justify-content: center;}.grid {display: grid; grid-template-columns: repeat(15, 30px); gap: 1px; background: #333; border: 2px solid #333;}.cell {width: 30px; height: 30px; background: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold; position: relative;}.cell.black {background: #333;}.cell-number {position: absolute; top: 1px; left: 2px; font-size: 8px; font-weight: normal;}.clues {max-width: 300px;}.clue-section h3 {margin-bottom: 10px; color: #333;}.clue {margin: 5px 0; font-size: 14px;}.clue-number {font-weight: bold; margin-right: 5px;}</style></head><body><h1>Crossword</h1><div class=''container''><div class=''grid''><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell''><span class=''cell-number''>1</span></div><div class=''cell''></div><div class=''cell''><span class=''cell-number''>2</span></div><div class=''cell''></div><div class=''cell''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell''><span class=''cell-number''>3</span></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell''><span class=''cell-number''>4</span></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell''></div><div class=''cell black''></div><div class=''cell''><span class=''cell-number''>5</span></div><div class=''cell''></div><div class=''cell''></div><div class=''cell''></div><div class=''cell''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell''><span class=''cell-number''>6</span></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell''></div><div class=''cell black''></div><div class=''cell''><span class=''cell-number''>7</span></div><div class=''cell''></div><div class=''cell''></div><div class=''cell''></div><div class=''cell black''></div><div class=''cell''><span class=''cell-number''>8</span></div><div class=''cell''></div><div class=''cell''></div><div class=''cell''></div><div class=''cell black''></div><div class=''cell''><span class=''cell-number''>9</span></div><div class=''cell''><span class=''cell-number''>10</span></div><div class=''cell''></div><div class=''cell''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell''></div><div class=''cell black''></div><div class=''cell''></div><div class=''cell black''></div><div class=''cell''><span class=''cell-number''>11</span></div><div class=''cell black''></div><div class=''cell''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell''></div><div class=''cell black''></div><div class=''cell''><span class=''cell-number''>12</span></div><div class=''cell''></div><div class=''cell''></div><div class=''cell''></div><div class=''cell''></div><div class=''cell''></div><div class=''cell''></div><div class=''cell''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell''></div><div class=''cell black''></div><div class=''cell''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell''></div><div class=''cell black''></div><div class=''cell''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell''><span class=''cell-number''>13</span></div><div class=''cell''></div><div class=''cell''></div><div class=''cell''></div><div class=''cell''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div><div class=''cell black''></div></div><div class=''clues''><div class=''clue-section''><h3>Across</h3><div class=''clue''><span class=''clue-number''>1.</span>Striped big cat (5)</div><div class=''clue''><span class=''clue-number''>5.</span>Striped horse-like animal (5)</div><div class=''clue''><span class=''clue-number''>7.</span>King of the jungle (4)</div><div class=''clue''><span class=''clue-number''>8.</span>Large furry mammal (4)</div><div class=''clue''><span class=''clue-number''>9.</span>Wild canine that howls (4)</div><div class=''clue''><span class=''clue-number''>12.</span>Large gray mammal with trunk (8)</div><div class=''clue''><span class=''clue-number''>13.</span>Black and white bear from China (5)</div></div><div class=''clue-section''><h3>Down</h3><div class=''clue''><span class=''clue-number''>2.</span>Tallest land animal (7)</div><div class=''clue''><span class=''clue-number''>3.</span>Forest animal with antlers (4)</div><div class=''clue''><span class=''clue-number''>4.</span>Hopping animal with long ears (6)</div><div class=''clue''><span class=''clue-number''>6.</span>Intelligent marine mammal (7)</div><div class=''clue''><span class=''clue-number''>10.</span>Nocturnal bird of prey (3)</div><div class=''clue''><span class=''clue-number''>11.</span>Flightless bird from Antarctica (7)</div></div></div></div></body></html>'
+                  image:
+                    imageName: 1838121c-9f76-44f8-b197-02e1db5987d5_puzzle.png
+                    format: .png
+                    downloadURL: https://storage.googleapis.com/apiverve/APIData/crossword/1838121c-9f76-44f8-b197-02e1db5987d5_puzzle.png?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1766010128&Signature=OYZsWA9QiINhqgC%2BSZSZpict%2B93ryyxvzUSIohJF%2BMGZ7SLGLA2Q47aVnwzLFzr8ZOK7IUQN4DZrAMh%2B0T8VqTMCLf76tj8BKLB1Qwo4IbMkkat1cbG6AFb44ungHGmCpwjwjwDYMwrDgI8%2Bg8dyKzwMZZmQHf5Q1hYNsy084Q%2BBTLAx6KUL%2FIZdw5pp0Rnxiq8aHdPrm%2Fbq2NU1UuMUDg8uBc8TR%2FHYN%2FOljXeyhv6Nbf4FXJCPLTMDdLDqblecNKhfQ67Dc4FdPD%2BF1IPN2A5G9VfkPb5v5KA5iiM8RF4zr8kHW%2FMlncbKSynvLp7QjtL9qZlSHn3%2Bn0pJpf%2FEUA%3D%3D
+                    expires: 1766010128609
+                  solutionImage:
+                    imageName: 3ec675cd-0e16-4e50-87f4-8f4192abea5b_solution.png
+                    format: .png
+                    downloadURL: https://storage.googleapis.com/apiverve/APIData/crossword/3ec675cd-0e16-4e50-87f4-8f4192abea5b_solution.png?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1766010129&Signature=L07115whFCEM3yuFDBILq7r4v26RoSYQzv81S7bwL8yJFcHRjHcKsqUhI6UWaDo4LPKfAjmk%2Fs1gN3z33ma12GE2fJYkp4mxD40EhyY%2BDjR3ja7m%2Fj20Zenu%2FdcOukkS9DCfGiYEa%2BxQDT4I2gjDVORhe7JeDuLeKCFtbsiLZFIlWNZoq6K7YbNc4BWDnwcqviJXSB%2FvWa1FMhXpQFoTIeJVvUCcdOGGVR6Vdl%2BPxwWN%2FAjXcsvNYbIhtyEZHaXQuXxI3zmCMg0eI770cVuhs7rm8JVdN7gYtojprJxTYl9nRx793SRuLcFfJD%2BRhx2dBmpMtXkcZFmv4%2Bz74oZY8Q%3D%3D
+                    expires: 1766010129033
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Games
+  /v1/cryptogram:
+    get:
+      summary: Cryptogram Generator
+      description: Create a cryptogram puzzle
+      operationId: cryptogram
+      parameters:
+      - name: text
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Text to encode (max 500 characters)
+        example: The quick brown fox
+      - name: random
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Use a random famous quote instead of text (a quote is also used when text is omitted)
+        example: true
+      - name: image
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Set to true to generate a downloadable puzzle image
+        example: true
+      - name: solutionImage
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Set to true to generate a downloadable solution image
+        example: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  encoded: PNR MJSXQRV JI K PNJSGKQC DBFRG ARWBQG ZBPN K GBQWFR GPRY
+                  original: The journey of a thousand miles begins with a single step
+                  cipher:
+                    A: K
+                    B: A
+                    C: H
+                    D: C
+                    E: R
+                    F: I
+                    G: W
+                    H: N
+                    I: B
+                    J: M
+                    K: E
+                    L: F
+                    M: D
+                    N: Q
+                    O: J
+                    P: Y
+                    Q: T
+                    R: X
+                    S: G
+                    T: P
+                    U: S
+                    V: L
+                    W: Z
+                    X: O
+                    Y: V
+                    Z: U
+                  letterCount: 47
+                  wordCount: 11
+                  html: '<html><head><title>Cryptogram Puzzle</title><style>body {font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: 0 auto;}h1 {text-align: center;}.puzzle {font-family: monospace; font-size: 24px; letter-spacing: 3px; line-height: 2.5; word-wrap: break-word;}.letter-box {display: inline-block; text-align: center; margin: 2px;}.encoded {border-bottom: 2px solid #333; min-width: 20px; display: block;}.answer {color: #ccc; font-size: 14px;}.space {width: 15px; display: inline-block;}.hint {margin-top: 30px; padding: 15px; background: #f5f5f5; border-radius: 5px;}.hint h3 {margin-top: 0;}</style></head><body><h1>Cryptogram</h1><div class=''puzzle''><span class=''letter-box''><span class=''encoded''>P</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>N</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>R</span><span class=''answer''>_</span></span><span class=''space''></span><span class=''letter-box''><span class=''encoded''>M</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>J</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>S</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>X</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>Q</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>R</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>V</span><span class=''answer''>_</span></span><span class=''space''></span><span class=''letter-box''><span class=''encoded''>J</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>I</span><span class=''answer''>_</span></span><span class=''space''></span><span class=''letter-box''><span class=''encoded''>K</span><span class=''answer''>_</span></span><span class=''space''></span><span class=''letter-box''><span class=''encoded''>P</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>N</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>J</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>S</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>G</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>K</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>Q</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>C</span><span class=''answer''>_</span></span><span class=''space''></span><span class=''letter-box''><span class=''encoded''>D</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>B</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>F</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>R</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>G</span><span class=''answer''>_</span></span><span class=''space''></span><span class=''letter-box''><span class=''encoded''>A</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>R</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>W</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>B</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>Q</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>G</span><span class=''answer''>_</span></span><span class=''space''></span><span class=''letter-box''><span class=''encoded''>Z</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>B</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>P</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>N</span><span class=''answer''>_</span></span><span class=''space''></span><span class=''letter-box''><span class=''encoded''>K</span><span class=''answer''>_</span></span><span class=''space''></span><span class=''letter-box''><span class=''encoded''>G</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>B</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>Q</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>W</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>F</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>R</span><span class=''answer''>_</span></span><span class=''space''></span><span class=''letter-box''><span class=''encoded''>G</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>P</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>R</span><span class=''answer''>_</span></span><span class=''letter-box''><span class=''encoded''>Y</span><span class=''answer''>_</span></span></div><div class=''hint''><h3>Letter Frequency:</h3><p>R=6, G=5, P=4, Q=4, B=4, N=3, J=3, K=3, S=2, F=2, W=2, M=1, X=1, V=1, I=1, C=1, D=1, A=1, Z=1, Y=1</p></div></body></html>'
+                  image:
+                    imageName: 0afa5de4-52fb-4902-8139-c177c08ac98b_puzzle.png
+                    format: .png
+                    downloadURL: https://storage.googleapis.com/apiverve/APIData/cryptogram/0afa5de4-52fb-4902-8139-c177c08ac98b_puzzle.png?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1766010132&Signature=guv7GNCup4lJXTI0iCF7Bo2Cz02Wl6h2HWC0YxJ0jtzb7w%2BlW80b1OzBlGR%2BneFxFdzQPwfIuMQlaHsW0KFqPh5ITsFkSt802OEUFyxuiDn71y4XkiJx8zVDhrxNH9R9i1befMM16c%2F4WQGpgzkaaXw8TJJUT2q2s8c8ESo41K85iYcHJZ%2BGUxXeMeFDJ%2FG38pq5txarX%2F0rnmdTk0Jk%2BhEox9PXFPCzaSvWbDFYDVABIt97N2NQyqlDPRcucrm5uuE5Jb9qjT80JqzlumfqiaR3DpgPDwZkWeVyuYW4b4TZCCbbEpK%2FIlRRUZTw9gYdxDpk0B35NKN9WKSCi%2BfFWQ%3D%3D
+                    expires: 1766010132300
+                  solutionImage:
+                    imageName: 41e6b5b7-d98c-4d4d-8b44-f56bdb5160b9_solution.png
+                    format: .png
+                    downloadURL: https://storage.googleapis.com/apiverve/APIData/cryptogram/41e6b5b7-d98c-4d4d-8b44-f56bdb5160b9_solution.png?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1766010132&Signature=YKDpJF9MYlmXjASdgVUgtPCq8%2Fp59Eci6DIAbXuHzv9B4rALSZwyq1sMj9KoIRhryYCdNW1KGBRpcgJFSFgaEGfcNC1MNsryoV%2F7bp3TSr1%2BknwqAGQu7sWvZrtozB2oJ3Wzaqz%2BGjm74rhrOaqAx0w7%2BmJtimslEHCl8emRuZxmAhW9l8Wi%2Fv%2BsCmb7%2Bl5hj0njHSs6AWo3YtoZpWoNv7F49g1dQczrfj%2BFYW7bOoFMfcmysTz%2ByNpXECZFbvWJ3A2f0fql7itGLGK%2B%2BNlI6Q6WkQ1ye3c7skHB3DqT%2BWHLbJCm0vjbIVhIgq3Vo39ZADdogcd7uiklvEBriMFkwA%3D%3D
+                    expires: 1766010132645
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Games
+  /v1/diceroller:
+    get:
+      summary: Dice Roller
+      description: Roll dice using XdY notation with optional modifier
+      operationId: diceroller
+      parameters:
+      - name: dice
+        in: query
+        schema:
+          type: string
+        required: false
+        description: 'Dice notation in XdY format (e.g., 3d6, 2d20, default: 1d6)'
+        example: 3d6
+      - name: modifier
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Modifier to add to the total (can be negative)
+        example: 5
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  dice_notation: 3d6
+                  num_dice: 3
+                  num_sides: 6
+                  modifier: 5
+                  rolls:
+                  - 6
+                  - 4
+                  - 4
+                  total: 14
+                  total_with_modifier: 19
+                  min_roll: 4
+                  max_roll: 6
+                  average_roll: 4.67
+                  theoretical_min: 3
+                  theoretical_max: 18
+                  theoretical_average: 10.5
+                  expression: 3d6+5
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Games
+  /v1/fillintheblanks:
+    get:
+      summary: Fill in the Blanks Generator
+      description: Create fill in the blank puzzles
+      operationId: fillintheblanks
+      parameters:
+      - name: category
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Puzzle category
+        example: idioms
+      - name: count
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of puzzles
+        example: 5
+      - name: difficulty
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Difficulty level
+        example: medium
+      - name: image
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Set to true to generate a downloadable puzzle image
+        example: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  puzzles:
+                  - id: 1
+                    sentence: A penny saved is a penny ___.
+                    answer: EARNED
+                    letterCount: 6
+                    hint: gained/obtained
+                    firstLetter: null
+                  - id: 2
+                    sentence: Actions speak louder than ___.
+                    answer: WORDS
+                    letterCount: 5
+                    hint: what we say
+                    firstLetter: null
+                  - id: 3
+                    sentence: Don't count your chickens before they ___.
+                    answer: HATCH
+                    letterCount: 5
+                    hint: come out of eggs
+                    firstLetter: null
+                  - id: 4
+                    sentence: The early bird catches the ___.
+                    answer: WORM
+                    letterCount: 4
+                    hint: a crawling creature
+                    firstLetter: null
+                  - id: 5
+                    sentence: Don't put all your eggs in one ___.
+                    answer: BASKET
+                    letterCount: 6
+                    hint: a container
+                    firstLetter: null
+                  count: 5
+                  difficulty: medium
+                  category: idioms
+                  html: '<html><head><title>Fill in the Blanks</title><style>body {font-family: Arial, sans-serif; padding: 20px; max-width: 700px; margin: 0 auto;}h1 {text-align: center; color: #673AB7;}.puzzle {background: #f5f5f5; padding: 20px; margin: 15px 0; border-radius: 10px;}.number {font-weight: bold; color: #673AB7; margin-bottom: 10px;}.sentence {font-size: 18px; line-height: 1.8;}.blank {display: inline-block; min-width: 100px; border-bottom: 2px solid #673AB7; margin: 0 5px;}.hint {font-size: 13px; color: #888; font-style: italic; margin-top: 10px;}.info {font-size: 12px; color: #999; margin-top: 5px;}</style></head><body><h1>Fill in the Blanks</h1><div class=''puzzle''><div class=''number''>#1</div><div class=''sentence''>A penny saved is a penny <span class=''blank''></span>.</div><div class=''info''>6 letters</div><div class=''hint''>Hint: gained/obtained</div></div><div class=''puzzle''><div class=''number''>#2</div><div class=''sentence''>Actions speak louder than <span class=''blank''></span>.</div><div class=''info''>5 letters</div><div class=''hint''>Hint: what we say</div></div><div class=''puzzle''><div class=''number''>#3</div><div class=''sentence''>Don''t count your chickens before they <span class=''blank''></span>.</div><div class=''info''>5 letters</div><div class=''hint''>Hint: come out of eggs</div></div><div class=''puzzle''><div class=''number''>#4</div><div class=''sentence''>The early bird catches the <span class=''blank''></span>.</div><div class=''info''>4 letters</div><div class=''hint''>Hint: a crawling creature</div></div><div class=''puzzle''><div class=''number''>#5</div><div class=''sentence''>Don''t put all your eggs in one <span class=''blank''></span>.</div><div class=''info''>6 letters</div><div class=''hint''>Hint: a container</div></div></body></html>'
+                  image:
+                    imageName: ba85c6d6-4376-4171-841d-8b4bc97e1095_fillblanks.png
+                    format: .png
+                    downloadURL: https://storage.googleapis.com/apiverve/APIData/fillintheblanks/ba85c6d6-4376-4171-841d-8b4bc97e1095_fillblanks.png?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1766010206&Signature=YRHfh28GKDNvEM4Q07qRcNyg3WnPs7Ee7yg0xXKxKRTmT%2Bg3x%2FThpfWsFTeYScpZlgQTVQ3SU1tZMGH74sZJvAHdVkG6IGA9V2lwIfhHzcfu4Uf4VGKL8%2FIa%2FaLupdtrgDqXSFWOJ9EHHeMKnImAhli1qhlMu%2BIuWAiqfPitDlN5pMklv4R5FACKkZld4LXyA82%2BX8bt%2FESyHciZ5jzlqY1JTacL4kW5uK09bpoo9Ytvs8XOOOjB0my1s%2BIq5z0JEwZzw1Jag%2F5vd09wTXzSXeQMzfo%2FDj73kpU7SilAxEGh%2BuflilyDQTXK7krXcdFUGcD5Nd4Wm%2BW7dP8tQKmbAA%3D%3D
+                    expires: 1766010206793
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Games
+  /v1/fortunecookie:
+    get:
+      summary: Fortune Cookie Generator
+      description: Generate fortune cookie messages with lucky numbers
+      operationId: fortunecookie
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  fortune: The best time to plant a tree was 20 years ago. The second best time is now.
+                  type: wisdom
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Games
+  /v1/gamecharacter:
+    get:
+      summary: Game Character Generator
+      description: Generate a random RPG character
+      operationId: gamecharacter
+      parameters:
+      - name: race
+        in: query
+        schema:
+          type: string
+        required: false
+        description: 'Character race: Human, Elf, Dwarf, Halfling, Orc, Gnome, Tiefling, Dragonborn, Half-Elf, Goblin'
+        example: elf
+      - name: class
+        in: query
+        schema:
+          type: string
+        required: false
+        description: 'Character class: Warrior, Mage, Rogue, Cleric, Ranger, Paladin, Barbarian, Bard, Druid, Monk, Warlock, Necromancer'
+        example: mage
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  name: Nimara Goldenbough
+                  race:
+                    name: Elf
+                    traits:
+                    - Graceful
+                    - Keen Senses
+                    - Long-lived
+                  class:
+                    name: Mage
+                    description: Wielder of arcane magic
+                    primaryStat: intelligence
+                    hitDie: d6
+                  background: Criminal
+                  personality: Ambitious and driven
+                  motivation: Protect the innocent
+                  stats:
+                    strength:
+                      value: 13
+                      modifier: 1
+                    dexterity:
+                      value: 12
+                      modifier: 1
+                    constitution:
+                      value: 9
+                      modifier: -1
+                    intelligence:
+                      value: 11
+                      modifier: 0
+                    wisdom:
+                      value: 4
+                      modifier: -3
+                    charisma:
+                      value: 8
+                      modifier: -1
+                  hp: 5
+                  totalStatPoints: 57
+                  highestStat: strength
+                  lowestStat: wisdom
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Games
+  /v1/hangmanword:
+    get:
+      summary: Hangman Word Generator
+      description: Get random words for hangman
+      operationId: hangmanword
+      parameters:
+      - name: category
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Word category
+        example: animals
+      - name: difficulty
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Difficulty level
+        example: medium
+      - name: count
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of words
+        example: 1
+      - name: image
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Set to true to generate a downloadable puzzle image
+        example: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  words:
+                  - word: PORCUPINE
+                    blanks: _ _ _ _ _ _ _ _ _
+                    length: 9
+                    uniqueLetters: 8
+                    difficulty: medium
+                    category: animals
+                    maxGuesses: 7
+                  count: 1
+                  difficulty: medium
+                  category: animals
+                  html: '<html><head><title>Hangman Words</title><style>body {font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto;}h1 {text-align: center;}.word-card {background: #f5f5f5; padding: 25px; margin: 20px 0; border-radius: 10px; text-align: center;}.blanks {font-size: 32px; font-family: monospace; letter-spacing: 8px; margin: 20px 0;}.info {font-size: 14px; color: #666;}.category {background: #2196F3; color: white; padding: 5px 15px; border-radius: 20px; display: inline-block; margin-bottom: 15px;}.hangman {font-size: 40px; margin: 20px 0;}</style></head><body><h1>Hangman</h1><div class=''word-card''><span class=''category''>animals</span><div class=''hangman''>&#128128;</div><div class=''blanks''>_ _ _ _ _ _ _ _ _</div><div class=''info''>9 letters | 8 unique | Max 7 wrong guesses</div></div></body></html>'
+                  image:
+                    imageName: d6e69eac-546c-4a2b-8413-2b65fd4a109a_hangman.png
+                    format: .png
+                    downloadURL: https://storage.googleapis.com/apiverve/APIData/hangmanword/d6e69eac-546c-4a2b-8413-2b65fd4a109a_hangman.png?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1766010232&Signature=En2KyqlZwODc1wOwqTyuVtHq5LqNHuFXdn9Xw6nKlwhmB2SMV9HTSwpfVi9SS1tC6tnq0sntOPZ4ANH8McPxnjqFJhT2VKXAObQSRha6IHR9J1ymSpH%2F5TJ4AmlRZ8nLvW1jXPWjNvnUvgrd%2BfN5zK1u9pQ1MYatBVeg63y0rOdxSPcJBMX%2BDdgzG1lJK3Rmugr0HWoVb9ocfk8R%2FGVPsLXzHuwZySOk%2BCyQ1IZAWoqYuX7v3wKf3JHhiK9ZQ%2FG58j2dSychhcDsBZyKXN1wSpRsRB%2F03F6zKkykiiVw%2FuGr9kjPGK1QRJ9XJZzLZ0Z9S%2BQ6ZoD5FrCJwTIVXTPHxg%3D%3D
+                    expires: 1766010232291
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Games
+  /v1/lotterypicker:
+    get:
+      summary: Lottery Number Generator
+      description: Generate random lottery numbers for various games
+      operationId: lotterypicker
+      parameters:
+      - name: game
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Lottery game preset
+        example: powerball
+      - name: numbers
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of main numbers to pick (for custom game)
+        example: 6
+      - name: max
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Maximum number for main numbers (for custom game)
+        example: 49
+      - name: bonus
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of bonus numbers (for custom game)
+        example: 1
+      - name: tickets
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of tickets to generate
+        example: 3
+      - name: bonusmax
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Highest value a bonus ball can take. Only applies when game is custom; named games use their own rules
+        example: 26
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  game: Powerball (US)
+                  game_type: powerball
+                  config:
+                    main_numbers_count: 5
+                    main_numbers_range: 1-69
+                    bonus_numbers_count: 1
+                    bonus_numbers_range: 1-26
+                  tickets_generated: 3
+                  tickets:
+                  - ticket_number: 1
+                    main_numbers:
+                    - 11
+                    - 12
+                    - 51
+                    - 53
+                    - 58
+                    bonus_numbers:
+                    - 3
+                  - ticket_number: 2
+                    main_numbers:
+                    - 4
+                    - 24
+                    - 28
+                    - 46
+                    - 61
+                    bonus_numbers:
+                    - 3
+                  - ticket_number: 3
+                    main_numbers:
+                    - 12
+                    - 13
+                    - 29
+                    - 49
+                    - 60
+                    bonus_numbers:
+                    - 6
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Games
+  /v1/madlibs:
+    get:
+      summary: Mad Libs Generator
+      description: Get mad libs story templates
+      operationId: madlibs
+      parameters:
+      - name: category
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Story category
+        example: funny
+      - name: count
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of stories
+        example: 1
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  stories:
+                  - title: Restaurant Disaster
+                    template: I went to a {adjective} restaurant called The {adjective} {noun}. The waiter was a {adjective} {animal} who kept {verb_ing} on the tables. I ordered {number} {adjective} {plural_noun} with a side of {adjective} {noun}. When the bill came, it said I owed {number} {plural_noun}!
+                    blanks:
+                    - id: 1
+                      type: adjective
+                      label: Adjective
+                    - id: 2
+                      type: adjective
+                      label: Adjective
+                    - id: 3
+                      type: noun
+                      label: Noun
+                    - id: 4
+                      type: adjective
+                      label: Adjective
+                    - id: 5
+                      type: animal
+                      label: Animal
+                    - id: 6
+                      type: verb_ing
+                      label: Verb ending in -ing
+                    - id: 7
+                      type: number
+                      label: Number
+                    - id: 8
+                      type: adjective
+                      label: Adjective
+                    - id: 9
+                      type: plural_noun
+                      label: Plural Noun
+                    - id: 10
+                      type: adjective
+                      label: Adjective
+                    - id: 11
+                      type: noun
+                      label: Noun
+                    - id: 12
+                      type: number
+                      label: Number
+                    - id: 13
+                      type: plural_noun
+                      label: Plural Noun
+                    blankCount: 13
+                    category: funny
+                  count: 1
+                  category: funny
+                  html: '<html><head><title>Mad Libs</title><style>body {font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: 0 auto;}h1 {text-align: center; color: #E91E63;}.story-card {background: #fff; border: 2px solid #E91E63; padding: 25px; margin: 25px 0; border-radius: 15px;}.title {font-size: 24px; font-weight: bold; color: #E91E63; margin-bottom: 20px;}.blanks-section {background: #FCE4EC; padding: 20px; border-radius: 10px; margin-bottom: 20px;}.blanks-section h3 {margin-top: 0;}.blank-item {margin: 10px 0; display: flex; align-items: center;}.blank-label {min-width: 50px; font-weight: bold;}.blank-type {color: #666; margin-left: 10px;}.blank-input {flex: 1; padding: 8px; border: 1px solid #E91E63; border-radius: 5px; margin-left: 10px;}.story-template {line-height: 2; font-size: 16px;}.blank-marker {background: #E91E63; color: white; padding: 2px 8px; border-radius: 3px; font-weight: bold;}</style></head><body><h1>Mad Libs</h1><div class=''story-card''><div class=''title''>Restaurant Disaster</div><div class=''blanks-section''><h3>Fill in the blanks:</h3><div class=''blank-item''><span class=''blank-label''>1.</span><span class=''blank-type''>Adjective</span><input type=''text'' class=''blank-input'' placeholder=''Enter adjective''></div><div class=''blank-item''><span class=''blank-label''>2.</span><span class=''blank-type''>Adjective</span><input type=''text'' class=''blank-input'' placeholder=''Enter adjective''></div><div class=''blank-item''><span class=''blank-label''>3.</span><span class=''blank-type''>Noun</span><input type=''text'' class=''blank-input'' placeholder=''Enter noun''></div><div class=''blank-item''><span class=''blank-label''>4.</span><span class=''blank-type''>Adjective</span><input type=''text'' class=''blank-input'' placeholder=''Enter adjective''></div><div class=''blank-item''><span class=''blank-label''>5.</span><span class=''blank-type''>Animal</span><input type=''text'' class=''blank-input'' placeholder=''Enter animal''></div><div class=''blank-item''><span class=''blank-label''>6.</span><span class=''blank-type''>Verb ending in -ing</span><input type=''text'' class=''blank-input'' placeholder=''Enter verb ending in -ing''></div><div class=''blank-item''><span class=''blank-label''>7.</span><span class=''blank-type''>Number</span><input type=''text'' class=''blank-input'' placeholder=''Enter number''></div><div class=''blank-item''><span class=''blank-label''>8.</span><span class=''blank-type''>Adjective</span><input type=''text'' class=''blank-input'' placeholder=''Enter adjective''></div><div class=''blank-item''><span class=''blank-label''>9.</span><span class=''blank-type''>Plural Noun</span><input type=''text'' class=''blank-input'' placeholder=''Enter plural noun''></div><div class=''blank-item''><span class=''blank-label''>10.</span><span class=''blank-type''>Adjective</span><input type=''text'' class=''blank-input'' placeholder=''Enter adjective''></div><div class=''blank-item''><span class=''blank-label''>11.</span><span class=''blank-type''>Noun</span><input type=''text'' class=''blank-input'' placeholder=''Enter noun''></div><div class=''blank-item''><span class=''blank-label''>12.</span><span class=''blank-type''>Number</span><input type=''text'' class=''blank-input'' placeholder=''Enter number''></div><div class=''blank-item''><span class=''blank-label''>13.</span><span class=''blank-type''>Plural Noun</span><input type=''text'' class=''blank-input'' placeholder=''Enter plural noun''></div></div><div class=''story-template''>I went to a <span class=''blank-marker''>1</span> restaurant called The <span class=''blank-marker''>2</span> <span class=''blank-marker''>3</span>. The waiter was a <span class=''blank-marker''>4</span> <span class=''blank-marker''>5</span> who kept <span class=''blank-marker''>6</span> on the tables. I ordered <span class=''blank-marker''>7</span> <span class=''blank-marker''>8</span> <span class=''blank-marker''>9</span> with a side of <span class=''blank-marker''>10</span> <span class=''blank-marker''>11</span>. When the bill came, it said I owed <span class=''blank-marker''>12</span> <span class=''blank-marker''>13</span>!</div></div></body></html>'
+                  image:
+                    imageName: 25d0dd78-3ad1-4f14-a30f-f8bdd8ebcc33_madlibs.png
+                    format: .png
+                    downloadURL: https://storage.googleapis.com/apiverve/APIData/madlibs/25d0dd78-3ad1-4f14-a30f-f8bdd8ebcc33_madlibs.png?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1766010349&Signature=e4owJidlQu2GZKe1GSuClCNSpOX1UQkxdweeS08IVOxkNscZGNr33BdYhNSG%2BuVIZ2XdEeAc3o2%2BY2hxP01APjgqMgCe4QvHRBgbCLPUiueHaczDJ1m1ZBI41aRaYjM8kdB7M0iYLNhdgqogXTYs9Zc%2FaRj9a6txpLz7fb2YexgG0fXhkcZuGeCb1haQlMTHL1YZbh9zJIKgHSqMhKK3jqhf0stuIDXIWkWdiK6fbP1B2aZkomqwpbx3iQKwbhca8rwFMWjUMRN5fspY%2FRtNbS7kIWaznc07VaBloITlQktm%2FMMojDc6QSanGeegRKealslcO53diZRsdLTZvB3wAQ%3D%3D
+                    expires: 1766010349930
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Games
+  /v1/maze:
+    get:
+      summary: Maze Generator
+      description: Create a maze puzzle
+      operationId: maze
+      parameters:
+      - name: width
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Maze width
+        example: 15
+      - name: height
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Maze height
+        example: 15
+      - name: difficulty
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Difficulty level
+        example: medium
+      - name: image
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Set to true to generate a downloadable maze image
+        example: true
+      - name: solutionImage
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Set to true to generate a downloadable solution image
+        example: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  width: 15
+                  height: 15
+                  difficulty: medium
+                  start:
+                    x: 1
+                    y: 1
+                  end:
+                    x: 29
+                    y: 29
+                  grid:
+                  - - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                  - - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                  - - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                  - - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                  - - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                  - - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                  - - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                  - - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                  - - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                  - - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                  - - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                  - - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                  - - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                  - - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                  - - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                  - - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                  - - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                  - - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                  - - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                  - - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                  - - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                  - - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                  - - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                  - - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                  - - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                  - - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                  - - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                  - - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                  - - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 0
+                    - 1
+                    - 1
+                    - 1
+                  - - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 0
+                    - 1
+                  - - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                    - 1
+                  html: '<html><head><title>Maze Puzzle</title><style>body {font-family: Arial, sans-serif; padding: 20px; text-align: center;}h1 {color: #333;}.maze {display: inline-grid; grid-template-columns: repeat(31, 19px); gap: 0; border: 2px solid #333;}.cell {width: 19px; height: 19px;}.wall {background: #333;}.path {background: #fff;}.start {background: #4CAF50;}.end {background: #F44336;}</style></head><body><h1>Maze</h1><p>Find your way from green to red!</p><div class=''maze''><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell start''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell wall''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell path''></div><div class=''cell end''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div><div class=''cell wall''></div></div></body></html>'
+                  image:
+                    imageName: 24ed4b60-28c5-4aa9-9d18-0dec8c2df627_puzzle.png
+                    format: .png
+                    downloadURL: https://storage.googleapis.com/apiverve/APIData/maze/24ed4b60-28c5-4aa9-9d18-0dec8c2df627_puzzle.png?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1766010378&Signature=bh3WmsCSjfVyE003mAyBjbWf07n4%2FjfI48d%2FpJpNAQEimQ113b%2F1%2FcovTUBbbMBOMy8ehlNHL9TDUcg7JNkfbIZL9ZePI0ioWQygbZro6ypdiHv0url3Iwh46nQbp6PqQ8KVUYF2%2FE7vCVEji15cJDK%2F5NJ61Y40ICPhbDGuxRBoDpvBuYS5mIYaOgrteLQpfYUL5qlSE%2F34ifcA8PTxfPjTNG4ixNmRELw6xqtcQs7RMFVTui6bm9eEA6a8D%2Br7h7NhUEnJv7kuJJVY1ieHKxg6yTJIWZUd%2FVIXrPRTJF3lgpgJFubXzAs5x01CVxEGl%2B2cUiG4u4gB%2F4ILITSJsw%3D%3D
+                    expires: 1766010378634
+                  solutionImage:
+                    imageName: 7d1c4b60-c228-47d1-9f8a-d8141d087cdc_solution.png
+                    format: .png
+                    downloadURL: https://storage.googleapis.com/apiverve/APIData/maze/7d1c4b60-c228-47d1-9f8a-d8141d087cdc_solution.png?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1766010378&Signature=H7m2zOphZK6elU3niJ4BSJD%2FABqi%2BZ1cPKUfG8QJbd1fY3nyhVdD5wFAcGzvCN76kjtVg%2BwBlbIDr3QG6FhrBhll9eY2t3UnCioJQ6lqQZYRIaB%2FmURSUbeLEIg2PZvODwf3qgZmTSsH8kIiLynIgr3vvvJ%2FBzJFKt56OUZLo2eynqLVWz%2FiQbUCcZ%2F5C6auROc2nWvhoPgV1xAwKEYlNCyFnHXbtTbBiBMqmk7n7SXg3l3ijQGuop8WYWPoAdI0%2FqQcREz5HwTdFsOdsv7sfh2TusSpPzNUycR%2F%2B6KlwWduiB0TKYAZSrmn5GYsDHxF%2BxjgNT5xaT02%2FFvelOb5mw%3D%3D
+                    expires: 1766010378983
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Games
+  /v1/rockpaperscissors:
+    get:
+      summary: Rock Paper Scissors
+      description: Play rounds of Rock Paper Scissors with outcome analysis
+      operationId: rockpaperscissors
+      parameters:
+      - name: choice
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Your choice - omit for random
+        example: rock
+      - name: rounds
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of rounds to play
+        example: 5
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  total_rounds: 5
+                  player_choice_mode: manual
+                  games:
+                  - round: 1
+                    player_choice: rock
+                    player_emoji: 🪨
+                    computer_choice: paper
+                    computer_emoji: 📄
+                    outcome: computer
+                    message: Computer wins! undefined
+                  - round: 2
+                    player_choice: rock
+                    player_emoji: 🪨
+                    computer_choice: rock
+                    computer_emoji: 🪨
+                    outcome: tie
+                    message: It's a tie! Both chose rock
+                  - round: 3
+                    player_choice: rock
+                    player_emoji: 🪨
+                    computer_choice: rock
+                    computer_emoji: 🪨
+                    outcome: tie
+                    message: It's a tie! Both chose rock
+                  - round: 4
+                    player_choice: rock
+                    player_emoji: 🪨
+                    computer_choice: paper
+                    computer_emoji: 📄
+                    outcome: computer
+                    message: Computer wins! undefined
+                  - round: 5
+                    player_choice: rock
+                    player_emoji: 🪨
+                    computer_choice: scissors
+                    computer_emoji: ✂️
+                    outcome: player
+                    message: You win! Rock crushes scissors
+                  results:
+                    player_wins: 1
+                    computer_wins: 2
+                    ties: 2
+                    player_win_percentage: 20
+                    computer_win_percentage: 40
+                    tie_percentage: 40
+                  overall_winner: computer
+                  game_rules:
+                    rock_beats: scissors
+                    paper_beats: rock
+                    scissors_beats: paper
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Games
+  /v1/slotmachine:
+    get:
+      summary: Slot Machine Simulator
+      description: Simulate slot machine spins with configurable reels and bet amounts
+      operationId: slotmachine
+      parameters:
+      - name: spins
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of spins to simulate
+        example: 5
+      - name: reels
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of reels
+        example: 3
+      - name: bet
+        in: query
+        schema:
+          type: number
+        required: false
+        description: Bet amount per spin
+        example: 1
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  total_spins: 5
+                  num_reels: 3
+                  bet_per_spin: 1
+                  spins:
+                  - spin_number: 1
+                    reels:
+                    - symbol: 🍋
+                      name: Lemon
+                    - symbol: 🍒
+                      name: Cherry
+                    - symbol: 🍒
+                      name: Cherry
+                    bet: 1
+                    payout: 0
+                    win_type: none
+                    is_win: false
+                  - spin_number: 2
+                    reels:
+                    - symbol: ⭐
+                      name: Star
+                    - symbol: 🍋
+                      name: Lemon
+                    - symbol: ⭐
+                      name: Star
+                    bet: 1
+                    payout: 0
+                    win_type: none
+                    is_win: false
+                  - spin_number: 3
+                    reels:
+                    - symbol: 🍊
+                      name: Orange
+                    - symbol: 🍇
+                      name: Grape
+                    - symbol: 🍋
+                      name: Lemon
+                    bet: 1
+                    payout: 0
+                    win_type: none
+                    is_win: false
+                  - spin_number: 4
+                    reels:
+                    - symbol: 🍒
+                      name: Cherry
+                    - symbol: ⭐
+                      name: Star
+                    - symbol: 🔔
+                      name: Bell
+                    bet: 1
+                    payout: 0
+                    win_type: none
+                    is_win: false
+                  - spin_number: 5
+                    reels:
+                    - symbol: 🍒
+                      name: Cherry
+                    - symbol: 🍒
+                      name: Cherry
+                    - symbol: 7️⃣
+                      name: Seven
+                    bet: 1
+                    payout: 0.5
+                    win_type: small
+                    is_win: true
+                  total_bet: 5
+                  total_winnings: 0.5
+                  net_profit: -4.5
+                  wins: 1
+                  losses: 4
+                  win_percentage: 20
+                  available_symbols:
+                  - symbol: 🍒
+                    name: Cherry
+                    payout_multiplier: 2
+                  - symbol: 🍋
+                    name: Lemon
+                    payout_multiplier: 3
+                  - symbol: 🍊
+                    name: Orange
+                    payout_multiplier: 5
+                  - symbol: 🍇
+                    name: Grape
+                    payout_multiplier: 10
+                  - symbol: 🔔
+                    name: Bell
+                    payout_multiplier: 20
+                  - symbol: ⭐
+                    name: Star
+                    payout_multiplier: 50
+                  - symbol: 💎
+                    name: Diamond
+                    payout_multiplier: 100
+                  - symbol: 7️⃣
+                    name: Seven
+                    payout_multiplier: 200
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Games
+  /v1/spellingbee:
+    get:
+      summary: Spelling Bee Generator
+      description: Create a spelling bee puzzle
+      operationId: spellingbee
+      parameters:
+      - name: difficulty
+        in: query
+        schema:
+          type: string
+        required: false
+        description: 'Difficulty: easy, medium, hard (affects word count)'
+        example: medium
+      - name: image
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Set to true to generate a downloadable puzzle image
+        example: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  centerLetter: A
+                  outerLetters:
+                  - C
+                  - H
+                  - E
+                  - J
+                  - O
+                  - D
+                  allLetters:
+                  - A
+                  - C
+                  - H
+                  - E
+                  - J
+                  - O
+                  - D
+                  difficulty: medium
+                  wordCount: 53
+                  pangramCount: 0
+                  maxPoints: 200
+                  words:
+                  - word: DEADHEADED
+                    points: 10
+                    isPangram: false
+                  - word: COHEADED
+                    points: 8
+                    isPangram: false
+                  - word: DEADHEAD
+                    points: 8
+                    isPangram: false
+                  - word: HEADACHE
+                    points: 8
+                    isPangram: false
+                  - word: ACCEDED
+                    points: 7
+                    isPangram: false
+                  - word: COACHED
+                    points: 7
+                    isPangram: false
+                  - word: ACCEDE
+                    points: 6
+                    isPangram: false
+                  - word: AHCHOO
+                    points: 6
+                    isPangram: false
+                  - word: CACHED
+                    points: 6
+                    isPangram: false
+                  - word: COHEAD
+                    points: 6
+                    isPangram: false
+                  - word: DADOED
+                    points: 6
+                    isPangram: false
+                  - word: DECADE
+                    points: 6
+                    isPangram: false
+                  - word: DOODAD
+                    points: 6
+                    isPangram: false
+                  - word: HADJEE
+                    points: 6
+                    isPangram: false
+                  - word: HEADED
+                    points: 6
+                    isPangram: false
+                  - word: AAHED
+                    points: 5
+                    isPangram: false
+                  - word: ACHED
+                    points: 5
+                    isPangram: false
+                  - word: ACHOO
+                    points: 5
+                    isPangram: false
+                  - word: ADDED
+                    points: 5
+                    isPangram: false
+                  - word: AHEAD
+                    points: 5
+                    isPangram: false
+                  - word: CACAO
+                    points: 5
+                    isPangram: false
+                  - word: CACHE
+                    points: 5
+                    isPangram: false
+                  - word: CAECA
+                    points: 5
+                    isPangram: false
+                  - word: COACH
+                    points: 5
+                    isPangram: false
+                  - word: COCOA
+                    points: 5
+                    isPangram: false
+                  - word: DACHA
+                    points: 5
+                    isPangram: false
+                  - word: HADED
+                    points: 5
+                    isPangram: false
+                  - word: HODAD
+                    points: 5
+                    isPangram: false
+                  - word: JADED
+                    points: 5
+                    isPangram: false
+                  - word: JEHAD
+                    points: 5
+                    isPangram: false
+                  - word: ACED
+                    points: 1
+                    isPangram: false
+                  - word: ACHE
+                    points: 1
+                    isPangram: false
+                  - word: AHED
+                    points: 1
+                    isPangram: false
+                  - word: AJEE
+                    points: 1
+                    isPangram: false
+                  - word: CACA
+                    points: 1
+                    isPangram: false
+                  - word: CADE
+                    points: 1
+                    isPangram: false
+                  - word: CECA
+                    points: 1
+                    isPangram: false
+                  - word: CHAD
+                    points: 1
+                    isPangram: false
+                  - word: CHAO
+                    points: 1
+                    isPangram: false
+                  - word: COCA
+                    points: 1
+                    isPangram: false
+                  - word: CODA
+                    points: 1
+                    isPangram: false
+                  - word: DACE
+                    points: 1
+                    isPangram: false
+                  - word: DADA
+                    points: 1
+                    isPangram: false
+                  - word: DADO
+                    points: 1
+                    isPangram: false
+                  - word: DEAD
+                    points: 1
+                    isPangram: false
+                  - word: EACH
+                    points: 1
+                    isPangram: false
+                  - word: HADE
+                    points: 1
+                    isPangram: false
+                  - word: HADJ
+                    points: 1
+                    isPangram: false
+                  - word: HAED
+                    points: 1
+                    isPangram: false
+                  - word: HAHA
+                    points: 1
+                    isPangram: false
+                  - word: HAJJ
+                    points: 1
+                    isPangram: false
+                  - word: HEAD
+                    points: 1
+                    isPangram: false
+                  - word: JADE
+                    points: 1
+                    isPangram: false
+                  html: '<html><head><title>Spelling Bee</title><style>body {font-family: Arial, sans-serif; padding: 20px; max-width: 500px; margin: 0 auto; text-align: center;}h1 {color: #F9A825;}.honeycomb {display: flex; flex-wrap: wrap; justify-content: center; max-width: 200px; margin: 30px auto;}.hex {width: 60px; height: 52px; background: #E0E0E0; margin: 2px; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);}.hex.center {background: #F9A825; color: white;}.stats {margin: 20px 0; font-size: 14px; color: #666;}.rules {text-align: left; background: #FFF8E1; padding: 15px; border-radius: 10px; margin-top: 20px;}.rules h3 {margin-top: 0; color: #F9A825;}.rules ul {margin: 0; padding-left: 20px;}</style></head><body><h1>Spelling Bee</h1><div class=''honeycomb''><div class=''hex center''>A</div><div class=''hex''>C</div><div class=''hex''>H</div><div class=''hex''>E</div><div class=''hex''>J</div><div class=''hex''>O</div><div class=''hex''>D</div></div><div class=''stats''>53 words | 200 possible points</div><div class=''rules''><h3>How to Play:</h3><ul><li>Create words using the letters shown</li><li>Words must contain the center letter (yellow)</li><li>Words must be at least 4 letters long</li><li>Letters can be used more than once</li><li>4-letter words = 1 point</li><li>Longer words = 1 point per letter</li><li>Pangrams (use all 7 letters) = +7 bonus points</li></ul></div></body></html>'
+                  image:
+                    imageName: 0f8f8f2c-ac7d-46f9-b5fc-e2d777117f13.png
+                    format: .png
+                    downloadURL: https://storage.googleapis.com/apiverve/APIData/spellingbee/0f8f8f2c-ac7d-46f9-b5fc-e2d777117f13.png?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1766010561&Signature=cHvKHU7wb0RwJKVI6FGIS8%2B8%2BencmsoWEuH%2FT2cQsUjPTY%2FFLhSzipEyHex5HCEg5q8jEiRB3wZDXF9lyONQTVSNdZp0Xpm6Fw69tZZDvCeHePwa1v0h0rktZ6PLSbRswtr0vlHDZL3JPBl7i%2FsxM8QxTdGDOs7cyULy3d9qEyuPPIEDkOF1cnQce2qThIhZ%2BHieQNsBVX193NhyeCrgfRVQVPiFYo4ngSbOrMJKpVm2aSbtykG6Hyw%2B8RnQqkBqA5JB8XaB2ESBg0ZU8ldZUNoHd4cMoC2Oz4rI5FkLuQ2tzju9FVsxsCXiVvJCPd9jsWOlhQ7T1NVp%2FwV107k38w%3D%3D
+                    expires: 1766010561052
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Games
+  /v1/superheroname:
+    get:
+      summary: Superhero Name Generator
+      description: Generate a random superhero name
+      operationId: superheroname
+      parameters:
+      - name: style
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Name style
+        example: dark
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  name: Lord Stalker
+                  style: dark
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Games
+  /v1/wordladder:
+    get:
+      summary: Word Ladder Generator
+      description: Create word ladder puzzles
+      operationId: wordladder
+      parameters:
+      - name: start
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Starting word (3-6 letters)
+        example: cold
+      - name: end
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Ending word (same length as start)
+        example: warm
+      - name: difficulty
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Difficulty level
+        example: medium
+      - name: count
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of puzzles
+        example: 1
+      - name: image
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Set to true to generate a downloadable puzzle image
+        example: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  puzzles:
+                  - startWord: ANIL
+                    endWord: CUED
+                    steps: 5
+                    solution:
+                    - ANIL
+                    - ARIL
+                    - ARID
+                    - IRID
+                    - IRED
+                    - CRED
+                    - CUED
+                    solvable: true
+                    difficulty: medium
+                  count: 1
+                  difficulty: medium
+                  html: '<html><head><title>Word Ladder</title><style>body {font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto;}h1 {text-align: center; color: #4CAF50;}.puzzle {background: #f5f5f5; padding: 25px; margin: 20px 0; border-radius: 10px;}.words {display: flex; justify-content: space-between; align-items: center; margin: 20px 0;}.word {font-size: 28px; font-weight: bold; letter-spacing: 3px; padding: 15px 25px; border-radius: 10px;}.start {background: #4CAF50; color: white;}.end {background: #2196F3; color: white;}.arrow {font-size: 30px; color: #999;}.steps {text-align: center; font-size: 14px; color: #666; margin-bottom: 15px;}.ladder {display: flex; flex-direction: column; align-items: center; gap: 10px; margin: 20px 0;}.rung {width: 150px; height: 40px; border: 2px dashed #ccc; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 18px; letter-spacing: 5px;}.hint {font-size: 13px; color: #888; font-style: italic; margin-top: 10px;}</style></head><body><h1>Word Ladder</h1><p style=''text-align:center;''>Change one letter at a time to get from the first word to the last</p><div class=''puzzle''><div class=''steps''>Puzzle #1 - 5 steps</div><div class=''words''><span class=''word start''>ANIL</span><span class=''arrow''>→</span><span class=''word end''>CUED</span></div><div class=''ladder''><div class=''rung''>_ _ _ _</div><div class=''rung''>_ _ _ _</div><div class=''rung''>_ _ _ _</div><div class=''rung''>_ _ _ _</div><div class=''rung''>_ _ _ _</div></div></div></body></html>'
+                  image:
+                    imageName: 6f0f9e5e-ce0d-4570-a706-8fc5ccbfc948_wordladder.png
+                    format: .png
+                    downloadURL: https://storage.googleapis.com/apiverve/APIData/wordladder/6f0f9e5e-ce0d-4570-a706-8fc5ccbfc948_wordladder.png?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1766010731&Signature=FQwH%2FqXC0eYHgHqGKfBoEETrcXALoIpkf2z7HCkmYcFu2IgL2uMbCBi22tEsrlY3yOkksRuZ56C2685lLi98CWvgCF1J9UrYaAWjFtLesnHZ0i%2B0SWYIy5wZLWnVq4UrJDLZVrvSe8lh21mQJrduVY8QqV%2FI0sViUlnlndLMFUfhEQedKYAGRtmXjJlpl1YA9A9%2BtJoqRvMm4YStfJyLJmExPQKnPiRoP6EB6%2B8%2F1WUq5vH3%2BWglijVroxaJ%2BJy6kgQ8qTuVX9%2FzFi8R0DDHZtd0IpcTL8EBvNvHnjRPS4lZB%2Bm3k9GCxqGCnsj8pssu6ymtzGNEqA%2BBqAthODekWw%3D%3D
+                    expires: 1766010731681
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Games
+  /v1/wordscramble:
+    get:
+      summary: Word Scramble Generator
+      description: Create scrambled word puzzles
+      operationId: wordscramble
+      parameters:
+      - name: difficulty
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Difficulty level (affects word length)
+        example: medium
+      - name: count
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of puzzles
+        example: 5
+      - name: image
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Set to true to generate a downloadable puzzle image
+        example: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  puzzles:
+                  - scrambled: ISIEMM
+                    answer: IMMIES
+                    letterCount: 6
+                  - scrambled: DRIGIANN
+                    answer: DRAINING
+                    letterCount: 8
+                  - scrambled: RDAKCE
+                    answer: ARCKED
+                    letterCount: 6
+                  - scrambled: ERTHASDB
+                    answer: BREADTHS
+                    letterCount: 8
+                  - scrambled: SISSNASA
+                    answer: ASSASSIN
+                    letterCount: 8
+                  count: 5
+                  difficulty: medium
+                  html: '<html><head><title>Word Scramble Puzzle</title><style>body {font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto;}h1 {text-align: center; color: #333;}.puzzle {background: #f5f5f5; padding: 20px; margin: 15px 0; border-radius: 10px;}.scrambled {font-size: 28px; font-weight: bold; letter-spacing: 5px; color: #2196F3; text-align: center;}.hint {font-size: 14px; color: #666; margin-top: 10px; font-style: italic;}.answer-line {margin-top: 15px; border-bottom: 2px solid #333; height: 30px;}.number {font-size: 14px; color: #999;}</style></head><body><h1>Word Scramble</h1><div class=''puzzle''><div class=''number''>#1 (6 letters)</div><div class=''scrambled''>ISIEMM</div><div class=''answer-line''></div></div><div class=''puzzle''><div class=''number''>#2 (8 letters)</div><div class=''scrambled''>DRIGIANN</div><div class=''answer-line''></div></div><div class=''puzzle''><div class=''number''>#3 (6 letters)</div><div class=''scrambled''>RDAKCE</div><div class=''answer-line''></div></div><div class=''puzzle''><div class=''number''>#4 (8 letters)</div><div class=''scrambled''>ERTHASDB</div><div class=''answer-line''></div></div><div class=''puzzle''><div class=''number''>#5 (8 letters)</div><div class=''scrambled''>SISSNASA</div><div class=''answer-line''></div></div></body></html>'
+                  image:
+                    imageName: d1ae484c-e879-4a0e-95b0-bfa872fa758a_wordscramble.png
+                    format: .png
+                    downloadURL: https://storage.googleapis.com/apiverve/APIData/wordscramble/d1ae484c-e879-4a0e-95b0-bfa872fa758a_wordscramble.png?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1766010755&Signature=A9uZl5RTt%2Bk0WWM4onUMA5OyLA4xXdvR2iar2gjYoNWpdlLgYreoRvdOSYdbKpXOUENwtFphQIS6AU5iOKeAD6zC47jFAgFPPR%2BiVJjdluhg%2B37xJXMzSaU3uaFRkO4YWu2zAgSRxPNgtMM3ahbGlU5H5Nv6GGuLBihmIPcw6IVhJXG1LBzt4Vat7FEnfU4GuwJhEcpYINhkuIPTdN7yy%2FjSeBq7ZAgvwJuzDI13Ng5mFcE4uB1qB5B9AiL%2BApnyqoAJljXJbbgzHCtwwg%2FCtTlzMa0C4Biy1ka4f%2Bjf%2Bs8c07khRku4b6MNvuMiRVhjw4tRb3D7Hui%2Bx%2FWyaoB6Pg%3D%3D
+                    expires: 1766010755245
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Games
+  /v1/wordsearch:
+    post:
+      summary: Word Search Generator
+      description: Create a word search puzzle with custom words
+      operationId: wordsearch
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  grid:
+                  - - P
+                    - C
+                    - R
+                    - J
+                    - W
+                    - R
+                    - D
+                    - K
+                    - G
+                    - D
+                    - V
+                    - F
+                    - J
+                    - B
+                    - Q
+                  - - J
+                    - F
+                    - O
+                    - J
+                    - E
+                    - B
+                    - X
+                    - I
+                    - A
+                    - A
+                    - S
+                    - S
+                    - H
+                    - X
+                    - G
+                  - - L
+                    - N
+                    - N
+                    - Q
+                    - L
+                    - X
+                    - G
+                    - E
+                    - M
+                    - X
+                    - F
+                    - Q
+                    - X
+                    - V
+                    - B
+                  - - S
+                    - J
+                    - Y
+                    - L
+                    - X
+                    - Z
+                    - T
+                    - X
+                    - E
+                    - A
+                    - K
+                    - M
+                    - X
+                    - C
+                    - Y
+                  - - S
+                    - G
+                    - F
+                    - O
+                    - E
+                    - J
+                    - F
+                    - X
+                    - M
+                    - W
+                    - V
+                    - E
+                    - I
+                    - M
+                    - X
+                  - - W
+                    - D
+                    - V
+                    - Y
+                    - D
+                    - T
+                    - T
+                    - N
+                    - F
+                    - U
+                    - K
+                    - L
+                    - P
+                    - C
+                    - T
+                  - - E
+                    - R
+                    - H
+                    - M
+                    - B
+                    - N
+                    - T
+                    - B
+                    - M
+                    - A
+                    - D
+                    - Z
+                    - X
+                    - A
+                    - D
+                  - - D
+                    - O
+                    - G
+                    - S
+                    - Y
+                    - E
+                    - B
+                    - E
+                    - T
+                    - H
+                    - I
+                    - Z
+                    - K
+                    - D
+                    - P
+                  - - F
+                    - W
+                    - S
+                    - E
+                    - A
+                    - R
+                    - C
+                    - H
+                    - R
+                    - G
+                    - X
+                    - U
+                    - B
+                    - Y
+                    - D
+                  - - H
+                    - C
+                    - G
+                    - E
+                    - N
+                    - B
+                    - K
+                    - E
+                    - L
+                    - S
+                    - E
+                    - P
+                    - O
+                    - E
+                    - N
+                  - - P
+                    - A
+                    - D
+                    - W
+                    - D
+                    - D
+                    - K
+                    - A
+                    - T
+                    - E
+                    - A
+                    - A
+                    - G
+                    - R
+                    - I
+                  - - C
+                    - T
+                    - C
+                    - E
+                    - Q
+                    - W
+                    - S
+                    - Q
+                    - O
+                    - W
+                    - X
+                    - R
+                    - O
+                    - E
+                    - F
+                  - - P
+                    - E
+                    - S
+                    - I
+                    - F
+                    - L
+                    - G
+                    - E
+                    - N
+                    - V
+                    - X
+                    - I
+                    - V
+                    - K
+                    - I
+                  - - T
+                    - G
+                    - G
+                    - Z
+                    - X
+                    - A
+                    - D
+                    - A
+                    - F
+                    - S
+                    - U
+                    - D
+                    - N
+                    - S
+                    - P
+                  - - Z
+                    - J
+                    - T
+                    - L
+                    - N
+                    - E
+                    - D
+                    - D
+                    - I
+                    - H
+                    - Z
+                    - O
+                    - A
+                    - A
+                    - A
+                  words:
+                  - word: LETTERS
+                    start:
+                      row: 3
+                      col: 3
+                    direction: diagonal-down-right
+                  - word: PUZZLE
+                    start:
+                      row: 9
+                      col: 11
+                    direction: up
+                  - word: SEARCH
+                    start:
+                      row: 8
+                      col: 2
+                    direction: right
+                  - word: HIDDEN
+                    start:
+                      row: 14
+                      col: 9
+                    direction: left
+                  - word: WORD
+                    start:
+                      row: 8
+                      col: 1
+                    direction: up
+                  - word: GAME
+                    start:
+                      row: 0
+                      col: 8
+                    direction: down
+                  - word: FIND
+                    start:
+                      row: 11
+                      col: 14
+                    direction: up
+                  wordCount: 7
+                  size: 15
+                  difficulty: medium
+                  html: '<html><head><title>Word Search Puzzle</title><style>body {font-family: Arial, sans-serif; padding: 20px;}.container {display: flex; gap: 40px;}table {border-collapse: collapse;}td {width: 30px; height: 30px; text-align: center; font-size: 18px; font-weight: bold; border: 1px solid #ccc;}.word-list {font-size: 16px;}.word-list h3 {margin-bottom: 10px;}.word-list ul {list-style: none; padding: 0;}.word-list li {margin: 5px 0;}</style></head><body><div class=''container''><div><table><tr><td>P</td><td>C</td><td>R</td><td>J</td><td>W</td><td>R</td><td>D</td><td>K</td><td>G</td><td>D</td><td>V</td><td>F</td><td>J</td><td>B</td><td>Q</td></tr><tr><td>J</td><td>F</td><td>O</td><td>J</td><td>E</td><td>B</td><td>X</td><td>I</td><td>A</td><td>A</td><td>S</td><td>S</td><td>H</td><td>X</td><td>G</td></tr><tr><td>L</td><td>N</td><td>N</td><td>Q</td><td>L</td><td>X</td><td>G</td><td>E</td><td>M</td><td>X</td><td>F</td><td>Q</td><td>X</td><td>V</td><td>B</td></tr><tr><td>S</td><td>J</td><td>Y</td><td>L</td><td>X</td><td>Z</td><td>T</td><td>X</td><td>E</td><td>A</td><td>K</td><td>M</td><td>X</td><td>C</td><td>Y</td></tr><tr><td>S</td><td>G</td><td>F</td><td>O</td><td>E</td><td>J</td><td>F</td><td>X</td><td>M</td><td>W</td><td>V</td><td>E</td><td>I</td><td>M</td><td>X</td></tr><tr><td>W</td><td>D</td><td>V</td><td>Y</td><td>D</td><td>T</td><td>T</td><td>N</td><td>F</td><td>U</td><td>K</td><td>L</td><td>P</td><td>C</td><td>T</td></tr><tr><td>E</td><td>R</td><td>H</td><td>M</td><td>B</td><td>N</td><td>T</td><td>B</td><td>M</td><td>A</td><td>D</td><td>Z</td><td>X</td><td>A</td><td>D</td></tr><tr><td>D</td><td>O</td><td>G</td><td>S</td><td>Y</td><td>E</td><td>B</td><td>E</td><td>T</td><td>H</td><td>I</td><td>Z</td><td>K</td><td>D</td><td>P</td></tr><tr><td>F</td><td>W</td><td>S</td><td>E</td><td>A</td><td>R</td><td>C</td><td>H</td><td>R</td><td>G</td><td>X</td><td>U</td><td>B</td><td>Y</td><td>D</td></tr><tr><td>H</td><td>C</td><td>G</td><td>E</td><td>N</td><td>B</td><td>K</td><td>E</td><td>L</td><td>S</td><td>E</td><td>P</td><td>O</td><td>E</td><td>N</td></tr><tr><td>P</td><td>A</td><td>D</td><td>W</td><td>D</td><td>D</td><td>K</td><td>A</td><td>T</td><td>E</td><td>A</td><td>A</td><td>G</td><td>R</td><td>I</td></tr><tr><td>C</td><td>T</td><td>C</td><td>E</td><td>Q</td><td>W</td><td>S</td><td>Q</td><td>O</td><td>W</td><td>X</td><td>R</td><td>O</td><td>E</td><td>F</td></tr><tr><td>P</td><td>E</td><td>S</td><td>I</td><td>F</td><td>L</td><td>G</td><td>E</td><td>N</td><td>V</td><td>X</td><td>I</td><td>V</td><td>K</td><td>I</td></tr><tr><td>T</td><td>G</td><td>G</td><td>Z</td><td>X</td><td>A</td><td>D</td><td>A</td><td>F</td><td>S</td><td>U</td><td>D</td><td>N</td><td>S</td><td>P</td></tr><tr><td>Z</td><td>J</td><td>T</td><td>L</td><td>N</td><td>E</td><td>D</td><td>D</td><td>I</td><td>H</td><td>Z</td><td>O</td><td>A</td><td>A</td><td>A</td></tr></table></div><div class=''word-list''><h3>Find these words:</h3><ul><li>LETTERS</li><li>PUZZLE</li><li>SEARCH</li><li>HIDDEN</li><li>WORD</li><li>GAME</li><li>FIND</li></ul></div></div></body></html>'
+                  image:
+                    imageName: 0ce84c70-c791-40f9-adfa-2ad3823667f7_puzzle.png
+                    format: .png
+                    downloadURL: https://storage.googleapis.com/apiverve/APIData/wordsearch/0ce84c70-c791-40f9-adfa-2ad3823667f7_puzzle.png?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1766010772&Signature=QOHSnr40T1DxKtie7xCSTwnqNwfgaur%2BUZDwPf8xhgiaynJPDQjvrVJwZBlkuSFXQFyd212HYyui%2BMUjHIVhMvL8TaGUucqOvXhsaXXl9p5vzQhGsGP2crtP8U94NpXonrL0GjnmFmFFaQOJELbcCqMLfTl5XjArtNsMTp0%2Bj3b8DeL6ljMZe09sRgL5i7cslA%2BLljRRX20Dbd2%2BuqR1r2aGY6pMZEqr7djDDF3uLNnyPq8M2wKPX243FASrcl3URyXZMkVduPYvkwIxvGkcOoeE7GrZo%2FnpOElZgbwevDCklXJ3fS6Ij2ffkLlYSrDNM11VSYUrU1fzgfHX2w%2F5ew%3D%3D
+                    expires: 1766010772936
+                  solutionImage:
+                    imageName: b4dc1d71-86e4-4331-af3b-01295373b772_solution.png
+                    format: .png
+                    downloadURL: https://storage.googleapis.com/apiverve/APIData/wordsearch/b4dc1d71-86e4-4331-af3b-01295373b772_solution.png?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1766010773&Signature=j8897QcmWY1g4fKyE4JUEL4RZ6OCXJCCRmB04DFCpjFOW4vUDfgc62cwJDIBZsCcnbFzTfShMekQJFvrie8MHR59VtbYD58XXI7RPRbxjjEdfZ6exdiRgN%2BXZ%2B%2Ff5L7DksaYC%2Bf6FL80REs4Vb7C%2B0PBlRa%2FBpqo%2FcHXL4An5dIsUKyzXLNrDE6AvYXIyiKNYRcsfTN8g7ekXxqM4uI5XYYF3Kl4KlORrVs395S421Bk1j9Qpet04lI7vTe7dwQIDimuOshA56LfhjN5OK%2FGCxyC0IAJ4cTZcN52ggkeEQSX%2BOgX8Sy%2B6%2BsM7YmkBOVeB%2FKlO7CIX1rKcO5oFOzN8Q%3D%3D
+                    expires: 1766010773937
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                words:
+                  type: string
+                  description: Array of words to hide in the puzzle (3-20 words)
+                size:
+                  type: integer
+                  description: Grid size
+                difficulty:
+                  type: string
+                  description: Difficulty level (affects word directions)
+                image:
+                  type: boolean
+                  description: Set to true to generate a downloadable puzzle image
+                solutionImage:
+                  type: boolean
+                  description: Set to true to generate a downloadable solution image
+              required:
+              - words
+      tags:
+      - Games
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
+externalDocs:
+  description: APIVerve Documentation
+  url: https://docs.apiverve.com

@@ -1,0 +1,4043 @@
+openapi: 3.2.0
+info:
+  title: APIVerve Finance API
+  description: One API key, 370+ real-world REST endpoints — weather, geocoding, finance, DNS, validation, text processing and more. Every endpoint returns JSON. Full documentation at https://docs.apiverve.com.
+  termsOfService: https://apiverve.com/terms/
+  contact:
+    name: APIVerve Support
+    email: hello@apiverve.com
+    url: https://apiverve.com/contact
+  license:
+    name: APIVerve Terms of Service
+    url: https://apiverve.com/terms/
+  version: 1.0.0
+  x-logo:
+    url: https://apiverve.com/images/favicon.png
+    altText: APIVerve
+servers:
+- url: https://api.apiverve.com
+security:
+- api_key: []
+tags:
+- name: Finance
+paths:
+  /v1/balancesheet:
+    get:
+      summary: Balance Sheet
+      description: Get the balance sheet for a company by ticker symbol. Optionally filter to a specific fiscal year and quarter.
+      operationId: balancesheet
+      parameters:
+      - name: ticker
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Stock ticker symbol (e.g. AAPL, MSFT, ADBE)
+        example: AAPL
+      - name: year
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Fiscal year to retrieve. Defaults to latest available. History covers only the quarters captured so far; a missing period answers 404 listing the available ones.
+      - name: quarter
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Fiscal quarter to retrieve. Defaults to latest available.
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  ticker: AAPL
+                  company: Apple Inc.
+                  cik: 0000320193
+                  fiscalYear: 2025
+                  fiscalQuarter: 4
+                  filingType: 10-K
+                  filingDate: '2025-10-31'
+                  periodEnd: '2025-09-27'
+                  balance:
+                    totalAssets: 359241000000
+                    currentAssets: 147957000000
+                    cash: 35934000000
+                    receivables: 39777000000
+                    inventory: 5718000000
+                    propertyAndEquipment: 49834000000
+                    goodwill: null
+                    intangibles: null
+                    totalLiabilities: 285508000000
+                    currentLiabilities: 165631000000
+                    accountsPayable: 69860000000
+                    longTermDebt: 78328000000
+                    equity: 73733000000
+                    retainedEarnings: -14264000000
+                  ratios:
+                    currentRatio: 0.89
+                    quickRatio: 0.86
+                    cashRatio: 0.22
+                    workingCapital: -17674000000
+                    debtToEquity: 3.87
+                    debtToAssets: 0.79
+                    longTermDebtToEquity: 1.06
+                    equityMultiplier: 4.87
+                  formatted:
+                    totalAssets: $359.24B
+                    totalLiabilities: $285.51B
+                    equity: $73.73B
+                    workingCapital: -$17.67B
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/benchmarkrate:
+    get:
+      summary: Benchmark Rate
+      description: Get the current value for a specific benchmark rate.
+      operationId: benchmarkrate
+      parameters:
+      - name: rate
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The benchmark rate to retrieve
+        example: SOFR
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  rate: SOFR
+                  name: Secured Overnight Financing Rate
+                  currency: USD
+                  region: United States
+                  administrator: Federal Reserve Bank of New York
+                  value: 4.32
+                  date: '2026-02-04'
+                  lastUpdated: '2026-02-05T05:00:00.000Z'
+                  change1d: -0.01
+                  changeDirection: down
+                  previousValue: 4.33
+                  previousDate: '2026-02-03'
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/binlookup:
+    get:
+      summary: BIN Lookup
+      description: Lookup credit card information based on the BIN
+      operationId: binlookup
+      parameters:
+      - name: bin
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The first six digits of the credit card number (BIN)
+        example: '448590'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  bin: '448590'
+                  brand: VISA
+                  type: CREDIT
+                  category: PURCHASING
+                  country: United States
+                  issuer:
+                    name: JPMORGAN CHASE BANK, N.A.
+                    country: United States
+                    phone: 1-800-432-3117
+                    website: www.chase.com
+                  location:
+                    latitude: '37.0902'
+                    longitude: '-95.7129'
+                    alpha2: US
+                    alpha3: USA
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/bitcoin:
+    get:
+      summary: Bitcoin Price
+      description: Get the current price of Bitcoin. You can optionally specify a currency, e.g. USD
+      operationId: bitcoin
+      parameters:
+      - name: currency
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The currency to get the price in
+        example: USD
+      - name: hourly
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Include hourly price data for the past 24 hours
+        example: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  currency: USD
+                  price: 97250.43
+                  marketCap: 1928000000000
+                  volume24h: 35420000000
+                  change24h: -1.52
+                  lastUpdated: '2026-02-07T12:00:00.000Z'
+                  high24h: 98750.21
+                  low24h: 96125.88
+                  changeDirection: down
+                  formatted:
+                    price: $97,250.43
+                    marketCap: $1.93T
+                    volume: $35.42B
+                    priceWords: ninety-seven thousand two hundred fifty dollars
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/cashflow:
+    get:
+      summary: Cash Flow Statement
+      description: Get the cash flow statement for a company by ticker symbol. Optionally filter to a specific fiscal year and quarter.
+      operationId: cashflow
+      parameters:
+      - name: ticker
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Stock ticker symbol (e.g. AAPL, MSFT, ADBE)
+        example: AAPL
+      - name: year
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Fiscal year to retrieve. Defaults to latest available. History covers only the quarters captured so far; a missing period answers 404 listing the available ones.
+      - name: quarter
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Fiscal quarter to retrieve. Defaults to latest available.
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  ticker: AAPL
+                  company: Apple Inc.
+                  cik: 0000320193
+                  fiscalYear: 2025
+                  fiscalQuarter: 4
+                  filingType: 10-K
+                  filingDate: '2025-10-31'
+                  periodEnd: '2025-09-27'
+                  cashFlow:
+                    operatingCashFlow: 111482000000
+                    capitalExpenditures: 12715000000
+                    investingCashFlow: 15195000000
+                    financingCashFlow: -120686000000
+                    dividendsPaid: 15421000000
+                    shareRepurchases: 90711000000
+                    freeCashFlow: 98767000000
+                  metrics:
+                    fcfMargin: 23.73
+                    operatingCashFlowMargin: 26.79
+                    capexToRevenue: 3.06
+                    cashFlowToNetIncome: 1
+                    dividendPayoutRatio: 13.77
+                    fcfPerShare: 6.5824
+                  formatted:
+                    operatingCashFlow: $111.48B
+                    freeCashFlow: $98.77B
+                    capitalExpenditures: $12.71B
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/companylookup:
+    get:
+      summary: Company Lookup
+      description: Get company information by stock ticker symbol.
+      operationId: companylookup
+      parameters:
+      - name: ticker
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Stock ticker symbol (e.g. AAPL, MSFT, GOOGL)
+        example: AAPL
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  count: 1
+                  companies:
+                  - ticker: AAPL
+                    cik: 0000320193
+                    name: Apple Inc.
+                    tickers:
+                    - AAPL
+                    exchanges:
+                    - Nasdaq
+                    entityType: operating
+                    sic: '3571'
+                    sicDescription: Electronic Computers
+                    sector: Manufacturing
+                    category: Large accelerated filer
+                    stateOfIncorporation: CA
+                    fiscalYearEnd: 0926
+                    ein: '942404110'
+                    phone: (408) 996-1010
+                    addresses:
+                      mailing:
+                        street1: ONE APPLE PARK WAY
+                        street2: null
+                        city: CUPERTINO
+                        stateOrCountry: CA
+                        zipCode: '95014'
+                        stateOrCountryDescription: CA
+                        isForeignLocation: 0
+                        foreignStateTerritory: null
+                        country: null
+                        countryCode: null
+                      business:
+                        street1: ONE APPLE PARK WAY
+                        street2: null
+                        city: CUPERTINO
+                        stateOrCountry: CA
+                        zipCode: '95014'
+                        stateOrCountryDescription: CA
+                        isForeignLocation: null
+                        foreignStateTerritory: null
+                        country: null
+                        countryCode: null
+                    formerNames:
+                    - name: APPLE INC
+                      from: '2007-01-10T05:00:00.000Z'
+                      to: '2019-08-05T04:00:00.000Z'
+                    - name: APPLE COMPUTER INC
+                      from: '1994-01-26T05:00:00.000Z'
+                      to: '2007-01-04T05:00:00.000Z'
+                    - name: APPLE COMPUTER INC/ FA
+                      from: '1997-07-28T04:00:00.000Z'
+                      to: '1997-07-28T04:00:00.000Z'
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/costliving:
+    get:
+      summary: Cost of Living
+      description: Get the cost of living index for a specific location. Accepts state names, state codes, or major city names.
+      operationId: costliving
+      parameters:
+      - name: location
+        in: query
+        schema:
+          type: string
+        required: true
+        description: State name, state code (e.g., CA, NY), or major city name.
+        example: California
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  searchedLocation: California
+                  region: west-large
+                  regionName: West Large Metros (LA, SF, Seattle, Phoenix, Denver area)
+                  costIndex: 107
+                  description: 7% above average
+                  cpi: 356.993
+                  usAverageCPI: 334.98
+                  period: 2026-08
+                  note: Cost index is relative to US average (100). Values above 100 indicate higher than average cost of living.
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/cpiinflation:
+    get:
+      summary: CPI Inflation
+      description: Get current or historical CPI inflation data by category
+      operationId: cpiinflation
+      parameters:
+      - name: date
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Optional date in YYYY-MM format for historical lookup. Omit for current data.
+        example: 2023-06
+      - name: category
+        in: query
+        schema:
+          type: string
+        required: false
+        description: 'Optional category filter: all, food, housing, apparel, transportation, medical, recreation, education, gasoline, electricity'
+        example: food
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  yearMonth: 2026-08
+                  year: 2026
+                  month: 8
+                  category: food
+                  index: 350.418
+                  yearOverYearChange: 2.67
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/currencyconverter:
+    get:
+      summary: Currency Converter
+      description: Convert currency rates based on the amount and currency
+      operationId: currencyconverter
+      parameters:
+      - name: value
+        in: query
+        schema:
+          type: number
+        required: true
+        description: The amount to convert
+        example: 1
+      - name: from
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The ISO 4217 currency code to convert from
+        example: USD
+      - name: to
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The ISO 4217 currency code to convert to
+        example: EUR
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  from: USD
+                  to: EUR
+                  value: 1
+                  convertedValue: 0.866496
+                  rate: 0.866496
+                  change24h: 0.000493
+                  change24hPct: 0.0569
+                  changeDirection: up
+                  high24h: 0.866914
+                  low24h: 0.865725
+                  lastUpdated: '2026-09-15T21:00:17.674Z'
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/currencysymbols:
+    get:
+      summary: Currency Symbols
+      description: Get the currency symbol and name of a currency
+      operationId: currencysymbols
+      parameters:
+      - name: currency
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The currency code for which you want to get the symbol
+        example: USD
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  countriesFound:
+                  - country_name: AMERICAN SAMOA
+                    currency_name: US Dollar
+                    currency_iso_code: USD
+                    currency_number: '840'
+                    currency_mnr_unts: '2'
+                    currency_symbol: $
+                  - country_name: BONAIRE, SINT EUSTATIUS AND SABA
+                    currency_name: US Dollar
+                    currency_iso_code: USD
+                    currency_number: '840'
+                    currency_mnr_unts: '2'
+                    currency_symbol: $
+                  - country_name: BRITISH INDIAN OCEAN TERRITORY (THE)
+                    currency_name: US Dollar
+                    currency_iso_code: USD
+                    currency_number: '840'
+                    currency_mnr_unts: '2'
+                    currency_symbol: $
+                  - country_name: ECUADOR
+                    currency_name: US Dollar
+                    currency_iso_code: USD
+                    currency_number: '840'
+                    currency_mnr_unts: '2'
+                    currency_symbol: $
+                  - country_name: EL SALVADOR
+                    currency_name: US Dollar
+                    currency_iso_code: USD
+                    currency_number: '840'
+                    currency_mnr_unts: '2'
+                    currency_symbol: $
+                  - country_name: GUAM
+                    currency_name: US Dollar
+                    currency_iso_code: USD
+                    currency_number: '840'
+                    currency_mnr_unts: '2'
+                    currency_symbol: $
+                  - country_name: HAITI
+                    currency_name: US Dollar
+                    currency_iso_code: USD
+                    currency_number: '840'
+                    currency_mnr_unts: '2'
+                    currency_symbol: $
+                  - country_name: MARSHALL ISLANDS (THE)
+                    currency_name: US Dollar
+                    currency_iso_code: USD
+                    currency_number: '840'
+                    currency_mnr_unts: '2'
+                    currency_symbol: $
+                  - country_name: MICRONESIA (FEDERATED STATES OF)
+                    currency_name: US Dollar
+                    currency_iso_code: USD
+                    currency_number: '840'
+                    currency_mnr_unts: '2'
+                    currency_symbol: $
+                  - country_name: NORTHERN MARIANA ISLANDS (THE)
+                    currency_name: US Dollar
+                    currency_iso_code: USD
+                    currency_number: '840'
+                    currency_mnr_unts: '2'
+                    currency_symbol: $
+                  - country_name: PALAU
+                    currency_name: US Dollar
+                    currency_iso_code: USD
+                    currency_number: '840'
+                    currency_mnr_unts: '2'
+                    currency_symbol: $
+                  - country_name: PANAMA
+                    currency_name: US Dollar
+                    currency_iso_code: USD
+                    currency_number: '840'
+                    currency_mnr_unts: '2'
+                    currency_symbol: $
+                  - country_name: PUERTO RICO
+                    currency_name: US Dollar
+                    currency_iso_code: USD
+                    currency_number: '840'
+                    currency_mnr_unts: '2'
+                    currency_symbol: $
+                  - country_name: TIMOR-LESTE
+                    currency_name: US Dollar
+                    currency_iso_code: USD
+                    currency_number: '840'
+                    currency_mnr_unts: '2'
+                    currency_symbol: $
+                  - country_name: TURKS AND CAICOS ISLANDS (THE)
+                    currency_name: US Dollar
+                    currency_iso_code: USD
+                    currency_number: '840'
+                    currency_mnr_unts: '2'
+                    currency_symbol: $
+                  - country_name: UNITED STATES MINOR OUTLYING ISLANDS (THE)
+                    currency_name: US Dollar
+                    currency_iso_code: USD
+                    currency_number: '840'
+                    currency_mnr_unts: '2'
+                    currency_symbol: $
+                  - country_name: UNITED STATES OF AMERICA (THE)
+                    currency_name: US Dollar
+                    currency_iso_code: USD
+                    currency_number: '840'
+                    currency_mnr_unts: '2'
+                    currency_symbol: $
+                  - country_name: VIRGIN ISLANDS (BRITISH)
+                    currency_name: US Dollar
+                    currency_iso_code: USD
+                    currency_number: '840'
+                    currency_mnr_unts: '2'
+                    currency_symbol: $
+                  - country_name: VIRGIN ISLANDS (U.S.)
+                    currency_name: US Dollar
+                    currency_iso_code: USD
+                    currency_number: '840'
+                    currency_mnr_unts: '2'
+                    currency_symbol: $
+                  currency: USD
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/dividends:
+    get:
+      summary: Dividends
+      description: Get the dividend-per-share history for a company by ticker symbol. Optionally choose the annual or quarterly series and limit how many periods are returned.
+      operationId: dividends
+      parameters:
+      - name: ticker
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Stock ticker symbol (e.g. AAPL, MSFT, KO)
+        example: AAPL
+      - name: period
+        in: query
+        schema:
+          type: string
+        required: false
+        description: 'Which series to return in the history list: quarterly (default) or annual.'
+        example: annual
+      - name: limit
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of periods to return in the history list (1-25). Defaults to 5.
+        example: 10
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  ticker: AAPL
+                  cik: 0000320193
+                  company: Apple Inc.
+                  currency: USD
+                  paysDividend: true
+                  latestDividendPerShare: 0.26
+                  latestDividendPeriod: CY2026Q1
+                  latestDividendDate: '2026-03-28'
+                  count: 5
+                  dividends:
+                  - period: CY2026Q1
+                    periodEnd: '2026-03-28'
+                    perShare: 0.26
+                    form: 10-Q
+                  - period: CY2025Q4
+                    periodEnd: '2025-12-27'
+                    perShare: 0.26
+                    form: 10-Q
+                  - period: CY2025Q2
+                    periodEnd: '2025-06-28'
+                    perShare: 0.26
+                    form: 10-Q
+                  - period: CY2025Q1
+                    periodEnd: '2025-03-29'
+                    perShare: 0.25
+                    form: 10-Q
+                  - period: CY2024Q4
+                    periodEnd: '2024-12-28'
+                    perShare: 0.25
+                    form: 10-Q
+                  analytics:
+                    dividendGrowth1Y: 4.08
+                    dividendGrowth3YCagr: 4.26
+                    dividendGrowth5YCagr: 5.11
+                    consecutiveYearsOfGrowth: 7
+                    averageAnnualGrowthRate: 5.98
+                    isDividendGrower: true
+                    annualHistory:
+                    - period: CY2018
+                      perShare: 0.68
+                    - period: CY2019
+                      perShare: 0.75
+                    - period: CY2020
+                      perShare: 0.795
+                    - period: CY2021
+                      perShare: 0.85
+                    - period: CY2022
+                      perShare: 0.9
+                    - period: CY2023
+                      perShare: 0.94
+                    - period: CY2024
+                      perShare: 0.98
+                    - period: CY2025
+                      perShare: 1.02
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/earnings:
+    get:
+      summary: Earnings Report
+      description: Get earnings and financial data for a company by ticker symbol. Optionally filter by year and quarter.
+      operationId: earnings
+      parameters:
+      - name: ticker
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Stock ticker symbol (e.g. AAPL, MSFT, ADBE)
+        example: ADBE
+      - name: year
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Fiscal year to retrieve. Defaults to latest available.
+      - name: quarter
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Fiscal quarter to retrieve. Defaults to latest available.
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  ticker: ADBE
+                  company: ADOBE INC.
+                  cik: 0000796343
+                  fiscalYear: 2026
+                  fiscalQuarter: 2
+                  filingType: 10-Q
+                  filingDate: '2026-06-15'
+                  periodEnd: '2026-05-29'
+                  income:
+                    revenue: 6618000000
+                    costOfRevenue: 715000000
+                    grossProfit: 5903000000
+                    operatingIncome: 2238000000
+                    netIncome: 1712000000
+                    eps: 4.25
+                    epsBasic: 4.26
+                    sharesOutstanding: 402500000
+                    sharesOutstandingBasic: 402400000
+                    researchAndDevelopment: null
+                    sellingAndMarketing: 1884000000
+                    sellingGeneralAndAdmin: null
+                    generalAndAdmin: 546000000
+                    interestExpense: null
+                    incomeTax: 526000000
+                    depreciation: 367000000
+                    stockBasedCompensation: 1043000000
+                  balance:
+                    totalAssets: 29933000000
+                    currentAssets: 9068000000
+                    cash: 4919000000
+                    receivables: 1993000000
+                    inventory: null
+                    propertyAndEquipment: 1870000000
+                    goodwill: 14041000000
+                    intangibles: 1012000000
+                    totalLiabilities: 18415000000
+                    currentLiabilities: 12078000000
+                    accountsPayable: 499000000
+                    longTermDebt: 4802000000
+                    equity: 11518000000
+                    retainedEarnings: 48767000000
+                  cashFlow:
+                    operatingCashFlow: 5123000000
+                    capitalExpenditures: 95000000
+                    freeCashFlow: 5028000000
+                    investingCashFlow: -1240000000
+                    financingCashFlow: -4399000000
+                    dividendsPaid: null
+                    shareRepurchases: 4589000000
+                  dividends: null
+                  lastUpdated: '2026-07-17T23:01:47.364Z'
+                  metrics:
+                    grossMargin: 89.2
+                    operatingMargin: 33.82
+                    netMargin: 25.87
+                    revenueFormatted: $6.62B
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/ethereum:
+    get:
+      summary: Ethereum Price
+      description: Get the current price of Ethereum. You can optionally specify a currency, e.g. USD
+      operationId: ethereum
+      parameters:
+      - name: currency
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The currency to get the price in
+        example: USD
+      - name: hourly
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Include hourly price data for the past 24 hours
+        example: true
+      - name: hourly[].hour
+        in: query
+        schema:
+          type: number
+        required: false
+        description: UTC hour-of-day slot (0-23) the price was captured in
+      - name: hourly[].price
+        in: query
+        schema:
+          type: number
+        required: false
+        description: Price at that hour, in the requested currency
+      - name: hourly[].timestamp
+        in: query
+        schema:
+          type: string
+        required: false
+        description: ISO 8601 time the hourly price was captured
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  currency: USD
+                  price: 2685.12
+                  marketCap: 323000000000
+                  volume24h: 14850000000
+                  change24h: 2.34
+                  lastUpdated: '2026-02-07T12:00:00.000Z'
+                  high24h: 2742.5
+                  low24h: 2618.75
+                  changeDirection: up
+                  formatted:
+                    price: $2,685.12
+                    marketCap: $323.00B
+                    volume: $14.85B
+                    priceWords: two thousand six hundred eighty-five dollars
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/exchangerate:
+    get:
+      summary: Exchange Rate
+      description: Exchange Rate is a simple tool for getting the current exchange rate between two currencies. It returns the current exchange rate.
+      operationId: exchangerate
+      parameters:
+      - name: currency1
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The first currency you want to get the exchange rate for
+        example: USD
+      - name: currency2
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The second currency you want to get the exchange rate for
+        example: EUR
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  currency1: USD
+                  currency2: EUR
+                  exchangeRate: '0.866664'
+                  inverseRate: '1.153850'
+                  lastUpdated: '2026-09-16T02:00:27.378Z'
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/financialratios:
+    get:
+      summary: Financial Ratios
+      description: Get the key financial ratios for a company by ticker symbol. Optionally filter to a specific fiscal year and quarter.
+      operationId: financialratios
+      parameters:
+      - name: ticker
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Stock ticker symbol (e.g. AAPL, MSFT, ADBE)
+        example: AAPL
+      - name: year
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Fiscal year to retrieve. Defaults to latest available. History covers only the quarters captured so far; a missing period answers 404 listing the available ones.
+      - name: quarter
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Fiscal quarter to retrieve. Defaults to latest available.
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  ticker: AAPL
+                  company: Apple Inc.
+                  cik: 0000320193
+                  fiscalYear: 2025
+                  fiscalQuarter: 4
+                  filingType: 10-K
+                  filingDate: '2025-10-31'
+                  periodEnd: '2025-09-27'
+                  profitability:
+                    grossMargin: 46.91
+                    operatingMargin: 31.97
+                    netMargin: 26.92
+                    returnOnEquity: 151.91
+                    returnOnAssets: 31.18
+                  liquidity:
+                    currentRatio: 0.89
+                    quickRatio: 0.86
+                    cashRatio: 0.22
+                  leverage:
+                    debtToEquity: 3.87
+                    debtToAssets: 0.79
+                    equityMultiplier: 4.87
+                    interestCoverage: null
+                  efficiency:
+                    assetTurnover: 1.16
+                    inventoryTurnover: 38.64
+                    receivablesTurnover: 10.46
+                  cashFlow:
+                    freeCashFlow: 98767000000
+                    fcfMargin: 23.73
+                    operatingCashFlowMargin: 26.79
+                    capexToRevenue: 3.06
+                  perShare:
+                    eps: 7.46
+                    bookValuePerShare: 4.914
+                    freeCashFlowPerShare: 6.5824
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/gdp:
+    get:
+      summary: GDP Data
+      description: Get GDP data for a specific country. Returns latest data by default, or data for a specific year if specified.
+      operationId: gdp
+      parameters:
+      - name: country
+        in: query
+        schema:
+          type: string
+        required: true
+        description: ISO 2 or 3-letter country code (e.g., US, USA, GB, GBR)
+        example: US
+      - name: year
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Specific year to retrieve data for (1960-present). Returns latest if not specified.
+        example: 2023
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  country: US
+                  countryName: United States
+                  currency: USD
+                  year: 2023
+                  gdp: 27360935000000
+                  gdpFormatted: $27.36 trillion
+                  gdpGrowth: 2.54
+                  gdpPerCapita: 81632
+                  count: 1
+                  years:
+                  - year: 2023
+                    gdp: 27360935000000
+                    gdpFormatted: $27.36 trillion
+                    gdpGrowth: 2.54
+                    gdpPerCapita: 81632
+                code: 200
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/globalstockmarket:
+    get:
+      summary: Global Stock Market
+      description: Get the current or historical share price index for a specific country.
+      operationId: globalstockmarket
+      parameters:
+      - name: country
+        in: query
+        schema:
+          type: string
+        required: true
+        description: ISO 2-letter country code
+        example: DE
+      - name: year
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Year to retrieve data for (2000-present). Requires month parameter.
+        example: 2023
+      - name: month
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Month to retrieve data for (1-12). Required when year is specified.
+        example: 6
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  country: DE
+                  countryName: Germany
+                  baseline: 2015=100
+                  year: 2023
+                  month: 6
+                  value: 154.28
+                  date: '2023-06-01'
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/goldprice:
+    get:
+      summary: Gold Price
+      description: Get the current price of gold. You can optionally specify a currency (defaults to USD).
+      operationId: goldprice
+      parameters:
+      - name: currency
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The currency to get the price in
+        example: USD
+      - name: hourly
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Include hourly price data for the past 24 hours
+        example: true
+      - name: hourly[].hour
+        in: query
+        schema:
+          type: number
+        required: false
+        description: UTC hour-of-day slot (0-23) the price was captured in
+      - name: hourly[].price
+        in: query
+        schema:
+          type: number
+        required: false
+        description: Price at that hour, in the requested currency
+      - name: hourly[].timestamp
+        in: query
+        schema:
+          type: string
+        required: false
+        description: ISO 8601 time the hourly price was captured
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  currency: USD
+                  gram: 138.63
+                  kilogram: 138633.92
+                  ounce: 4312
+                  lastUpdated: '2026-02-07T12:00:00.000Z'
+                  change24h: 28.5
+                  change24hPct: 0.67
+                  changeDirection: up
+                  high24h: 4325
+                  low24h: 4278.5
+                  formatted:
+                    ounce: $4,312.00
+                    gram: $138.63
+                    kilogram: $138,633.92
+                    ounceWords: four thousand, three hundred twelve dollars
+                    kilogramWords: one hundred thirty-eight thousand, six hundred thirty-four dollars
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/ifsclookup:
+    get:
+      summary: IFSC Lookup
+      description: IFSC Lookup is a simple tool for getting information on IFSC codes. It returns information on various IFSC codes.
+      operationId: ifsclookup
+      parameters:
+      - name: ifsc
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The IFSC code to get information about
+        example: SBIN0005943
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  bank: State Bank of India
+                  ifsc: SBIN0005943
+                  branch: KASTURBA GANDHI MARG,NEW DELHI
+                  address: 23, HIMALAYA HOUSE KASTURBA GANDHI MARG NEW DELHI ,PIN - 110001
+                  contact: ''
+                  city: NEW DELHI
+                  district: NEW DELHI
+                  state: DELHI
+                  imps: true
+                  rtgs: true
+                  neft: true
+                  upi: true
+                  micr: '110002062'
+                  swift: ''
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/incomestatement:
+    get:
+      summary: Income Statement
+      description: Get the income statement for a company by ticker symbol. Optionally filter to a specific fiscal year and quarter.
+      operationId: incomestatement
+      parameters:
+      - name: ticker
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Stock ticker symbol (e.g. AAPL, MSFT, ADBE)
+        example: AAPL
+      - name: year
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Fiscal year to retrieve. Defaults to latest available. History covers only the quarters captured so far; a missing period answers 404 listing the available ones.
+      - name: quarter
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Fiscal quarter to retrieve. Defaults to latest available.
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  ticker: AAPL
+                  company: Apple Inc.
+                  cik: 0000320193
+                  fiscalYear: 2026
+                  fiscalQuarter: 3
+                  filingType: 10-Q
+                  filingDate: '2026-07-31'
+                  periodEnd: '2026-06-27'
+                  income:
+                    revenue: 109417000000
+                    costOfRevenue: 54647000000
+                    grossProfit: 54770000000
+                    operatingIncome: 35695000000
+                    netIncome: 29789000000
+                    eps: 2.02
+                    epsBasic: 2.03
+                    sharesOutstanding: 14714676000
+                    sharesOutstandingBasic: 14656110000
+                    researchAndDevelopment: 11729000000
+                    sellingAndMarketing: 5034000000
+                    sellingGeneralAndAdmin: 7346000000
+                    generalAndAdmin: 2312000000
+                    interestExpense: null
+                    incomeTax: 6478000000
+                    depreciation: 9973000000
+                    stockBasedCompensation: 10523000000
+                  margins:
+                    grossMargin: 50.06
+                    operatingMargin: 32.62
+                    netMargin: 27.23
+                    effectiveTaxRate: 18.15
+                  growth:
+                    revenueYoY: null
+                    netIncomeYoY: null
+                    epsYoY: null
+                  formatted:
+                    revenue: $109.42B
+                    grossProfit: $54.77B
+                    operatingIncome: $35.70B
+                    netIncome: $29.79B
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/incometax:
+    get:
+      summary: Income Tax Brackets
+      description: Get federal income tax brackets for a specific country and year.
+      operationId: incometax
+      parameters:
+      - name: country
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The country code (currently only 'US' is supported)
+        example: US
+      - name: year
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: The tax year to retrieve brackets for. Defaults to the previous year.
+        example: 2024
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  year: 2025
+                  country: US
+                  type: federal
+                  brackets:
+                    single:
+                    - rate: 0.1
+                      min: 0
+                      max: 11924
+                    - rate: 0.12
+                      min: 11925
+                      max: 48474
+                    - rate: 0.22
+                      min: 48475
+                      max: 103349
+                    - rate: 0.24
+                      min: 103350
+                      max: 197299
+                    - rate: 0.32
+                      min: 197300
+                      max: 250524
+                    - rate: 0.35
+                      min: 250525
+                      max: 626349
+                    - rate: 0.37
+                      min: 626350
+                      max: 999999999
+                    married_filing_jointly:
+                    - rate: 0.1
+                      min: 0
+                      max: 23849
+                    - rate: 0.12
+                      min: 23850
+                      max: 96949
+                    - rate: 0.22
+                      min: 96950
+                      max: 206699
+                    - rate: 0.24
+                      min: 206700
+                      max: 394599
+                    - rate: 0.32
+                      min: 394600
+                      max: 501049
+                    - rate: 0.35
+                      min: 501050
+                      max: 751599
+                    - rate: 0.37
+                      min: 751600
+                      max: 999999999
+                    married_filing_separately:
+                    - rate: 0.1
+                      min: 0
+                      max: 11924
+                    - rate: 0.12
+                      min: 11925
+                      max: 48474
+                    - rate: 0.22
+                      min: 48475
+                      max: 103349
+                    - rate: 0.24
+                      min: 103350
+                      max: 197299
+                    - rate: 0.32
+                      min: 197300
+                      max: 250524
+                    - rate: 0.35
+                      min: 250525
+                      max: 375799
+                    - rate: 0.37
+                      min: 375800
+                      max: 999999999
+                    head_of_household:
+                    - rate: 0.1
+                      min: 0
+                      max: 16999
+                    - rate: 0.12
+                      min: 17000
+                      max: 64849
+                    - rate: 0.22
+                      min: 64850
+                      max: 103349
+                    - rate: 0.24
+                      min: 103350
+                      max: 197299
+                    - rate: 0.32
+                      min: 197300
+                      max: 250499
+                    - rate: 0.35
+                      min: 250500
+                      max: 626349
+                    - rate: 0.37
+                      min: 626350
+                      max: 999999999
+                  standard_deduction:
+                    single: 15000
+                    married_filing_jointly: 30000
+                    married_filing_separately: 15000
+                    head_of_household: 22500
+                  lastUpdated: '2026-02-07T06:02:41.898Z'
+                  marriagePenalty:
+                    appliesFromRate: 0.37
+                    singleThreshold: 626350
+                    jointThreshold: 751600
+                    jointShortfall: 501100
+                  effectiveRateCurve:
+                    single:
+                    - income: 25000
+                      taxableIncome: 10000
+                      tax: 1000
+                      effectiveRate: 0.04
+                      marginalRate: 0.1
+                    - income: 50000
+                      taxableIncome: 35000
+                      tax: 3961.4
+                      effectiveRate: 0.0792
+                      marginalRate: 0.12
+                    - income: 100000
+                      taxableIncome: 85000
+                      tax: 13613.78
+                      effectiveRate: 0.1361
+                      marginalRate: 0.22
+                    - income: 250000
+                      taxableIncome: 235000
+                      tax: 52262.32
+                      effectiveRate: 0.209
+                      marginalRate: 0.32
+                    - income: 1000000
+                      taxableIncome: 985000
+                      tax: 321468.9
+                      effectiveRate: 0.3215
+                      marginalRate: 0.37
+                    married_filing_jointly:
+                    - income: 25000
+                      taxableIncome: 0
+                      tax: 0
+                      effectiveRate: 0
+                      marginalRate: 0.1
+                    - income: 50000
+                      taxableIncome: 20000
+                      tax: 2000
+                      effectiveRate: 0.04
+                      marginalRate: 0.1
+                    - income: 100000
+                      taxableIncome: 70000
+                      tax: 7922.9
+                      effectiveRate: 0.0792
+                      marginalRate: 0.12
+                    - income: 250000
+                      taxableIncome: 220000
+                      tax: 38493.56
+                      effectiveRate: 0.154
+                      marginalRate: 0.24
+                    - income: 1000000
+                      taxableIncome: 970000
+                      tax: 282961.15
+                      effectiveRate: 0.283
+                      marginalRate: 0.37
+                    married_filing_separately:
+                    - income: 25000
+                      taxableIncome: 10000
+                      tax: 1000
+                      effectiveRate: 0.04
+                      marginalRate: 0.1
+                    - income: 50000
+                      taxableIncome: 35000
+                      tax: 3961.4
+                      effectiveRate: 0.0792
+                      marginalRate: 0.12
+                    - income: 100000
+                      taxableIncome: 85000
+                      tax: 13613.78
+                      effectiveRate: 0.1361
+                      marginalRate: 0.22
+                    - income: 250000
+                      taxableIncome: 235000
+                      tax: 52262.32
+                      effectiveRate: 0.209
+                      marginalRate: 0.32
+                    - income: 1000000
+                      taxableIncome: 985000
+                      tax: 326479.9
+                      effectiveRate: 0.3265
+                      marginalRate: 0.37
+                    head_of_household:
+                    - income: 25000
+                      taxableIncome: 2500
+                      tax: 250
+                      effectiveRate: 0.01
+                      marginalRate: 0.1
+                    - income: 50000
+                      taxableIncome: 27500
+                      tax: 2959.9
+                      effectiveRate: 0.0592
+                      marginalRate: 0.12
+                    - income: 100000
+                      taxableIncome: 77500
+                      tax: 10224.78
+                      effectiveRate: 0.1022
+                      marginalRate: 0.22
+                    - income: 250000
+                      taxableIncome: 227500
+                      tax: 48123.32
+                      effectiveRate: 0.1925
+                      marginalRate: 0.32
+                    - income: 1000000
+                      taxableIncome: 977500
+                      tax: 316955.65
+                      effectiveRate: 0.317
+                      marginalRate: 0.37
+                  changes:
+                    versusYear: 2024
+                    indexingPercent: 2.794
+                    bracketShifts:
+                      single:
+                      - rate: 0.12
+                        from: 11600
+                        to: 11925
+                        shiftPercent: 2.802
+                      - rate: 0.22
+                        from: 47150
+                        to: 48475
+                        shiftPercent: 2.81
+                      - rate: 0.24
+                        from: 100525
+                        to: 103350
+                        shiftPercent: 2.81
+                      - rate: 0.32
+                        from: 191950
+                        to: 197300
+                        shiftPercent: 2.787
+                      - rate: 0.35
+                        from: 243725
+                        to: 250525
+                        shiftPercent: 2.79
+                      - rate: 0.37
+                        from: 609350
+                        to: 626350
+                        shiftPercent: 2.79
+                      married_filing_jointly:
+                      - rate: 0.12
+                        from: 23200
+                        to: 23850
+                        shiftPercent: 2.802
+                      - rate: 0.22
+                        from: 94300
+                        to: 96950
+                        shiftPercent: 2.81
+                      - rate: 0.24
+                        from: 201050
+                        to: 206700
+                        shiftPercent: 2.81
+                      - rate: 0.32
+                        from: 383900
+                        to: 394600
+                        shiftPercent: 2.787
+                      - rate: 0.35
+                        from: 487450
+                        to: 501050
+                        shiftPercent: 2.79
+                      - rate: 0.37
+                        from: 731200
+                        to: 751600
+                        shiftPercent: 2.79
+                      married_filing_separately:
+                      - rate: 0.12
+                        from: 11600
+                        to: 11925
+                        shiftPercent: 2.802
+                      - rate: 0.22
+                        from: 47150
+                        to: 48475
+                        shiftPercent: 2.81
+                      - rate: 0.24
+                        from: 100525
+                        to: 103350
+                        shiftPercent: 2.81
+                      - rate: 0.32
+                        from: 191950
+                        to: 197300
+                        shiftPercent: 2.787
+                      - rate: 0.35
+                        from: 243725
+                        to: 250525
+                        shiftPercent: 2.79
+                      - rate: 0.37
+                        from: 365600
+                        to: 375800
+                        shiftPercent: 2.79
+                      head_of_household:
+                      - rate: 0.12
+                        from: 16550
+                        to: 17000
+                        shiftPercent: 2.719
+                      - rate: 0.22
+                        from: 63100
+                        to: 64850
+                        shiftPercent: 2.773
+                      - rate: 0.24
+                        from: 100500
+                        to: 103350
+                        shiftPercent: 2.836
+                      - rate: 0.32
+                        from: 191950
+                        to: 197300
+                        shiftPercent: 2.787
+                      - rate: 0.35
+                        from: 243700
+                        to: 250500
+                        shiftPercent: 2.79
+                      - rate: 0.37
+                        from: 609350
+                        to: 626350
+                        shiftPercent: 2.79
+                    standardDeduction:
+                      single:
+                        from: 14600
+                        to: 15000
+                        change: 400
+                        changePercent: 2.74
+                      married_filing_jointly:
+                        from: 29200
+                        to: 30000
+                        change: 800
+                        changePercent: 2.74
+                      married_filing_separately:
+                        from: 14600
+                        to: 15000
+                        change: 400
+                        changePercent: 2.74
+                      head_of_household:
+                        from: 21900
+                        to: 22500
+                        change: 600
+                        changePercent: 2.74
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/incometaxcalculator:
+    get:
+      summary: Income Tax Calculator
+      description: Calculate income tax using a custom tax rate. Useful for simple flat-rate tax calculations or estimations.
+      operationId: incometaxcalculator
+      parameters:
+      - name: income
+        in: query
+        schema:
+          type: number
+        required: true
+        description: Gross annual income in USD
+        example: 85000
+      - name: rate
+        in: query
+        schema:
+          type: number
+        required: true
+        description: Tax rate as a percentage (e.g., 22 for 22%)
+        example: 22
+      - name: deduction
+        in: query
+        schema:
+          type: number
+        required: false
+        description: Optional deduction amount to subtract from income before calculating tax
+        example: 14600
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  year: 2025
+                  filing_status: single
+                  income: 85000
+                  standardDeduction: 15000
+                  taxableIncome: 70000
+                  totalTax: 10852.5
+                  effectiveRate: 12.77%
+                  marginalRate: 22%
+                  incomeAfterTax: 74147.5
+                  monthlyTax: 904.38
+                  monthlyIncome: 6178.96
+                  brackets:
+                  - rate: 0.1
+                    ratePercent: 10.0%
+                    rangeMin: 0
+                    rangeMax: 11925
+                    taxableAmount: 11926
+                    taxAmount: 1192.6
+                  - rate: 0.12
+                    ratePercent: 12.0%
+                    rangeMin: 11926
+                    rangeMax: 48475
+                    taxableAmount: 36550
+                    taxAmount: 4386
+                  - rate: 0.22
+                    ratePercent: 22.0%
+                    rangeMin: 48476
+                    rangeMax: 103350
+                    taxableAmount: 21524
+                    taxAmount: 4735.28
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/inflation:
+    get:
+      summary: Inflation Rate
+      description: Get the annual inflation rate and CPI data for a specific country and year.
+      operationId: inflation
+      parameters:
+      - name: country
+        in: query
+        schema:
+          type: string
+        required: true
+        description: ISO 2-letter country code (e.g., US, GB, JP, DE, BR)
+        example: US
+      - name: year
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: The year to retrieve data for. Defaults to the previous year.
+        example: 2023
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  country: US
+                  countryName: United States
+                  year: 2023
+                  inflationRate: 4.12
+                  cpiIndex: 139.81
+                  cpiBaseYear: 2010
+                  lastUpdated: '2026-02-05T04:00:00.000Z'
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/insidertrading:
+    get:
+      summary: Insider Trading
+      description: Get recent SEC Form 4 insider transactions for a company by ticker symbol. Optionally filter to buys or sells and limit the number of transactions returned.
+      operationId: insidertrading
+      parameters:
+      - name: ticker
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Stock ticker symbol (e.g. AAPL, MSFT, ADBE)
+        example: AAPL
+      - name: type
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Filter to open-market buys or sells (buy or sell).
+        example: buy
+      - name: limit
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of transactions to return (1-25). Defaults to 5.
+        example: 10
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  ticker: AAPL
+                  cik: 0000320193
+                  company: Apple Inc.
+                  totalRecentForm4: 512
+                  count: 5
+                  lastTransactionDate: '2025-10-14'
+                  daysSinceLastTransaction: 64
+                  transactions:
+                  - filingDate: '2025-10-16'
+                    transactionDate: '2025-10-14'
+                    insiderName: COOK TIMOTHY D
+                    insiderTitle: Chief Executive Officer
+                    relationship:
+                      director: true
+                      officer: true
+                      tenPercentOwner: false
+                    security: Common Stock
+                    transactionCode: S
+                    transactionType: Sale
+                    direction: sell
+                    acquiredDisposed: D
+                    shares: 511000
+                    pricePerShare: 245.5
+                    value: 125450500
+                    sharesOwnedAfter: 3280000
+                    accessionNumber: 0000320193-25-000118
+                    url: https://www.sec.gov/Archives/edgar/data/320193/000032019325000118/xslF345X05/wf-form4.xml
+                  - filingDate: '2025-10-02'
+                    transactionDate: '2025-10-01'
+                    insiderName: MAESTRI LUCA
+                    insiderTitle: Senior Vice President, CFO
+                    relationship:
+                      director: false
+                      officer: true
+                      tenPercentOwner: false
+                    security: Common Stock
+                    transactionCode: S
+                    transactionType: Sale
+                    direction: sell
+                    acquiredDisposed: D
+                    shares: 74213
+                    pricePerShare: 241.18
+                    value: 17899091
+                    sharesOwnedAfter: 112884
+                    accessionNumber: 0000320193-25-000112
+                    url: https://www.sec.gov/Archives/edgar/data/320193/000032019325000112/xslF345X05/wf-form4.xml
+                  - filingDate: '2025-08-20'
+                    transactionDate: '2025-08-18'
+                    insiderName: WILLIAMS JEFFREY E
+                    insiderTitle: Chief Operating Officer
+                    relationship:
+                      director: false
+                      officer: true
+                      tenPercentOwner: false
+                    security: Common Stock
+                    transactionCode: P
+                    transactionType: Purchase
+                    direction: buy
+                    acquiredDisposed: A
+                    shares: 5000
+                    pricePerShare: 226.4
+                    value: 1132000
+                    sharesOwnedAfter: 489210
+                    accessionNumber: 0000320193-25-000101
+                    url: https://www.sec.gov/Archives/edgar/data/320193/000032019325000101/xslF345X05/wf-form4.xml
+                  - filingDate: '2025-08-04'
+                    transactionDate: '2025-08-01'
+                    insiderName: ADAMS KATHERINE L
+                    insiderTitle: Senior Vice President, General Counsel
+                    relationship:
+                      director: false
+                      officer: true
+                      tenPercentOwner: false
+                    security: Common Stock
+                    transactionCode: A
+                    transactionType: Grant/Award
+                    direction: null
+                    acquiredDisposed: A
+                    shares: 25000
+                    pricePerShare: 0
+                    value: 0
+                    sharesOwnedAfter: 312450
+                    accessionNumber: 0000320193-25-000098
+                    url: https://www.sec.gov/Archives/edgar/data/320193/000032019325000098/xslF345X05/wf-form4.xml
+                  - filingDate: '2025-08-04'
+                    transactionDate: '2025-08-01'
+                    insiderName: O'BRIEN DEIRDRE
+                    insiderTitle: Senior Vice President
+                    relationship:
+                      director: false
+                      officer: true
+                      tenPercentOwner: false
+                    security: Common Stock
+                    transactionCode: F
+                    transactionType: Tax Withholding
+                    direction: null
+                    acquiredDisposed: D
+                    shares: 8123
+                    pricePerShare: 232.1
+                    value: 1885348
+                    sharesOwnedAfter: 145200
+                    accessionNumber: 0000320193-25-000097
+                    url: https://www.sec.gov/Archives/edgar/data/320193/000032019325000097/xslF345X05/wf-form4.xml
+                  summary:
+                    totalTransactions: 5
+                    distinctInsiders: 5
+                    buys:
+                      count: 1
+                      shares: 5000
+                      value: 1132000
+                    sells:
+                      count: 2
+                      shares: 585213
+                      value: 143349591
+                    netShares: -580213
+                    netValue: -142217591
+                    buySellRatio: 0.01
+                    sentiment: Bearish
+                    clusterBuy: false
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/interestrate:
+    get:
+      summary: Interest Rate
+      description: Get the central bank policy interest rate for a specific country. Omit `date` for the current rate, or pass a YYYY-MM month for a historical rate (available from 2000 onwards).
+      operationId: interestrate
+      parameters:
+      - name: country
+        in: query
+        schema:
+          type: string
+        required: true
+        description: 2-letter country code
+        example: US
+      - name: date
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Optional month in YYYY-MM format for a historical lookup. Omit for the current rate.
+        example: 2024-06
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  country: US
+                  countryName: United States
+                  centralBank: Federal Reserve
+                  rate: 4.5
+                  date: '2026-02-05'
+                  lastUpdated: '2026-02-05T05:00:00.000Z'
+                  lastChanged: '2026-01-29'
+                  change: -0.25
+                  changeDirection: down
+                  previousRate: 4.75
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/jobsreport:
+    get:
+      summary: Jobs Report
+      description: Get current or historical employment statistics
+      operationId: jobsreport
+      parameters:
+      - name: date
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Optional date in YYYY-MM format for historical lookup. Omit for current data.
+        example: 2023-06
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  yearMonth: 2024-01
+                  year: 2024
+                  month: 1
+                  jobsChangeDirection: growth
+                  summary:
+                    unemploymentRate: 3.7
+                    laborForceParticipation: 62.5
+                    totalEmployed: 161152000
+                    totalUnemployed: 6124000
+                    laborForce: 167276000
+                    jobsChange: 353000
+                  nonfarmPayrolls:
+                    total: 157245000
+                    private: 133567000
+                  bySector:
+                    mining: 645000
+                    construction: 8123000
+                    manufacturing: 12987000
+                    tradeTransportUtilities: 29456000
+                    information: 2987000
+                    financialActivities: 9234000
+                    professionalBusiness: 22876000
+                    educationHealth: 25678000
+                    leisureHospitality: 16789000
+                    otherServices: 5892000
+                    government: 23678000
+                  topSector: Trade, Transport & Utilities
+                  formatted:
+                    totalEmployed: 161.15M
+                    totalUnemployed: 6.12M
+                    laborForce: 167.28M
+                    jobsChange: +353.0K
+                    nonfarmPayrolls: 157.25M
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/loanpaymentcalculator:
+    post:
+      summary: Loan Calculator
+      description: Calculate loan payments based on the loan amount, interest rate, and loan term
+      operationId: loanpaymentcalculator
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  loanAmount: 32000
+                  downpayment: 0
+                  interestRate: 8.5
+                  loanTerm: 6
+                  monthly_payment: 568.91
+                  total_interest_paid: 8961.4
+                  total_payment: 40961.52
+                  interestRatio: 21.88
+                  formatted:
+                    loanAmount: $32,000.00
+                    monthlyPayment: $568.91
+                    totalInterestPaid: $8,961.40
+                    totalPayment: $40,961.52
+                  amortization_schedule:
+                  - month: 1
+                    interest_payment: 226.67
+                    principal_payment: 342.24
+                    remaining_balance: 31657.76
+                  - month: 2
+                    interest_payment: 224.24
+                    principal_payment: 344.67
+                    remaining_balance: 31313.09
+                  - month: 3
+                    interest_payment: 221.8
+                    principal_payment: 347.11
+                    remaining_balance: 30965.99
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                loanAmount:
+                  type: number
+                  description: The loan amount
+                interestRate:
+                  type: number
+                  description: The interest rate (percentage)
+                loanTerm:
+                  type: integer
+                  description: The loan term in years
+                downpayment:
+                  type: number
+                  description: Amount paid up front, subtracted from the loan amount before interest is applied
+              required:
+              - loanAmount
+              - interestRate
+              - loanTerm
+      tags:
+      - Finance
+  /v1/minimumwage:
+    get:
+      summary: Minimum Wage
+      description: Get minimum wage rates for all states or a specific state
+      operationId: minimumwage
+      parameters:
+      - name: state
+        in: query
+        schema:
+          type: string
+        required: true
+        description: 2-letter state code (e.g., CA, NY)
+        example: CA
+      - name: year
+        in: query
+        schema:
+          type: number
+        required: false
+        description: Year to get minimum wage for (e.g., 2020). Defaults to current year.
+        example: 2024
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  state: CA
+                  stateName: California
+                  year: 2026
+                  minimumWage: 16.9
+                  stateRate: 16.9
+                  federalRate: 7.25
+                  tippedMinimum: null
+                  usesFederalRate: false
+                  aboveFederal: true
+                  federalDifference: 9.65
+                  annualIncome40hrs: 35152
+                  note: null
+                  formatted:
+                    minimumWage: $16.90/hr
+                    annualIncome: $35,152.00
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/mortgagecalculator:
+    post:
+      summary: Mortgage Calculator
+      description: Calculate mortgage payments based on the loan amount, interest rate, and loan term
+      operationId: mortgagecalculator
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  amount: 570000
+                  downpayment: 0
+                  rate: 6.8
+                  years: 30
+                  total_interest_paid: 767750.49
+                  total_loan_payment: 1337750.49
+                  interestRatio: 57.39
+                  monthly_payment:
+                    total: 3715.97
+                    mortgage: 3715.97
+                    property_tax: 0
+                    hoa: 0
+                    home_insurance: 0
+                  annual_payment:
+                    total: 44591.68
+                    mortgage: 44591.68
+                    property_tax: 0
+                    hoa: 0
+                    home_insurance: 0
+                  formatted:
+                    amount: $570,000
+                    monthlyPayment: $3,715.97
+                    totalInterestPaid: $767,750.49
+                    totalLoanPayment: $1,337,750.49
+                  amortization_schedule:
+                  - month: 1
+                    interest_payment: 3230
+                    principal_payment: 485.97
+                    remaining_balance: 569514.03
+                  - month: 2
+                    interest_payment: 3227.25
+                    principal_payment: 488.73
+                    remaining_balance: 569025.3
+                  - month: 3
+                    interest_payment: 3224.48
+                    principal_payment: 491.5
+                    remaining_balance: 568533.8
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                  description: The loan amount
+                rate:
+                  type: number
+                  description: The interest rate (percentage)
+                years:
+                  type: integer
+                  description: The loan term in years
+                downpayment:
+                  type: number
+                  description: The down payment amount
+                annual_propertytax:
+                  type: number
+                  description: The annual property tax amount
+                annual_homeinsurance:
+                  type: number
+                  description: The annual home insurance amount
+                annual_hoa:
+                  type: number
+                  description: The annual HOA amount
+              required:
+              - amount
+              - rate
+              - years
+      tags:
+      - Finance
+  /v1/mortgagerate:
+    get:
+      summary: Mortgage Rate
+      description: Get the current or historical mortgage rate for a specific type.
+      operationId: mortgagerate
+      parameters:
+      - name: type
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The mortgage type
+        example: 30year
+      - name: year
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Year to retrieve rates for (1971-present). Requires month parameter.
+        example: 2023
+      - name: month
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Month to retrieve rates for (1-12). Required when year is specified.
+        example: 6
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  rateType: 30year
+                  name: 30-Year Fixed Rate Mortgage
+                  term: 30
+                  type: fixed
+                  country: US
+                  year: 2023
+                  month: 6
+                  count: 4
+                  rates:
+                  - week: '2023-06-01'
+                    rate: 6.79
+                  - week: '2023-06-08'
+                    rate: 6.71
+                  - week: '2023-06-15'
+                    rate: 6.69
+                  - week: '2023-06-22'
+                    rate: 6.67
+                  change1w: -0.02
+                  changeDirection: down
+                  previousRate: 6.69
+                  previousDate: '2023-06-15'
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/nationaldebt:
+    get:
+      summary: National Debt
+      description: Get current or historical US national debt data
+      operationId: nationaldebt
+      parameters:
+      - name: date
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Optional date in YYYY-MM-DD format for historical lookup. Omit for current data.
+        example: '2023-06-15'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  date: '2026-09-14'
+                  recordDate: '2026-09-14'
+                  totalDebt: 40054421967786.91
+                  totalDebtFormatted: $40.05 trillion
+                  publicDebt: 32358452350574.73
+                  publicDebtFormatted: $32.36 trillion
+                  intragovernmentalDebt: 7695969617212.18
+                  intragovernmentalDebtFormatted: $7.70 trillion
+                  perCapita: 119565
+                  perCapitaFormatted: $119,565
+                  population: 335000000
+                  publicDebtRatio: 80.79
+                  perHousehold: 298913.6
+                  perHouseholdFormatted: $298,914
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/palladiumprice:
+    get:
+      summary: Palladium Price
+      description: Get the current price of palladium. You can optionally specify a currency (defaults to USD).
+      operationId: palladiumprice
+      parameters:
+      - name: currency
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The currency to get the price in
+        example: USD
+      - name: hourly
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Include hourly price data for the past 24 hours
+        example: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  currency: USD
+                  gram: 40.08
+                  kilogram: 40075.88
+                  ounce: 1246.5
+                  lastUpdated: '2026-02-07T12:00:00.000Z'
+                  change24h: -8.2
+                  change24hPct: -0.65
+                  changeDirection: down
+                  high24h: 1259
+                  low24h: 1241.1
+                  formatted:
+                    ounce: $1,246.50
+                    gram: $40.08
+                    kilogram: $40,075.88
+                    ounceWords: one thousand, two hundred forty-seven dollars
+                    kilogramWords: forty thousand, seventy-six dollars
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/platinumprice:
+    get:
+      summary: Platinum Price
+      description: Get the current price of platinum. You can optionally specify a currency (defaults to USD).
+      operationId: platinumprice
+      parameters:
+      - name: currency
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The currency to get the price in
+        example: USD
+      - name: hourly
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Include hourly price data for the past 24 hours
+        example: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  currency: USD
+                  gram: 51.62
+                  kilogram: 51617.99
+                  ounce: 1605.5
+                  lastUpdated: '2026-02-07T12:00:00.000Z'
+                  change24h: 12.3
+                  change24hPct: 0.77
+                  changeDirection: up
+                  high24h: 1618
+                  low24h: 1592.4
+                  formatted:
+                    ounce: $1,605.50
+                    gram: $51.62
+                    kilogram: $51,617.99
+                    ounceWords: one thousand, six hundred six dollars
+                    kilogramWords: fifty-one thousand, six hundred eighteen dollars
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/population:
+    get:
+      summary: Population Data
+      description: Get population data for a specific country. Returns latest data by default, or data for a specific year if specified.
+      operationId: population
+      parameters:
+      - name: country
+        in: query
+        schema:
+          type: string
+        required: true
+        description: ISO 2 or 3-letter country code (e.g., US, USA, GB, GBR)
+        example: US
+      - name: year
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Specific year to retrieve data for (1960-present). Returns latest if not specified.
+        example: 2023
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  country: US
+                  countryName: United States
+                  year: 2025
+                  count: 1
+                  historical:
+                  - year: 2025
+                    population: 341784857
+                    populationFormatted: 341.78 million
+                    growthRate: 0.52
+                    urbanPercent: 80.19
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/purchasingpower:
+    get:
+      summary: Purchasing Power
+      description: Calculate the inflation-adjusted value of money between two periods
+      operationId: purchasingpower
+      parameters:
+      - name: amount
+        in: query
+        schema:
+          type: number
+        required: true
+        description: The dollar amount to convert
+        example: 100
+      - name: from
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Starting year (YYYY format, data available from 1947)
+        example: '1990'
+      - name: to
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Ending year (YYYY format). Omit for current.
+        example: '2024'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  originalAmount: 100
+                  originalPeriod: 1990-01
+                  adjustedAmount: 242.31
+                  adjustedPeriod: 2024-01
+                  cumulativeInflation: 142.31
+                  multiplier: 2.423
+                  explanation: $100 in 1990-01 has the same purchasing power as $242.31 in 2024-01
+                  fromCPI: 127.4
+                  toCPI: 308.417
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/routinglookup:
+    get:
+      summary: Routing Number Lookup
+      description: Lookup routing number information based on the routing number
+      operationId: routinglookup
+      parameters:
+      - name: routing
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The routing number to lookup information about
+        example: '121000358'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  routing_number: '121000358'
+                  office_code: O
+                  record_type_code: '1'
+                  new_routing_number: '000000000'
+                  bank: BANK OF AMERICA, N.A.
+                  address: 8001 VILLA PARK DRIVE
+                  city: HENRICO
+                  state: VA
+                  zip: '23228'
+                  zip_extension: '0000'
+                  country: US
+                  federal_reserve_district: San Francisco
+                  routing_type: primary
+                  is_valid_checksum: true
+                  routing_analysis:
+                    is_head_office: true
+                    is_branch: false
+                    is_federal_reserve_bank: false
+                    is_active: true
+                    replaced_by: null
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/salestax:
+    get:
+      summary: Sales Tax Lookup
+      description: Lookup the sales tax rate of a location based on the zip code
+      operationId: salestax
+      parameters:
+      - name: zip
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The zip code for which you want to get the sales tax rate
+        example: '64082'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  state: CA
+                  zip: 90210
+                  region: WEST HOLLYWOOD TOURISM IMPROVEMENT DISTRICT
+                  rate: 0.1025
+                  county: 0.0025
+                  city: 0.0075
+                  special: 0.0325
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/salestaxcalculator:
+    get:
+      summary: Sales Tax Calculator
+      description: Calculate sales tax for a purchase amount at a specific US location
+      operationId: salestaxcalculator
+      parameters:
+      - name: amount
+        in: query
+        schema:
+          type: number
+        required: true
+        description: Purchase amount to calculate tax on
+        example: 100
+      - name: zip
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Valid US 5-digit ZIP code (required unless state is given)
+        example: '90210'
+      - name: state
+        in: query
+        schema:
+          type: string
+        required: false
+        description: 2-letter US state code (e.g., CA, NY, TX); used when zip is not given, state rate only
+        example: CA
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  amount: 100
+                  taxRate: 0.0975
+                  taxRatePercent: 9.75
+                  taxAmount: 9.75
+                  totalAmount: 109.75
+                  zip: '90210'
+                  state: CA
+                  region: Beverly Hills
+                  breakdown:
+                    stateRate: 0.0725
+                    countyRate: 0.0025
+                    cityRate: 0.0125
+                    specialRate: 0.01
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/sanctionscreening:
+    get:
+      summary: Sanctions Screening
+      description: Screen a person or company name against the OFAC Specially Designated Nationals list. Returns scored matches, or an empty result set when the name is clear.
+      operationId: sanctionscreening
+      parameters:
+      - name: name
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The person or company name to screen (minimum 3 characters)
+        example: Banco Nacional de Cuba
+      - name: threshold
+        in: query
+        schema:
+          type: number
+        required: false
+        description: Minimum match score to return, between 0.5 and 1. Lower catches more names but returns more false positives
+        example: 0.85
+      - name: limit
+        in: query
+        schema:
+          type: number
+        required: false
+        description: Maximum number of matches to return (1-50)
+        example: 10
+      - name: type
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Restrict screening to one entry type
+        example: individual
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  query: Banco Nacional de Cuba
+                  matched: true
+                  matchCount: 1
+                  verdict: exact
+                  topScore: 1
+                  results:
+                  - uid: 306
+                    name: BANCO NACIONAL DE CUBA
+                    type: entity
+                    score: 1
+                    confidence: exact
+                    matchedOn: BANCO NACIONAL DE CUBA
+                    matchedVia: primary
+                    isWeakAlias: false
+                    programs:
+                    - CUBA
+                    title: null
+                    aka:
+                    - name: BNC
+                      type: aka
+                      strength: weak
+                    - name: NATIONAL BANK OF CUBA
+                      type: aka
+                      strength: strong
+                    dateOfBirth: []
+                    placeOfBirth: []
+                    nationalities: []
+                    citizenships: []
+                    addresses:
+                    - address1: Zweierstrasse 35
+                      city: Zurich
+                      postalCode: CH-8022
+                      country: Switzerland
+                    - address1: Avenida de Concha Espina 8
+                      city: Madrid
+                      postalCode: E-28036
+                      country: Spain
+                    - address1: Dai-Ichi Bldg. 6th Floor, 10-2 Nihombashi, 2-chome, Chuo-ku
+                      city: Tokyo
+                      postalCode: '103'
+                      country: Japan
+                    - address1: Federico Boyd Avenue & 51 Street
+                      city: Panama City
+                      country: Panama
+                    ids: []
+                    remarks: null
+                  list:
+                    source: OFAC SDN
+                    authority: US Department of the Treasury, Office of Foreign Assets Control
+                    publishDate: 07/15/2026
+                    recordCount: 19217
+                    lastUpdated: '2026-07-16T05:00:12.431Z'
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/savingsbonds:
+    get:
+      summary: I-Bond Rates
+      description: Get current I-Bond rates and historical rate data
+      operationId: savingsbonds
+      parameters:
+      - name: period
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Specific issue period to lookup (YYYY-MM format, e.g., 2024-11). Omit for current rates.
+        example: 2024-11
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  period: 2026-10
+                  compositeRate: 4.26
+                  fixedRate: 0.9
+                  inflationRate: 1.67
+                  purchaseLimit: 10000
+                  minimumHoldingPeriod: 1 year
+                  earlyRedemptionPenalty: Last 3 months interest if redeemed before 5 years
+                  taxAdvantages: Federal tax deferred until redemption; exempt from state/local tax; may be tax-free for education
+                  nextRateChange: '2026-11-01'
+                  lastUpdated: '2026-09-01T15:00:29.761Z'
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/secfilings:
+    get:
+      summary: SEC Filings
+      description: Get the recent SEC EDGAR filing history for a company by ticker symbol. Optionally filter to a specific form type and limit the number of filings returned.
+      operationId: secfilings
+      parameters:
+      - name: ticker
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Stock ticker symbol (e.g. AAPL, MSFT, ADBE)
+        example: AAPL
+      - name: form
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Filter to a single form type (e.g. 10-K, 10-Q, 8-K, 4).
+        example: 10-K
+      - name: limit
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of filings to return (1-50). Defaults to 5.
+        example: 10
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  ticker: AAPL
+                  cik: 0000320193
+                  company: Apple Inc.
+                  sic: '3571'
+                  sicDescription: Electronic Computers
+                  fiscalYearEnd: 0926
+                  totalRecentFilings: 1000
+                  count: 5
+                  latest:
+                    annual:
+                      form: 10-K
+                      filingDate: '2025-10-31'
+                      accessionNumber: 0000320193-25-000079
+                      primaryDocument: aapl-20250927.htm
+                      url: https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm
+                      daysAgo: 321
+                    quarterly:
+                      form: 10-Q
+                      filingDate: '2026-07-31'
+                      accessionNumber: 0000320193-26-000020
+                      primaryDocument: aapl-20260627.htm
+                      url: https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/aapl-20260627.htm
+                      daysAgo: 48
+                    currentReport:
+                      form: 8-K
+                      filingDate: '2026-07-30'
+                      accessionNumber: 0000320193-26-000018
+                      primaryDocument: aapl-20260730.htm
+                      url: https://www.sec.gov/Archives/edgar/data/320193/000032019326000018/aapl-20260730.htm
+                      daysAgo: 49
+                  filings:
+                  - form: '4'
+                    filingDate: '2026-09-10'
+                    reportDate: '2026-09-08'
+                    primaryDocDescription: FORM 4
+                    accessionNumber: 0001140361-26-036226
+                    primaryDocument: xslF345X06/form4.xml
+                    url: https://www.sec.gov/Archives/edgar/data/320193/000114036126036226/xslF345X06/form4.xml
+                    items: null
+                    isXBRL: false
+                  - form: '4'
+                    filingDate: '2026-09-03'
+                    reportDate: '2026-09-01'
+                    primaryDocDescription: FORM 4
+                    accessionNumber: 0001140361-26-035636
+                    primaryDocument: xslF345X06/form4.xml
+                    url: https://www.sec.gov/Archives/edgar/data/320193/000114036126035636/xslF345X06/form4.xml
+                    items: null
+                    isXBRL: false
+                  - form: '4'
+                    filingDate: '2026-09-01'
+                    reportDate: '2026-09-01'
+                    primaryDocDescription: FORM 4
+                    accessionNumber: 0001140361-26-035362
+                    primaryDocument: xslF345X06/form4.xml
+                    url: https://www.sec.gov/Archives/edgar/data/320193/000114036126035362/xslF345X06/form4.xml
+                    items: null
+                    isXBRL: false
+                  - form: '3'
+                    filingDate: '2026-09-01'
+                    reportDate: '2026-09-01'
+                    primaryDocDescription: FORM 3
+                    accessionNumber: 0001140361-26-035359
+                    primaryDocument: xslF345X06/form3.xml
+                    url: https://www.sec.gov/Archives/edgar/data/320193/000114036126035359/xslF345X06/form3.xml
+                    items: null
+                    isXBRL: false
+                  - form: 8-K/A
+                    filingDate: '2026-09-01'
+                    reportDate: '2026-04-17'
+                    primaryDocDescription: 8-K/A
+                    accessionNumber: 0001140361-26-035325
+                    primaryDocument: ef20081427_8ka.htm
+                    url: https://www.sec.gov/Archives/edgar/data/320193/000114036126035325/ef20081427_8ka.htm
+                    items: '5.02'
+                    isXBRL: true
+                  analytics:
+                    formCounts:
+                      '4': 590
+                      '144': 45
+                      8-K: 103
+                      424B2: 46
+                      10-Q: 33
+                      PX14A6G: 27
+                    filingsLast30Days: 7
+                    filingsLast90Days: 11
+                    filingsLast365Days: 50
+                    daysSinceLastFiling: 7
+                    daysSinceLastAnnual: 321
+                    daysSinceLastQuarterly: 48
+                    averageDaysBetweenFilings: 4.5
+                    mostActiveForm: '4'
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/silverprice:
+    get:
+      summary: Silver Price
+      description: Get the current price of silver. You can optionally specify a currency (defaults to USD).
+      operationId: silverprice
+      parameters:
+      - name: currency
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The currency to get the price in
+        example: USD
+      - name: hourly
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Include hourly price data for the past 24 hours
+        example: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  currency: USD
+                  gram: 1.58
+                  kilogram: 1584.07
+                  ounce: 49.27
+                  lastUpdated: '2026-02-07T12:00:00.000Z'
+                  change24h: 0.42
+                  change24hPct: 0.86
+                  changeDirection: up
+                  high24h: 49.55
+                  low24h: 48.8
+                  formatted:
+                    ounce: $49.27
+                    gram: $1.58
+                    kilogram: $1,584.07
+                    ounceWords: forty-nine dollars
+                    kilogramWords: one thousand, five hundred eighty-four dollars
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/stockexchange:
+    get:
+      summary: Stock Exchange
+      description: Get stock exchange details by its Market Identifier Code (MIC).
+      operationId: stockexchange
+      parameters:
+      - name: mic
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The 4-character Market Identifier Code (e.g., XNYS for NYSE, XNAS for NASDAQ)
+        example: XNYS
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  count: 1
+                  exchanges:
+                  - mic: XNYS
+                    operatingMic: XNYS
+                    type: OPRT
+                    name: NEW YORK STOCK EXCHANGE, INC.
+                    acronym: NYSE
+                    category: RMKT
+                    country: US
+                    city: NEW YORK
+                    website: WWW.NYSE.COM
+                    lei: 549300HIIRNWMO0MKS45
+                    creationDate: '2005-05-23'
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/stockmarketopentimes:
+    get:
+      summary: Stock Market Open Times
+      description: Get the open times of the stock market on the current date of the request
+      operationId: stockmarketopentimes
+      parameters:
+      - name: exchange
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The stock exchange code
+        example: NYSE
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  timezone: America/New_York
+                  exchange: NYSE
+                  fullName: New York Stock Exchange
+                  isOpen: false
+                  openingTime: '2025-12-16 09:30:00'
+                  closingTime: '2025-12-16 16:00:00'
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/swiftlookup:
+    get:
+      summary: SWIFT Code Lookup
+      description: Lookup SWIFT code information based on the SWIFT code
+      operationId: swiftlookup
+      parameters:
+      - name: swift
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The SWIFT code to lookup information about
+        example: CHASUS33ARP
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  count: 1
+                  banks:
+                  - bank: JPMORGAN CHASE BANK, N.A.
+                    city: NEW YORK,NY
+                    branch: ACCOUNT RECONCILIATION PROCESSING
+                    swift_code: CHASUS33ARP
+                    country: United States
+                    country_code: US
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/tradebalance:
+    get:
+      summary: Trade Balance
+      description: Get trade balance data
+      operationId: tradebalance
+      parameters:
+      - name: date
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Optional date in YYYY-MM format for historical lookup. Omit for current data.
+        example: 2023-06
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  yearMonth: 2026-07
+                  year: 2026
+                  month: 7
+                  exports: 310723
+                  imports: 399299
+                  balance: -88576
+                  unit: millions_usd
+                  exportsFormatted: $310.72 billion
+                  importsFormatted: $399.30 billion
+                  balanceFormatted: -$88.58 billion
+                  tradeStatus: deficit
+                  updatedAt: '2026-09-16T16:03:38.440Z'
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/treasuryyields:
+    get:
+      summary: Treasury Yields
+      description: Get current or historical Treasury securities interest rates
+      operationId: treasuryyields
+      parameters:
+      - name: date
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Optional month in YYYY-MM format for a recent-month lookup (recent months only). Omit for current data.
+        example: 2025-06
+      - name: type
+        in: query
+        schema:
+          type: string
+        required: false
+        description: 'Optional filter for a single point. Legacy security types: bills, notes, bonds, tips, frn. Or a maturity: 1mo, 3mo, 6mo, 1yr, 2yr, 3yr, 5yr, 7yr, 10yr, 20yr, 30yr'
+        example: 10yr
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  date: '2024-02-01'
+                  bills: 5.24
+                  notes: 4.35
+                  bonds: 4.67
+                  tips: 2.15
+                  frn: 5.31
+                  changes:
+                    bills:
+                      change1d: 0.02
+                      direction: up
+                    notes:
+                      change1d: -0.03
+                      direction: down
+                    bonds:
+                      change1d: 0.01
+                      direction: up
+                    tips:
+                      change1d: 0
+                      direction: unchanged
+                    frn:
+                      change1d: 0.02
+                      direction: up
+                  previousDate: '2024-01-31'
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/unemployment:
+    get:
+      summary: Unemployment Rate
+      description: Get the current or historical unemployment rate for a specific country.
+      operationId: unemployment
+      parameters:
+      - name: country
+        in: query
+        schema:
+          type: string
+        required: true
+        description: 'ISO country code (2 or 3 letter). Examples: US, USA, DE, DEU, GB, GBR'
+        example: USA
+      - name: year
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Specific year to retrieve data for (1991-present). Returns latest if not specified.
+        example: 2023
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  country: USA
+                  countryName: United States
+                  year: 2024
+                  count: 1
+                  historical:
+                  - year: 2024
+                    rate: 4.02
+                code: 200
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+  /v1/vatrates:
+    get:
+      summary: VAT Rates
+      description: Returns VAT rates for a country. Optionally specify a date for historical rates or a postcode for regional exceptions.
+      operationId: vatrates
+      parameters:
+      - name: country
+        in: query
+        schema:
+          type: string
+        required: true
+        description: ISO 2-letter country code (e.g., DE, FR, ES)
+        example: DE
+      - name: date
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Look up rate effective on this date (YYYY-MM-DD). Defaults to today.
+        example: '2020-07-01'
+      - name: postcode
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Check for regional exceptions (e.g., Canary Islands, Ceuta)
+        example: '35001'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  country: DE
+                  countryName: Germany
+                  currency: EUR
+                  effectiveFrom: '2021-01-01'
+                  rates:
+                    standard: 19
+                    reduced: 7
+                    reduced2: null
+                    superReduced: null
+                    parking: null
+                  exception: null
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Finance
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
+externalDocs:
+  description: APIVerve Documentation
+  url: https://docs.apiverve.com

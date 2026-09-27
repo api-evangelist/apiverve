@@ -1,0 +1,2001 @@
+openapi: 3.2.0
+info:
+  title: APIVerve Math/Calculations API
+  description: One API key, 370+ real-world REST endpoints — weather, geocoding, finance, DNS, validation, text processing and more. Every endpoint returns JSON. Full documentation at https://docs.apiverve.com.
+  termsOfService: https://apiverve.com/terms/
+  contact:
+    name: APIVerve Support
+    email: hello@apiverve.com
+    url: https://apiverve.com/contact
+  license:
+    name: APIVerve Terms of Service
+    url: https://apiverve.com/terms/
+  version: 1.0.0
+  x-logo:
+    url: https://apiverve.com/images/favicon.png
+    altText: APIVerve
+servers:
+- url: https://api.apiverve.com
+security:
+- api_key: []
+tags:
+- name: Math/Calculations
+paths:
+  /v1/colorsimilarity:
+    get:
+      summary: Color Similarity Calculator
+      description: Calculate similarity between two hex colors
+      operationId: colorsimilarity
+      parameters:
+      - name: color1
+        in: query
+        schema:
+          type: string
+        required: true
+        description: 'First hex color value (with or without # prefix)'
+        example: FF5733
+      - name: color2
+        in: query
+        schema:
+          type: string
+        required: true
+        description: 'Second hex color value (with or without # prefix)'
+        example: FF6B47
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  color1:
+                    hex: '#FF5733'
+                    rgb:
+                      r: 255
+                      g: 87
+                      b: 51
+                    hsl:
+                      h: 10.6
+                      s: 100
+                      l: 60
+                  color2:
+                    hex: '#FF6B47'
+                    rgb:
+                      r: 255
+                      g: 107
+                      b: 71
+                    hsl:
+                      h: 11.7
+                      s: 100
+                      l: 63.9
+                  rgb_distance: 28.28
+                  rgb_similarity: 93.6
+                  hsl_similarity: 97.71
+                  overall_similarity: 95.65
+                  delta_e: 28.28
+                  hue_difference: 1.15
+                  saturation_difference: 0
+                  lightness_difference: 3.92
+                  similarity_category: nearly identical
+                  are_identical: false
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Math/Calculations
+  /v1/daylightduration:
+    get:
+      summary: Daylight Duration Calculator
+      description: Calculate sunrise, sunset, and daylight hours for a location
+      operationId: daylightduration
+      parameters:
+      - name: latitude
+        in: query
+        schema:
+          type: number
+        required: true
+        description: Latitude of the location
+        example: 40.7128
+      - name: longitude
+        in: query
+        schema:
+          type: number
+        required: true
+        description: Longitude of the location
+        example: -74.006
+      - name: date
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Date in YYYY-MM-DD format (defaults to today)
+        example: '2024-06-21'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  date: '2024-06-21'
+                  location:
+                    latitude: 40.7128
+                    longitude: -74.006
+                  condition: Normal
+                  description: Standard sunrise and sunset
+                  sunrise: 09:25:09
+                  sunset: '24:30:44'
+                  daylight_duration:
+                    total_minutes: 905.58
+                    hours: 15
+                    minutes: 5
+                    formatted: '15:05:00'
+                  day_of_year: 173
+                  is_valid: true
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Math/Calculations
+  /v1/fibonaccigenerator:
+    get:
+      summary: Fibonacci Generator
+      description: Generate a specific number of Fibonacci numbers
+      operationId: fibonaccigenerator
+      parameters:
+      - name: count
+        in: query
+        schema:
+          type: integer
+        required: true
+        description: Number of Fibonacci numbers to generate
+        example: 10
+      - name: startfrom
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Start from this position in the sequence
+        example: 0
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  sequence:
+                  - 0
+                  - 1
+                  - 1
+                  - 2
+                  - 3
+                  - 5
+                  - 8
+                  - 13
+                  - 21
+                  - 34
+                  count: 10
+                  start_from: 0
+                  first_value: 0
+                  last_value: 34
+                  sum: 88
+                  ratios:
+                  - 1.666667
+                  - 1.6
+                  - 1.625
+                  - 1.615385
+                  - 1.619048
+                  golden_ratio_approximation: 1.619048
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Math/Calculations
+  /v1/permutationcombination:
+    get:
+      summary: Permutation & Combination Calculator
+      description: Calculate P(n,r) and C(n,r) values
+      operationId: permutationcombination
+      parameters:
+      - name: n
+        in: query
+        schema:
+          type: integer
+        required: true
+        description: Total number of items
+        example: 10
+      - name: r
+        in: query
+        schema:
+          type: integer
+        required: true
+        description: Number of items to choose (must be <= n)
+        example: 3
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  n: 10
+                  r: 3
+                  permutation: 720
+                  combination: 120
+                  formulas:
+                    permutation: P(n,r) = n! / (n-r)!
+                    combination: C(n,r) = n! / (r! × (n-r)!)
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Math/Calculations
+  /v1/romannumeralmath:
+    get:
+      summary: Roman Numeral Math
+      description: Perform arithmetic operations with Roman numerals
+      operationId: romannumeralmath
+      parameters:
+      - name: roman1
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The first Roman numeral
+        example: XIV
+      - name: roman2
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The second Roman numeral
+        example: VI
+      - name: operation
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Operation to perform
+        example: add
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  roman1: XIV
+                  roman2: VI
+                  roman1_value: 14
+                  roman2_value: 6
+                  operation: add
+                  result_number: 20
+                  result_roman: XX
+                  equation_numeric: 14 + 6 = 20
+                  equation_roman: XIV + VI = XX
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Math/Calculations
+  /v1/tipcalculator:
+    get:
+      summary: Tip Calculator
+      description: Calculate tip amount and split bill among people
+      operationId: tipcalculator
+      parameters:
+      - name: amount
+        in: query
+        schema:
+          type: number
+        required: true
+        description: The bill amount before tip
+        example: 100
+      - name: percentage
+        in: query
+        schema:
+          type: number
+        required: false
+        description: Tip percentage
+        example: 18
+      - name: people
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of people to split the bill
+        example: 4
+      - name: currency
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Currency code for display
+        example: USD
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  bill_amount: 100
+                  tip_percentage: 18
+                  tip_amount: 18
+                  total_amount: 118
+                  currency: USD
+                  split_between: 4
+                  per_person:
+                    bill_amount: 25
+                    tip_amount: 4.5
+                    total_amount: 29.5
+                  common_tip_amounts:
+                  - percentage: 10
+                    tip_amount: 10
+                    total: 110
+                    per_person: 27.5
+                  - percentage: 15
+                    tip_amount: 15
+                    total: 115
+                    per_person: 28.75
+                  - percentage: 20
+                    tip_amount: 20
+                    total: 120
+                    per_person: 30
+                  formatted:
+                    bill_amount: $100.00
+                    tip_amount: $18.00
+                    total_amount: $118.00
+                    per_person_total: $29.50
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Math/Calculations
+  /v1/truthtable:
+    get:
+      summary: Truth Table Generator
+      description: Generate a truth table for a boolean expression
+      operationId: truthtable
+      parameters:
+      - name: expression
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Boolean expression using A-Z variables and operators (AND, OR, NOT, XOR, NAND, NOR)
+        example: A AND B OR C
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  expression: A AND B OR C
+                  normalized: A && B || C
+                  variables:
+                  - A
+                  - B
+                  - C
+                  - D
+                  - N
+                  - O
+                  - R
+                  variableCount: 7
+                  rowCount: 128
+                  rows:
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 0
+                      D: 0
+                      N: 0
+                      O: 0
+                      R: 0
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 0
+                      D: 0
+                      N: 0
+                      O: 0
+                      R: 1
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 0
+                      D: 0
+                      N: 0
+                      O: 1
+                      R: 0
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 0
+                      D: 0
+                      N: 0
+                      O: 1
+                      R: 1
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 0
+                      D: 0
+                      N: 1
+                      O: 0
+                      R: 0
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 0
+                      D: 0
+                      N: 1
+                      O: 0
+                      R: 1
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 0
+                      D: 0
+                      N: 1
+                      O: 1
+                      R: 0
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 0
+                      D: 0
+                      N: 1
+                      O: 1
+                      R: 1
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 0
+                      D: 1
+                      N: 0
+                      O: 0
+                      R: 0
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 0
+                      D: 1
+                      N: 0
+                      O: 0
+                      R: 1
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 0
+                      D: 1
+                      N: 0
+                      O: 1
+                      R: 0
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 0
+                      D: 1
+                      N: 0
+                      O: 1
+                      R: 1
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 0
+                      D: 1
+                      N: 1
+                      O: 0
+                      R: 0
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 0
+                      D: 1
+                      N: 1
+                      O: 0
+                      R: 1
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 0
+                      D: 1
+                      N: 1
+                      O: 1
+                      R: 0
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 0
+                      D: 1
+                      N: 1
+                      O: 1
+                      R: 1
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 1
+                      D: 0
+                      N: 0
+                      O: 0
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 1
+                      D: 0
+                      N: 0
+                      O: 0
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 1
+                      D: 0
+                      N: 0
+                      O: 1
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 1
+                      D: 0
+                      N: 0
+                      O: 1
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 1
+                      D: 0
+                      N: 1
+                      O: 0
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 1
+                      D: 0
+                      N: 1
+                      O: 0
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 1
+                      D: 0
+                      N: 1
+                      O: 1
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 1
+                      D: 0
+                      N: 1
+                      O: 1
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 1
+                      D: 1
+                      N: 0
+                      O: 0
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 1
+                      D: 1
+                      N: 0
+                      O: 0
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 1
+                      D: 1
+                      N: 0
+                      O: 1
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 1
+                      D: 1
+                      N: 0
+                      O: 1
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 1
+                      D: 1
+                      N: 1
+                      O: 0
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 1
+                      D: 1
+                      N: 1
+                      O: 0
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 1
+                      D: 1
+                      N: 1
+                      O: 1
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 0
+                      C: 1
+                      D: 1
+                      N: 1
+                      O: 1
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 0
+                      D: 0
+                      N: 0
+                      O: 0
+                      R: 0
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 0
+                      D: 0
+                      N: 0
+                      O: 0
+                      R: 1
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 0
+                      D: 0
+                      N: 0
+                      O: 1
+                      R: 0
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 0
+                      D: 0
+                      N: 0
+                      O: 1
+                      R: 1
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 0
+                      D: 0
+                      N: 1
+                      O: 0
+                      R: 0
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 0
+                      D: 0
+                      N: 1
+                      O: 0
+                      R: 1
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 0
+                      D: 0
+                      N: 1
+                      O: 1
+                      R: 0
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 0
+                      D: 0
+                      N: 1
+                      O: 1
+                      R: 1
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 0
+                      D: 1
+                      N: 0
+                      O: 0
+                      R: 0
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 0
+                      D: 1
+                      N: 0
+                      O: 0
+                      R: 1
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 0
+                      D: 1
+                      N: 0
+                      O: 1
+                      R: 0
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 0
+                      D: 1
+                      N: 0
+                      O: 1
+                      R: 1
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 0
+                      D: 1
+                      N: 1
+                      O: 0
+                      R: 0
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 0
+                      D: 1
+                      N: 1
+                      O: 0
+                      R: 1
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 0
+                      D: 1
+                      N: 1
+                      O: 1
+                      R: 0
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 0
+                      D: 1
+                      N: 1
+                      O: 1
+                      R: 1
+                    result: 0
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 1
+                      D: 0
+                      N: 0
+                      O: 0
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 1
+                      D: 0
+                      N: 0
+                      O: 0
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 1
+                      D: 0
+                      N: 0
+                      O: 1
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 1
+                      D: 0
+                      N: 0
+                      O: 1
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 1
+                      D: 0
+                      N: 1
+                      O: 0
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 1
+                      D: 0
+                      N: 1
+                      O: 0
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 1
+                      D: 0
+                      N: 1
+                      O: 1
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 1
+                      D: 0
+                      N: 1
+                      O: 1
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 1
+                      D: 1
+                      N: 0
+                      O: 0
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 1
+                      D: 1
+                      N: 0
+                      O: 0
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 1
+                      D: 1
+                      N: 0
+                      O: 1
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 1
+                      D: 1
+                      N: 0
+                      O: 1
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 1
+                      D: 1
+                      N: 1
+                      O: 0
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 1
+                      D: 1
+                      N: 1
+                      O: 0
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 1
+                      D: 1
+                      N: 1
+                      O: 1
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 0
+                      B: 1
+                      C: 1
+                      D: 1
+                      N: 1
+                      O: 1
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 0
+                      D: 0
+                      N: 0
+                      O: 0
+                      R: 0
+                    result: 0
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 0
+                      D: 0
+                      N: 0
+                      O: 0
+                      R: 1
+                    result: 0
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 0
+                      D: 0
+                      N: 0
+                      O: 1
+                      R: 0
+                    result: 0
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 0
+                      D: 0
+                      N: 0
+                      O: 1
+                      R: 1
+                    result: 0
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 0
+                      D: 0
+                      N: 1
+                      O: 0
+                      R: 0
+                    result: 0
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 0
+                      D: 0
+                      N: 1
+                      O: 0
+                      R: 1
+                    result: 0
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 0
+                      D: 0
+                      N: 1
+                      O: 1
+                      R: 0
+                    result: 0
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 0
+                      D: 0
+                      N: 1
+                      O: 1
+                      R: 1
+                    result: 0
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 0
+                      D: 1
+                      N: 0
+                      O: 0
+                      R: 0
+                    result: 0
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 0
+                      D: 1
+                      N: 0
+                      O: 0
+                      R: 1
+                    result: 0
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 0
+                      D: 1
+                      N: 0
+                      O: 1
+                      R: 0
+                    result: 0
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 0
+                      D: 1
+                      N: 0
+                      O: 1
+                      R: 1
+                    result: 0
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 0
+                      D: 1
+                      N: 1
+                      O: 0
+                      R: 0
+                    result: 0
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 0
+                      D: 1
+                      N: 1
+                      O: 0
+                      R: 1
+                    result: 0
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 0
+                      D: 1
+                      N: 1
+                      O: 1
+                      R: 0
+                    result: 0
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 0
+                      D: 1
+                      N: 1
+                      O: 1
+                      R: 1
+                    result: 0
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 1
+                      D: 0
+                      N: 0
+                      O: 0
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 1
+                      D: 0
+                      N: 0
+                      O: 0
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 1
+                      D: 0
+                      N: 0
+                      O: 1
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 1
+                      D: 0
+                      N: 0
+                      O: 1
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 1
+                      D: 0
+                      N: 1
+                      O: 0
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 1
+                      D: 0
+                      N: 1
+                      O: 0
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 1
+                      D: 0
+                      N: 1
+                      O: 1
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 1
+                      D: 0
+                      N: 1
+                      O: 1
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 1
+                      D: 1
+                      N: 0
+                      O: 0
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 1
+                      D: 1
+                      N: 0
+                      O: 0
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 1
+                      D: 1
+                      N: 0
+                      O: 1
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 1
+                      D: 1
+                      N: 0
+                      O: 1
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 1
+                      D: 1
+                      N: 1
+                      O: 0
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 1
+                      D: 1
+                      N: 1
+                      O: 0
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 1
+                      D: 1
+                      N: 1
+                      O: 1
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 0
+                      C: 1
+                      D: 1
+                      N: 1
+                      O: 1
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 0
+                      D: 0
+                      N: 0
+                      O: 0
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 0
+                      D: 0
+                      N: 0
+                      O: 0
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 0
+                      D: 0
+                      N: 0
+                      O: 1
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 0
+                      D: 0
+                      N: 0
+                      O: 1
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 0
+                      D: 0
+                      N: 1
+                      O: 0
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 0
+                      D: 0
+                      N: 1
+                      O: 0
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 0
+                      D: 0
+                      N: 1
+                      O: 1
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 0
+                      D: 0
+                      N: 1
+                      O: 1
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 0
+                      D: 1
+                      N: 0
+                      O: 0
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 0
+                      D: 1
+                      N: 0
+                      O: 0
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 0
+                      D: 1
+                      N: 0
+                      O: 1
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 0
+                      D: 1
+                      N: 0
+                      O: 1
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 0
+                      D: 1
+                      N: 1
+                      O: 0
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 0
+                      D: 1
+                      N: 1
+                      O: 0
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 0
+                      D: 1
+                      N: 1
+                      O: 1
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 0
+                      D: 1
+                      N: 1
+                      O: 1
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 1
+                      D: 0
+                      N: 0
+                      O: 0
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 1
+                      D: 0
+                      N: 0
+                      O: 0
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 1
+                      D: 0
+                      N: 0
+                      O: 1
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 1
+                      D: 0
+                      N: 0
+                      O: 1
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 1
+                      D: 0
+                      N: 1
+                      O: 0
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 1
+                      D: 0
+                      N: 1
+                      O: 0
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 1
+                      D: 0
+                      N: 1
+                      O: 1
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 1
+                      D: 0
+                      N: 1
+                      O: 1
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 1
+                      D: 1
+                      N: 0
+                      O: 0
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 1
+                      D: 1
+                      N: 0
+                      O: 0
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 1
+                      D: 1
+                      N: 0
+                      O: 1
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 1
+                      D: 1
+                      N: 0
+                      O: 1
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 1
+                      D: 1
+                      N: 1
+                      O: 0
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 1
+                      D: 1
+                      N: 1
+                      O: 0
+                      R: 1
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 1
+                      D: 1
+                      N: 1
+                      O: 1
+                      R: 0
+                    result: 1
+                  - inputs:
+                      A: 1
+                      B: 1
+                      C: 1
+                      D: 1
+                      N: 1
+                      O: 1
+                      R: 1
+                    result: 1
+                  asciiTable: '| A        | B        | C        | D        | N        | O        | R        | Result   |
+
+                    |----------|----------|----------|----------|----------|----------|----------|----------|
+
+                    | 0        | 0        | 0        | 0        | 0        | 0        | 0        | 0        |
+
+                    | 0        | 0        | 0        | 0        | 0        | 0        | 1        | 0        |
+
+                    | 0        | 0        | 0        | 0        | 0        | 1        | 0        | 0        |
+
+                    | 0        | 0        | 0        | 0        | 0        | 1        | 1        | 0        |
+
+                    | 0        | 0        | 0        | 0        | 1        | 0        | 0        | 0        |
+
+                    | 0        | 0        | 0        | 0        | 1        | 0        | 1        | 0        |
+
+                    | 0        | 0        | 0        | 0        | 1        | 1        | 0        | 0        |
+
+                    | 0        | 0        | 0        | 0        | 1        | 1        | 1        | 0        |
+
+                    | 0        | 0        | 0        | 1        | 0        | 0        | 0        | 0        |
+
+                    | 0        | 0        | 0        | 1        | 0        | 0        | 1        | 0        |
+
+                    | 0        | 0        | 0        | 1        | 0        | 1        | 0        | 0        |
+
+                    | 0        | 0        | 0        | 1        | 0        | 1        | 1        | 0        |
+
+                    | 0        | 0        | 0        | 1        | 1        | 0        | 0        | 0        |
+
+                    | 0        | 0        | 0        | 1        | 1        | 0        | 1        | 0        |
+
+                    | 0        | 0        | 0        | 1        | 1        | 1        | 0        | 0        |
+
+                    | 0        | 0        | 0        | 1        | 1        | 1        | 1        | 0        |
+
+                    | 0        | 0        | 1        | 0        | 0        | 0        | 0        | 1        |
+
+                    | 0        | 0        | 1        | 0        | 0        | 0        | 1        | 1        |
+
+                    | 0        | 0        | 1        | 0        | 0        | 1        | 0        | 1        |
+
+                    | 0        | 0        | 1        | 0        | 0        | 1        | 1        | 1        |
+
+                    | 0        | 0        | 1        | 0        | 1        | 0        | 0        | 1        |
+
+                    | 0        | 0        | 1        | 0        | 1        | 0        | 1        | 1        |
+
+                    | 0        | 0        | 1        | 0        | 1        | 1        | 0        | 1        |
+
+                    | 0        | 0        | 1        | 0        | 1        | 1        | 1        | 1        |
+
+                    | 0        | 0        | 1        | 1        | 0        | 0        | 0        | 1        |
+
+                    | 0        | 0        | 1        | 1        | 0        | 0        | 1        | 1        |
+
+                    | 0        | 0        | 1        | 1        | 0        | 1        | 0        | 1        |
+
+                    | 0        | 0        | 1        | 1        | 0        | 1        | 1        | 1        |
+
+                    | 0        | 0        | 1        | 1        | 1        | 0        | 0        | 1        |
+
+                    | 0        | 0        | 1        | 1        | 1        | 0        | 1        | 1        |
+
+                    | 0        | 0        | 1        | 1        | 1        | 1        | 0        | 1        |
+
+                    | 0        | 0        | 1        | 1        | 1        | 1        | 1        | 1        |
+
+                    | 0        | 1        | 0        | 0        | 0        | 0        | 0        | 0        |
+
+                    | 0        | 1        | 0        | 0        | 0        | 0        | 1        | 0        |
+
+                    | 0        | 1        | 0        | 0        | 0        | 1        | 0        | 0        |
+
+                    | 0        | 1        | 0        | 0        | 0        | 1        | 1        | 0        |
+
+                    | 0        | 1        | 0        | 0        | 1        | 0        | 0        | 0        |
+
+                    | 0        | 1        | 0        | 0        | 1        | 0        | 1        | 0        |
+
+                    | 0        | 1        | 0        | 0        | 1        | 1        | 0        | 0        |
+
+                    | 0        | 1        | 0        | 0        | 1        | 1        | 1        | 0        |
+
+                    | 0        | 1        | 0        | 1        | 0        | 0        | 0        | 0        |
+
+                    | 0        | 1        | 0        | 1        | 0        | 0        | 1        | 0        |
+
+                    | 0        | 1        | 0        | 1        | 0        | 1        | 0        | 0        |
+
+                    | 0        | 1        | 0        | 1        | 0        | 1        | 1        | 0        |
+
+                    | 0        | 1        | 0        | 1        | 1        | 0        | 0        | 0        |
+
+                    | 0        | 1        | 0        | 1        | 1        | 0        | 1        | 0        |
+
+                    | 0        | 1        | 0        | 1        | 1        | 1        | 0        | 0        |
+
+                    | 0        | 1        | 0        | 1        | 1        | 1        | 1        | 0        |
+
+                    | 0        | 1        | 1        | 0        | 0        | 0        | 0        | 1        |
+
+                    | 0        | 1        | 1        | 0        | 0        | 0        | 1        | 1        |
+
+                    | 0        | 1        | 1        | 0        | 0        | 1        | 0        | 1        |
+
+                    | 0        | 1        | 1        | 0        | 0        | 1        | 1        | 1        |
+
+                    | 0        | 1        | 1        | 0        | 1        | 0        | 0        | 1        |
+
+                    | 0        | 1        | 1        | 0        | 1        | 0        | 1        | 1        |
+
+                    | 0        | 1        | 1        | 0        | 1        | 1        | 0        | 1        |
+
+                    | 0        | 1        | 1        | 0        | 1        | 1        | 1        | 1        |
+
+                    | 0        | 1        | 1        | 1        | 0        | 0        | 0        | 1        |
+
+                    | 0        | 1        | 1        | 1        | 0        | 0        | 1        | 1        |
+
+                    | 0        | 1        | 1        | 1        | 0        | 1        | 0        | 1        |
+
+                    | 0        | 1        | 1        | 1        | 0        | 1        | 1        | 1        |
+
+                    | 0        | 1        | 1        | 1        | 1        | 0        | 0        | 1        |
+
+                    | 0        | 1        | 1        | 1        | 1        | 0        | 1        | 1        |
+
+                    | 0        | 1        | 1        | 1        | 1        | 1        | 0        | 1        |
+
+                    | 0        | 1        | 1        | 1        | 1        | 1        | 1        | 1        |
+
+                    | 1        | 0        | 0        | 0        | 0        | 0        | 0        | 0        |
+
+                    | 1        | 0        | 0        | 0        | 0        | 0        | 1        | 0        |
+
+                    | 1        | 0        | 0        | 0        | 0        | 1        | 0        | 0        |
+
+                    | 1        | 0        | 0        | 0        | 0        | 1        | 1        | 0        |
+
+                    | 1        | 0        | 0        | 0        | 1        | 0        | 0        | 0        |
+
+                    | 1        | 0        | 0        | 0        | 1        | 0        | 1        | 0        |
+
+                    | 1        | 0        | 0        | 0        | 1        | 1        | 0        | 0        |
+
+                    | 1        | 0        | 0        | 0        | 1        | 1        | 1        | 0        |
+
+                    | 1        | 0        | 0        | 1        | 0        | 0        | 0        | 0        |
+
+                    | 1        | 0        | 0        | 1        | 0        | 0        | 1        | 0        |
+
+                    | 1        | 0        | 0        | 1        | 0        | 1        | 0        | 0        |
+
+                    | 1        | 0        | 0        | 1        | 0        | 1        | 1        | 0        |
+
+                    | 1        | 0        | 0        | 1        | 1        | 0        | 0        | 0        |
+
+                    | 1        | 0        | 0        | 1        | 1        | 0        | 1        | 0        |
+
+                    | 1        | 0        | 0        | 1        | 1        | 1        | 0        | 0        |
+
+                    | 1        | 0        | 0        | 1        | 1        | 1        | 1        | 0        |
+
+                    | 1        | 0        | 1        | 0        | 0        | 0        | 0        | 1        |
+
+                    | 1        | 0        | 1        | 0        | 0        | 0        | 1        | 1        |
+
+                    | 1        | 0        | 1        | 0        | 0        | 1        | 0        | 1        |
+
+                    | 1        | 0        | 1        | 0        | 0        | 1        | 1        | 1        |
+
+                    | 1        | 0        | 1        | 0        | 1        | 0        | 0        | 1        |
+
+                    | 1        | 0        | 1        | 0        | 1        | 0        | 1        | 1        |
+
+                    | 1        | 0        | 1        | 0        | 1        | 1        | 0        | 1        |
+
+                    | 1        | 0        | 1        | 0        | 1        | 1        | 1        | 1        |
+
+                    | 1        | 0        | 1        | 1        | 0        | 0        | 0        | 1        |
+
+                    | 1        | 0        | 1        | 1        | 0        | 0        | 1        | 1        |
+
+                    | 1        | 0        | 1        | 1        | 0        | 1        | 0        | 1        |
+
+                    | 1        | 0        | 1        | 1        | 0        | 1        | 1        | 1        |
+
+                    | 1        | 0        | 1        | 1        | 1        | 0        | 0        | 1        |
+
+                    | 1        | 0        | 1        | 1        | 1        | 0        | 1        | 1        |
+
+                    | 1        | 0        | 1        | 1        | 1        | 1        | 0        | 1        |
+
+                    | 1        | 0        | 1        | 1        | 1        | 1        | 1        | 1        |
+
+                    | 1        | 1        | 0        | 0        | 0        | 0        | 0        | 1        |
+
+                    | 1        | 1        | 0        | 0        | 0        | 0        | 1        | 1        |
+
+                    | 1        | 1        | 0        | 0        | 0        | 1        | 0        | 1        |
+
+                    | 1        | 1        | 0        | 0        | 0        | 1        | 1        | 1        |
+
+                    | 1        | 1        | 0        | 0        | 1        | 0        | 0        | 1        |
+
+                    | 1        | 1        | 0        | 0        | 1        | 0        | 1        | 1        |
+
+                    | 1        | 1        | 0        | 0        | 1        | 1        | 0        | 1        |
+
+                    | 1        | 1        | 0        | 0        | 1        | 1        | 1        | 1        |
+
+                    | 1        | 1        | 0        | 1        | 0        | 0        | 0        | 1        |
+
+                    | 1        | 1        | 0        | 1        | 0        | 0        | 1        | 1        |
+
+                    | 1        | 1        | 0        | 1        | 0        | 1        | 0        | 1        |
+
+                    | 1        | 1        | 0        | 1        | 0        | 1        | 1        | 1        |
+
+                    | 1        | 1        | 0        | 1        | 1        | 0        | 0        | 1        |
+
+                    | 1        | 1        | 0        | 1        | 1        | 0        | 1        | 1        |
+
+                    | 1        | 1        | 0        | 1        | 1        | 1        | 0        | 1        |
+
+                    | 1        | 1        | 0        | 1        | 1        | 1        | 1        | 1        |
+
+                    | 1        | 1        | 1        | 0        | 0        | 0        | 0        | 1        |
+
+                    | 1        | 1        | 1        | 0        | 0        | 0        | 1        | 1        |
+
+                    | 1        | 1        | 1        | 0        | 0        | 1        | 0        | 1        |
+
+                    | 1        | 1        | 1        | 0        | 0        | 1        | 1        | 1        |
+
+                    | 1        | 1        | 1        | 0        | 1        | 0        | 0        | 1        |
+
+                    | 1        | 1        | 1        | 0        | 1        | 0        | 1        | 1        |
+
+                    | 1        | 1        | 1        | 0        | 1        | 1        | 0        | 1        |
+
+                    | 1        | 1        | 1        | 0        | 1        | 1        | 1        | 1        |
+
+                    | 1        | 1        | 1        | 1        | 0        | 0        | 0        | 1        |
+
+                    | 1        | 1        | 1        | 1        | 0        | 0        | 1        | 1        |
+
+                    | 1        | 1        | 1        | 1        | 0        | 1        | 0        | 1        |
+
+                    | 1        | 1        | 1        | 1        | 0        | 1        | 1        | 1        |
+
+                    | 1        | 1        | 1        | 1        | 1        | 0        | 0        | 1        |
+
+                    | 1        | 1        | 1        | 1        | 1        | 0        | 1        | 1        |
+
+                    | 1        | 1        | 1        | 1        | 1        | 1        | 0        | 1        |
+
+                    | 1        | 1        | 1        | 1        | 1        | 1        | 1        | 1        |
+
+                    '
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Math/Calculations
+  /v1/utmconverter:
+    get:
+      summary: UTM Coordinate Converter
+      description: Convert latitude/longitude coordinates to UTM format
+      operationId: utmconverter
+      parameters:
+      - name: direction
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Conversion direction
+        example: to_utm
+      - name: latitude
+        in: query
+        schema:
+          type: number
+        required: true
+        description: Latitude (-90 to 90)
+        example: 40.7128
+      - name: longitude
+        in: query
+        schema:
+          type: number
+        required: true
+        description: Longitude (-180 to 180)
+        example: -74.006
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  conversion: lat/lon to UTM
+                  input:
+                    latitude: 40.7128
+                    longitude: -74.006
+                  output:
+                    zone: 18
+                    hemisphere: N
+                    easting: 583959.37
+                    northing: 4507351
+                  formatted: 18N 583959E 4507351N
+                  datum: WGS84
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Math/Calculations
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
+externalDocs:
+  description: APIVerve Documentation
+  url: https://docs.apiverve.com

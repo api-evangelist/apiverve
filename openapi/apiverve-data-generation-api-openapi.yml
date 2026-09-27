@@ -1,0 +1,2375 @@
+openapi: 3.2.0
+info:
+  title: APIVerve Data Generation API
+  description: One API key, 370+ real-world REST endpoints — weather, geocoding, finance, DNS, validation, text processing and more. Every endpoint returns JSON. Full documentation at https://docs.apiverve.com.
+  termsOfService: https://apiverve.com/terms/
+  contact:
+    name: APIVerve Support
+    email: hello@apiverve.com
+    url: https://apiverve.com/contact
+  license:
+    name: APIVerve Terms of Service
+    url: https://apiverve.com/terms/
+  version: 1.0.0
+  x-logo:
+    url: https://apiverve.com/images/favicon.png
+    altText: APIVerve
+servers:
+- url: https://api.apiverve.com
+security:
+- api_key: []
+tags:
+- name: Data Generation
+paths:
+  /v1/acronymgenerator:
+    get:
+      summary: Acronym Generator
+      description: Generate an acronym from a phrase by extracting the first letter of each word
+      operationId: acronymgenerator
+      parameters:
+      - name: text
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The phrase to generate an acronym from (must contain at least 2 words)
+        example: Application Programming Interface
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  text: Application Programming Interface
+                  acronyms:
+                  - API
+                  - APP IN
+                  - Accessing Program's Interface
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Generation
+  /v1/babynamegenerator:
+    get:
+      summary: Baby Name Generator
+      description: Generate a baby's first and middle name, based on the provided gender
+      operationId: babynamegenerator
+      parameters:
+      - name: gender
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The gender for the generated names
+        example: male
+      - name: count
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: The number of names to generate
+        example: 1
+      - name: includeAvatar
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Include an AI-generated child face avatar matching gender
+        example: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  count: 1
+                  names:
+                  - firstName: Myra
+                    middleName: Sherri
+                    fullName: Myra Sherri
+                    avatar: https://storage.googleapis.com/apiverve/APIResources/faces/Female/Child/11223344.jpg?X-Goog-Signature=...
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Generation
+  /v1/barcodegenerator:
+    post:
+      summary: Barcode Generator
+      description: Barcode Generator is a simple tool for generating barcodes from data. It returns a URL to the generated image of the barcode.
+      operationId: barcodegenerator
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  imageName: cc85680f-a1d0-4627-89ff-7d7e53663a2b.png
+                  format: .png
+                  type: CODE128
+                  expires: 1766010012598
+                  downloadURL: https://storage.googleapis.com/apiverve/APIData/barcodegenerator/cc85680f-a1d0-4627-89ff-7d7e53663a2b.png?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1766010012&Signature=cV6ANXGGaVDdl5SOFZt3xm2haHBnOklW1zXQICvJlGNlF4kwYVP9i%2F1RAN8NBGxSUiMk4Zcro%2FJUb3W%2Fwy8jA86pyEXTwIjNAiGW94ikpKSXs6%2FiV42Rwv6u2gX%2B2FH7XYyixlwJ%2B%2FHpfGcvka6u01FDk%2F2TUcR7%2FxsZ%2FmXPU2KTrzsI6XttCGBcHhex3LdTv%2F8tzMJbSshbZn%2BGcRTddwv6dC4lCcTtGE6Bl2zqY9s92KIr9X%2F4xj34q4XKBzywgXES57QaVhZeGPPOOUfLtI3pAN8fVSyM%2B9NBMU7R46xyqJ0J8PSVpQZhhAHn03T%2B40rcNp26GXqauM9K%2BLwZRw%3D%3D
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: string
+                  description: The data you want to generate a barcode from (string)
+                type:
+                  type: string
+                  description: The type of barcode you want to generate
+                lineColor:
+                  type: string
+                  description: 'The color of the barcode (default: #000000)'
+                backgroundColor:
+                  type: string
+                  description: 'The background color of the barcode (default: #ffffff)'
+                displayValue:
+                  type: boolean
+                  description: 'Whether to display the value below the barcode (default: true)'
+              required:
+              - data
+              - type
+      tags:
+      - Data Generation
+  /v1/bingocardgenerator:
+    get:
+      summary: Bingo Card Generator
+      description: Generate random bingo card with HTML and image
+      operationId: bingocardgenerator
+      parameters:
+      - name: size
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Card size (3x3 to 10x10)
+        example: 5
+      - name: freeSpace
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Include free space in center
+        example: true
+      - name: image
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Set to true to generate a downloadable bingo card image
+        example: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  card:
+                  - - 14
+                    - 19
+                    - 42
+                    - 47
+                    - 71
+                  - - 4
+                    - 17
+                    - 36
+                    - 50
+                    - 69
+                  - - 11
+                    - 18
+                    - FREE
+                    - 53
+                    - 73
+                  - - 15
+                    - 23
+                    - 41
+                    - 52
+                    - 68
+                  - - 8
+                    - 27
+                    - 43
+                    - 58
+                    - 75
+                  html: '<html><head><title>Bingo Card</title><style>body {font-family: Arial, sans-serif; padding: 20px;}table {border-collapse: collapse; margin: 0 auto;}td {text-align: center; width: 60px; height: 60px; border: 2px solid #000; font-size: 20px; font-weight: bold;}th {text-align: center; width: 60px; height: 40px; border: 2px solid #000; font-size: 24px; font-weight: bold; background-color: #4CAF50; color: white;}.free-space {background-color: #FFD700; font-size: 14px;}</style></head><body><table><tr><th>B</th><th>I</th><th>N</th><th>G</th><th>O</th></tr><tr><td class=''''>14</td><td class=''''>19</td><td class=''''>42</td><td class=''''>47</td><td class=''''>71</td></tr><tr><td class=''''>4</td><td class=''''>17</td><td class=''''>36</td><td class=''''>50</td><td class=''''>69</td></tr><tr><td class=''''>11</td><td class=''''>18</td><td class=''free-space''>FREE</td><td class=''''>53</td><td class=''''>73</td></tr><tr><td class=''''>15</td><td class=''''>23</td><td class=''''>41</td><td class=''''>52</td><td class=''''>68</td></tr><tr><td class=''''>8</td><td class=''''>27</td><td class=''''>43</td><td class=''''>58</td><td class=''''>75</td></tr></table></body></html>'
+                  size: 5
+                  freeSpace: true
+                  totalCells: 25
+                  winningPatterns:
+                  - horizontal
+                  - vertical
+                  - diagonal
+                  - four corners
+                  - blackout (all cells)
+                  image:
+                    imageName: 8dcb6cee-a419-4501-a13c-ff6eafd393b7_bingo.png
+                    format: .png
+                    downloadURL: https://storage.googleapis.com/apiverve/APIData/bingocardgenerator/8dcb6cee-a419-4501-a13c-ff6eafd393b7_bingo.png?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1766010022&Signature=ErKaS3I1DaHCBxYRxnjx5QLHm0S3zfpJIWzz7BosGyhDwYSejCHlfcSI%2BKOHJzxEiUdSWFFt947%2BLzHGpVZrLYPxGGvgCVPOKZ4H9vfgyJPP%2BF9LICc9kLG6%2FwevlPsAHHHLjoLS%2F7OVByiwzTWguRzcbyYT44XpbbU0IsOA40S7Utqt%2BjAC5%2FSfhW4z%2FdJE2yXsSNqr3acEJB70cVde3qkP80Iv6H7%2FZB08EDjbakauJmjASJ86H%2BWM2b9BPo250bBzLtGPxW8KZUVgy79SDxJu8VVnzAhiWzcmih9UrBUvejuxkbPIAx6ohwHepmh414G0wvAcxtHRaXx4O5cr7g%3D%3D
+                    expires: 1766010022446
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Generation
+  /v1/boggleboardgenerator:
+    get:
+      summary: Boggle Board Generator
+      description: Generate random Boggle board with HTML and image
+      operationId: boggleboardgenerator
+      parameters:
+      - name: size
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Board size
+        example: 4
+      - name: image
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Set to true to generate a downloadable board image
+        example: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  board:
+                  - - U
+                    - A
+                    - Z
+                    - H
+                  - - Y
+                    - L
+                    - E
+                    - A
+                  - - A
+                    - I
+                    - E
+                    - F
+                  - - T
+                    - D
+                    - E
+                    - X
+                  size: 4
+                  html: '<html><head><title>Boggle Board</title><style>table {border-collapse: collapse; width: 320px; height: 320px; font-family: Arial, sans-serif;}td {text-align: center; width: 80px; height: 80px; padding: 0; border: 2px solid #333; background-color: #f5e6d3; font-size: 24px; font-weight: bold; color: #2c1810;}</style></head><body><table><tr><td>U</td><td>A</td><td>Z</td><td>H</td></tr><tr><td>Y</td><td>L</td><td>E</td><td>A</td></tr><tr><td>A</td><td>I</td><td>E</td><td>F</td></tr><tr><td>T</td><td>D</td><td>E</td><td>X</td></tr></table></body></html>'
+                  image:
+                    imageName: e91f26a6-95fc-47c1-9117-b0bb169c3418_boggle.png
+                    format: .png
+                    downloadURL: https://storage.googleapis.com/apiverve/APIData/boggleboardgenerator/e91f26a6-95fc-47c1-9117-b0bb169c3418_boggle.png?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1766010033&Signature=Y%2Bx7mfpf%2FtSwnIkgen0c5gfuBNROyJYByCnhToBZIM660VzCpCX8ON%2F9V1sBElqpDm2rePIfPMqiFG3DC5f98%2BczXodTl4TiUnDxyYm5uMv%2Fdr71kRdUnVKRMp42FkflnxQ2p8YMmRTEx279hpgRQb2BCx4e7ntQrh8uepKoaHY1G8gBOJIof0LQPSWo%2FygwA74Hmwwe8wTZcScXgTskxXm%2BpESGeOb942JiP8Pf9CL1RWOYdjIS3Kr4%2FcgnEMXPjKecOcNZaN%2BGQXm3UC6GAVHzA1QF0uOOKE%2FeyxybNRD1dc0uCUFNYHIpXpEJ8pPvzYHQlSNv1EPfpd4pMc9s9g%3D%3D
+                    expires: 1766010033049
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Generation
+  /v1/captchagenerator:
+    get:
+      summary: Captcha Generator
+      description: Captcha Generator is a simple tool for generating captchas. It returns a random string of characters that can be used as a captcha.
+      operationId: captchagenerator
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  id: e183c54c-5bf6-455e-bc96-195685cee71c
+                  expires: 1766010041360
+                  solution: fwvct
+                  downloadURL: https://storage.googleapis.com/apiverve/APIData/captchagenerator/e183c54c-5bf6-455e-bc96-195685cee71c.png?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1766010041&Signature=LLBhTrpVAk%2Bzx%2B2U7sdbIfjUOm%2FEe4hP7ebqGfphThctFRbHs9oyHPJ3J7BCAu71WswQr1qOKh%2BQddOPTGFCVUVL%2BlN1Qxt%2BlIBXYVM7%2FzW3YlfbHmFbXaesr%2BC7pFW6ekZ88fobbOP%2FcGbKdtVL1Vz9ceomtqUw%2Bl9Mwy3FCkpmwPHzGxW56%2BAHB%2B5TQgH2S%2FcmkJkPUxMSGnztQerMNB7V2JrhpuBLZl7N%2FPRucwJswVX6LYYOfNlvrFuxwJwS%2BBot9TesdYlPPDZgOfBo0%2FGgGMzIc753aPUIzkJoeMyPZgJGRilPQNrWJgp%2F7mmx4WNq6QgdIZPlQ36FlDHMsg%3D%3D
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Generation
+  /v1/cardgenerator:
+    get:
+      summary: Test Card Generator
+      description: Generate a list of test card numbers
+      operationId: cardgenerator
+      parameters:
+      - name: brand
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The brand of the card to generate
+        example: visa
+      - name: count
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: The number of test card numbers to generate
+        example: 5
+      - name: includeAvatar
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Include an AI-generated face avatar for the card owner
+        example: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  brand: visa
+                  count: 5
+                  cards:
+                  - cvv: 175
+                    issuer: SOUTHEAST F.C.U.
+                    id: 0faca124-9a33-4ac6-a3df-8bf103025779
+                    number: '4750377207233152'
+                    expiration: 12/2030
+                    brand: visa
+                    number_alt:
+                      masked: '************3152'
+                      unmasked: 4750 3772 0723 3152
+                      last4: '3152'
+                  - cvv: 129
+                    issuer: U.S. BANK, N.A.
+                    id: 0d074efe-69e2-4e30-b49a-4cead1ea8411
+                    number: '4431387818727358'
+                    expiration: 12/2030
+                    brand: visa
+                    number_alt:
+                      masked: '************7358'
+                      unmasked: 4431 3878 1872 7358
+                      last4: '7358'
+                  - cvv: 249
+                    issuer: AUGUSTA VAH F.C.U.
+                    id: 2f01f458-7422-400e-bbcf-41364564193b
+                    number: '4425919427248836'
+                    expiration: 12/2030
+                    brand: visa
+                    number_alt:
+                      masked: '************8836'
+                      unmasked: 4425 9194 2724 8836
+                      last4: '8836'
+                  - cvv: 892
+                    issuer: CITIZENS SECURITY BANK AND TRUST COMPANY
+                    id: d311e9d0-f410-4f75-a21f-f14125c88cbb
+                    number: '4127737519045634'
+                    expiration: 12/2030
+                    brand: visa
+                    number_alt:
+                      masked: '************5634'
+                      unmasked: 4127 7375 1904 5634
+                      last4: '5634'
+                  - cvv: 524
+                    issuer: CREDIT LIBANAIS S.A.L.
+                    id: 64113f4d-c625-43d2-9d82-04f220c9e26f
+                    number: '4741441509416816'
+                    expiration: 12/2030
+                    brand: visa
+                    number_alt:
+                      masked: '************6816'
+                      unmasked: 4741 4415 0941 6816
+                      last4: '6816'
+                  owner:
+                    name: Benny Swaniawski
+                    address:
+                      street: 007 Nelson Mountains
+                      city: Margueriteton
+                      state: Washington
+                      zipCode: 39956-7950
+                    avatar: https://storage.googleapis.com/apiverve/APIResources/faces/Male/30-40/12345678.jpg?X-Goog-Signature=...
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Generation
+  /v1/chartgenerator:
+    post:
+      summary: Chart Generator
+      description: Generate a chart with minimal configuration. Just provide type, labels, and datasets with name/values. Colors are auto-assigned.
+      operationId: chartgenerator
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  id: 6a783c9c-f959-4a88-80cb-84580b8c788d
+                  format: .png
+                  expires: 1766010059346
+                  type: bar
+                  downloadURL: https://storage.googleapis.com/apiverve/APIData/chartgenerator/6a783c9c-f959-4a88-80cb-84580b8c788d.png?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1766010059&Signature=Iud%2B7hoPRtPbWoJXQAAnhN9nqUHObHQ7PaiJCtkWQzEzpMexPMRR3BIPKkwOUMAwT6YcNbvywgnLvU2SV7498rbp%2FZbktuAR3Ok1E3O6p4ZJJ4s%2FpW8HAZgIBJpDlPUQt%2FjulQLtwP2I2GUPVmgWheXitnWsWq1S3E2k4viysXwS8H2%2B8BBdxjS%2Bv1ruGXbqd4RpdzdLst4e9YtHGWNZuiaL8zX8%2FHA1zreyrewY2fpB4g0pHnh%2B3IDE48eIohb4HQoDc9vXy4s8sIoqLScmTLyxyq1pPYlak1n1PWdbLcz4TBr41JnLELzF%2BBwCkyrLts9dhisSseaIB7d4g4JQnw%3D%3D
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  description: Chart type
+                labels:
+                  type: string
+                  description: Array of labels for the x-axis or chart segments
+                datasets:
+                  type: string
+                  description: Array of datasets with 'name' and 'values'
+                title:
+                  type: string
+                  description: Optional title displayed on the chart
+                width:
+                  type: integer
+                  description: Image width in pixels
+                height:
+                  type: integer
+                  description: Image height in pixels
+                format:
+                  type: string
+                  description: Output format
+              required:
+              - labels
+              - datasets
+      tags:
+      - Data Generation
+  /v1/colorpalette:
+    get:
+      summary: Color Palette Generator
+      description: Generate a color palette from a single color
+      operationId: colorpalette
+      parameters:
+      - name: color
+        in: query
+        schema:
+          type: string
+        required: true
+        description: 'The base color to generate the palette from (HEX format without #)'
+        example: FF5733
+      - name: scheme
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The color scheme type
+        example: triade
+      - name: variation
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The color variation
+        example: soft
+      - name: count
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Caps how many colors are returned (1-16). Each scheme has its own ceiling and count cannot raise it - mono yields 4, contrast 8, triade and analogic 12, tetrade 16. The colorCount field reports how many were actually returned. Free tier limited to 5 colors
+        example: 5
+      - name: distance
+        in: query
+        schema:
+          type: number
+        required: false
+        description: Color spacing distance (0-1). Affects triade, tetrade, and analogic schemes
+        example: 0.5
+      - name: addComplement
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Add complement color to analogic scheme
+        example: true
+      - name: webSafe
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Return web-safe colors only
+        example: false
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  source: '#FF5733'
+                  sourceName: Outrageous Orange
+                  hue: 11
+                  scheme: triade
+                  variation: soft
+                  distance: 0.5
+                  colorCount: 5
+                  colorPalette:
+                  - hex: '#CC988F'
+                    name: Oriental Pink
+                    rgb:
+                      r: 204
+                      g: 152
+                      b: 143
+                    hsl:
+                      h: 9
+                      s: 37
+                      l: 68
+                    luminance: 0.373
+                    isDark: true
+                    textColor: '#FFFFFF'
+                    accessibility:
+                      contrastWithWhite: 2.48
+                      contrastWithBlack: 8.46
+                      wcagAANormal: false
+                      wcagAALarge: false
+                      wcagAAA: false
+                  - hex: '#805F59'
+                    name: Russett
+                    rgb:
+                      r: 128
+                      g: 95
+                      b: 89
+                    hsl:
+                      h: 9
+                      s: 18
+                      l: 43
+                    luminance: 0.135
+                    isDark: true
+                    textColor: '#FFFFFF'
+                    accessibility:
+                      contrastWithWhite: 5.68
+                      contrastWithBlack: 3.7
+                      wcagAANormal: true
+                      wcagAALarge: true
+                      wcagAAA: false
+                  - hex: '#E6D2CF'
+                    name: Dust Storm
+                    rgb:
+                      r: 230
+                      g: 210
+                      b: 207
+                    hsl:
+                      h: 8
+                      s: 32
+                      l: 86
+                    luminance: 0.674
+                    isDark: false
+                    textColor: '#000000'
+                    accessibility:
+                      contrastWithWhite: 1.45
+                      contrastWithBlack: 14.48
+                      wcagAANormal: true
+                      wcagAALarge: true
+                      wcagAAA: true
+                  - hex: '#BF6E60'
+                    name: Contessa
+                    rgb:
+                      r: 191
+                      g: 110
+                      b: 96
+                    hsl:
+                      h: 9
+                      s: 43
+                      l: 56
+                    luminance: 0.231
+                    isDark: true
+                    textColor: '#FFFFFF'
+                    accessibility:
+                      contrastWithWhite: 3.74
+                      contrastWithBlack: 5.61
+                      wcagAANormal: false
+                      wcagAALarge: true
+                      wcagAAA: false
+                  - hex: '#A2CC8F'
+                    name: Pine Glade
+                    rgb:
+                      r: 162
+                      g: 204
+                      b: 143
+                    hsl:
+                      h: 101
+                      s: 37
+                      l: 68
+                    luminance: 0.529
+                    isDark: false
+                    textColor: '#000000'
+                    accessibility:
+                      contrastWithWhite: 1.82
+                      contrastWithBlack: 11.57
+                      wcagAANormal: true
+                      wcagAALarge: true
+                      wcagAAA: true
+                  colorPaletteRaw:
+                  - cc988f
+                  - 805f59
+                  - e6d2cf
+                  - bf6e60
+                  - a2cc8f
+                  css: ":root {\n  --primary: #CC988F;\n  --primary-rgb: 204, 152, 143;\n  --secondary: #805F59;\n  --secondary-rgb: 128, 95, 89;\n  --tertiary: #E6D2CF;\n  --tertiary-rgb: 230, 210, 207;\n  --quaternary: #BF6E60;\n  --quaternary-rgb: 191, 110, 96;\n  --quinary: #A2CC8F;\n  --quinary-rgb: 162, 204, 143;\n}"
+                  image:
+                    imageName: 6ee29826-a52f-4c87-86f5-bef3b49f0dbb_palette.png
+                    format: .png
+                    downloadURL: https://storage.googleapis.com/apiverve/APIData/colorpalette/6ee29826-a52f-4c87-86f5-bef3b49f0dbb_palette.png?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1766010083&Signature=Boef5OapaNmcyp0F8bGmf%2BVfQk3zQkiWcw1THBfbsevtYGZnOuzr7xKDRlk9FYiHidSoMz6wjody2ymL7GzUoHkDvA8PEdSERhAq2z9St5yWlaX1c87KoNh%2FtCQEJqHixYk039NuYyb%2FhJu18JFY1RNrOfo8OPZEn9a3ICQdTDL0fYQEZEBxnDuc%2B7wvn4q9UFWhCJcf302HcoZoCw76AzrgVRu%2FazuahqHdVWMR1K5QTV3U51lSoqC23ERHjRZ6uZB8W0bCO65qBFrRNzWEPSVCC%2F8oafvvitZwB1YCG674q3MbtRhWXIhX2zdoPCT%2BgxL7E4fgIyXDtDLm5%2Bm%2Fsg%3D%3D
+                    expires: 1766010083748
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Generation
+  /v1/commentgenerator:
+    get:
+      summary: Comment Generator
+      description: Generate comments for text-based social media posts
+      operationId: commentgenerator
+      parameters:
+      - name: mode
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The mode of comment generation
+        example: text
+      - name: tone
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The tone of the comments
+        example: positive
+      - name: count
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: The number of comments to generate (max 10)
+        example: 5
+      - name: emojis
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Whether to include emojis in the comments
+        example: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  count: 5
+                  mode: text
+                  tone: positive
+                  comments:
+                  - You're so right! is a game-changer Wow! 😍
+                  - Inspiring stuff gives me all the feels Wow! ✨
+                  - Thanks for sharing this gives me all the feels Perfect! 💯
+                  - Exactly my thoughts is on fire Wow beyond! 🌟
+                  - Great outlook in everything here, very bright! slays! For sure! 😊
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Generation
+  /v1/companynamegenerator:
+    get:
+      summary: Company Name Generator
+      description: Generate company names based on the specified criteria
+      operationId: companynamegenerator
+      parameters:
+      - name: keyword
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The keyword to generate company names from
+        example: systems
+      - name: count
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: The number of company names to generate
+        example: 5
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  keyword: systems
+                  count: '5'
+                  names:
+                  - SystemsVibe
+                  - SystemsGrid
+                  - SystemsDeck
+                  - TrueSystems
+                  - SystemsCape
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Generation
+  /v1/crongenerator:
+    get:
+      summary: Cron Expression Generator
+      description: Generate cron expressions from natural language schedule descriptions
+      operationId: crongenerator
+      parameters:
+      - name: schedule
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Natural language description of the schedule (max 200 characters)
+        example: every weekday at 9am
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  schedule: every weekday at 9am
+                  expression: 0 9 * * 1-5
+                  description: Runs every weekday at 9:00 AM.
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Generation
+  /v1/cuidgenerator:
+    get:
+      summary: Cuid Generator
+      description: Generate one or more collision-resistant unique identifiers
+      operationId: cuidgenerator
+      parameters:
+      - name: count
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of Cuids to generate
+        example: 10
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  cuids:
+                  - cmj95ed27000000145v116use
+                  - cmj95ed2700010014uuounuyc
+                  - cmj95ed27000200147pwbz35y
+                  - cmj95ed27000300142h9ivqrz
+                  - cmj95ed27000400149ingh73n
+                  - cmj95ed2700050014mg9alsah
+                  - cmj95ed27000600149utx0fy3
+                  - cmj95ed270007001467kspfhp
+                  - cmj95ed2700080014n7ykgwxf
+                  - cmj95ed2700090014rrnfehcn
+                  count: 10
+                  format: c + timestamp + counter + fingerprint + random
+                  collision_resistant: true
+                  sortable: true
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Generation
+  /v1/guidgenerator:
+    get:
+      summary: GUID Generator
+      description: Generate one or more GUIDs with formatting options
+      operationId: guidgenerator
+      parameters:
+      - name: count
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of GUIDs to generate
+        example: 3
+      - name: format
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Output format
+        example: uppercase
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  guids:
+                  - 099FD1E4-60FD-4749-9B61-53A265F52579
+                  - D68CA374-C822-40E4-9948-CE7A5D5FC76A
+                  - F6DAD45F-A904-4007-89DF-8F5C76184910
+                  count: 3
+                  format: uppercase
+                  version: 4
+                  variant: RFC 4122
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Generation
+  /v1/hashtaggenerator:
+    post:
+      summary: Hashtag Generator
+      description: Generate hashtags from text
+      operationId: hashtaggenerator
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  count: 5
+                  hashtags:
+                  - '#adventure'
+                  - '#awaits'
+                  - '#ready'
+                  - '#embark'
+                  - '#journey'
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to generate hashtags from
+                count:
+                  type: number
+                  description: Number of hashtags to generate. 1 to 10)
+              required:
+              - text
+      tags:
+      - Data Generation
+  /v1/imeigenerator:
+    get:
+      summary: IMEI Generator
+      description: Generate valid IMEI numbers
+      operationId: imeigenerator
+      parameters:
+      - name: brand
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Filter by manufacturer brand (e.g., Samsung, Apple, Nokia)
+        example: Samsung
+      - name: count
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of IMEIs to generate
+        example: 1
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  count: 2
+                  brand: Samsung
+                  imeis:
+                  - imei: '358398048517203'
+                    tac: '35839804'
+                    manufacturer: Samsung
+                    model: Galaxy Xcover
+                    serial: '851720'
+                    checksum: '3'
+                    isValid: true
+                  - imei: '359040029448038'
+                    tac: '35904002'
+                    manufacturer: Samsung
+                    model: SGH-B130
+                    serial: '944803'
+                    checksum: '8'
+                    isValid: true
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Generation
+  /v1/initialismgenerator:
+    post:
+      summary: Initialism Generator
+      description: Generate initialism from phrase
+      operationId: initialismgenerator
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  initialism: API
+                  phrase: Application Programming Interface
+                  wordCount: 3
+                  words:
+                  - Application
+                  - Programming
+                  - Interface
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phrase:
+                  type: string
+                  description: Phrase to convert to initialism (max 500 characters)
+                excludeCommonWords:
+                  type: boolean
+                  description: Exclude common words like 'the', 'of', 'and'
+                uppercase:
+                  type: boolean
+                  description: Return the initialism in uppercase
+              required:
+              - phrase
+      tags:
+      - Data Generation
+  /v1/jsonschemagenerator:
+    post:
+      summary: JSON Schema Generator
+      description: Generate a JSON schema from sample JSON data
+      operationId: jsonschemagenerator
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  $schema: http://json-schema.org/draft-07/schema#
+                  title: User Schema
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    age:
+                      type: integer
+                    email:
+                      type: string
+                      format: email
+                    active:
+                      type: boolean
+                  required:
+                  - name
+                  - age
+                  - email
+                  - active
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                json:
+                  type: string
+                  description: The sample JSON data to generate a schema from
+                title:
+                  type: string
+                  description: 'The title for the generated schema (default: ''Generated Schema'')'
+                description:
+                  type: string
+                  description: Optional description for the schema
+              required:
+              - json
+      tags:
+      - Data Generation
+  /v1/loremipsumgenerator:
+    get:
+      summary: Lorem Ipsum Generator
+      description: Generate lorem ipsum text with a specified number of sentences or words
+      operationId: loremipsumgenerator
+      parameters:
+      - name: paragraphs
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: The number of paragraphs to generate
+        example: 3
+      - name: startwithlorem
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Start the text with 'Lorem ipsum dolor sit amet'
+        example: true
+      - name: maxlength
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: The maximum length of the generated text (0 for no limit)
+        example: 100
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  words: 73
+                  sentences: 7
+                  text: Lorem ipsum dolor sit amet aliquip duis veniam dolore ea eu ex ad occaecat in sunt amet sit non esse. Proident fugiat eu nisi et duis excepteur. Aute ipsum pariatur labore do pariatur exercitation excepteur qui exercitation aliquip ut mollit. Reprehenderit ipsum velit eiusmod duis nulla. Id eu aute mollit cillum dolore adipisicing non occaecat. Laboris commodo magna occaecat officia amet sunt aliqua et enim enim incididunt in. Magna laborum irure nulla ea.
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Generation
+  /v1/passwordgenerator:
+    get:
+      summary: Password Generator
+      description: Generate passwords with a specified length and complexity
+      operationId: passwordgenerator
+      parameters:
+      - name: count
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: The number of passwords to generate
+        example: 10
+      - name: length
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: The length of the password to generate
+        example: 12
+      - name: complexity
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The complexity of the password. Only applies when type is random
+        example: strong
+      - name: type
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The kind of password to generate. random uses the complexity preset, pronounceable builds readable syllables, passphrase joins dictionary words, and custom honours the include/exclude switches below
+        example: random
+      - name: includeNumbers
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Include digits. Applies to custom and pronounceable, and to random at simple complexity
+        example: true
+      - name: includeSymbols
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Include punctuation symbols. Applies to custom, and to random at medium complexity
+        example: true
+      - name: includeUppercase
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Include uppercase letters. Applies to custom, and to random at simple complexity
+        example: true
+      - name: includeLowercase
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Include lowercase letters in a custom password. Set false to build from the other character sets only
+        example: true
+      - name: excludeSimilar
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Exclude characters that are easy to confuse when read aloud or typed (i, l, 1, L, o, 0, O)
+        example: true
+      - name: excludeAmbiguous
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Exclude brackets, slashes, quotes and other characters that need escaping in shells and config files
+        example: true
+      - name: mixedCase
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Randomly capitalise letters in a pronounceable password
+        example: true
+      - name: strict
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Guarantee at least one character from every enabled set rather than leaving it to chance
+        example: true
+      - name: wordCount
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: How many words a passphrase contains. Only applies when type is passphrase
+        example: 4
+      - name: separator
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The character placed between passphrase words. Only applies when type is passphrase
+        example: '-'
+      - name: capitalize
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Capitalise each word of a passphrase. Only applies when type is passphrase
+        example: true
+      - name: analyze
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Return a strength analysis alongside each password
+        example: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  passwords:
+                  - password: aOwqDh0ZK*P;!M|%oiFYJ!IK%TMXQO
+                    length: 30
+                    metadata:
+                      type: random
+                      complexity: strong
+                    analysis: null
+                  - password: Wo:)*V2nMakoVI78[fKu|QDI.E45p|
+                    length: 30
+                    metadata:
+                      type: random
+                      complexity: strong
+                    analysis: null
+                  - password: '%XqlsK2qN.9>*&jk6gYIG.[aE,hiRc'
+                    length: 30
+                    metadata:
+                      type: random
+                      complexity: strong
+                    analysis: null
+                  - password: WQNY0{R~(G99uc&i62Mve).n<|xt=F
+                    length: 30
+                    metadata:
+                      type: random
+                      complexity: strong
+                    analysis: null
+                  - password: 2$m-&z9!5$c3QlxQP{h#@0x~'M/h]T
+                    length: 30
+                    metadata:
+                      type: random
+                      complexity: strong
+                    analysis: null
+                  - password: y]e_H)/z2yzbr{4C&hHOb[Q:#/$Hml
+                    length: 30
+                    metadata:
+                      type: random
+                      complexity: strong
+                    analysis: null
+                  - password: +iZ,<<+_MR:jJ,JbXTN*3Z,xLo'=@E
+                    length: 30
+                    metadata:
+                      type: random
+                      complexity: strong
+                    analysis: null
+                  - password: x=e6H^U;ajD+)h5Z8$7Wy)^Ob8ERw'
+                    length: 30
+                    metadata:
+                      type: random
+                      complexity: strong
+                    analysis: null
+                  - password: +p!SGSnR*JNl}/[#oVQy~ZxtoZU}F+
+                    length: 30
+                    metadata:
+                      type: random
+                      complexity: strong
+                    analysis: null
+                  - password: '%h:23-bMb0;?QWL)chKm8{>%)mN:EO'
+                    length: 30
+                    metadata:
+                      type: random
+                      complexity: strong
+                    analysis: null
+                  count: 10
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Generation
+  /v1/qrcodegenerator:
+    post:
+      summary: QR Code Generator
+      description: Generate a styled QR code with custom colors, logo, and design options
+      operationId: qrcodegenerator
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  id: b07577c8-e17f-4af3-aeff-94c74d9ea04a
+                  format: png
+                  type: url
+                  correction: M
+                  size: 5
+                  margin: 0
+                  expires: 1766096864874
+                  downloadURL: https://storage.googleapis.com/apiverve/APIData/qrcodegenerator/2556d708-7ec4-45ce-b0fb-98d47fcf170f.png?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1766096864&Signature=fRvOFggSHakWfnBqT46dyv9trO4sVcwPjvjV8hpFG9yI2G2UG%2FoAvJFwzX%2F%2FYPcxRfzcR5Cnc6uSx74iJANJXn42Hpcgr5EudNa%2BxtAo106LfyWBaQgaZggNVai4D6WsDYyBL8sTPGIDxjnldVFIJy7HFMRCKUZ%2B3KQMiYujmFoc2tVMVi7lngxrfAFIylHOmEgCXDaAWXGb6NwV%2BZNsDE1Ju9DLseLnhZ%2Fh2LxIbxRiF042MLkg2hp54P%2FrIhABfOcwW7CoV9Hpn4N88t5818ljyCrLfeLQpxM5gtcRCZJ3MYiICwLkmr%2F62KDmx5JBMFLB%2FVfh%2Bewsc0QJytB3vg%3D%3D
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                value:
+                  type: string
+                  description: The text or data to encode in the QR code
+                type:
+                  type: string
+                  description: The type of data being encoded. Advanced types (wifi, vcard) are premium.
+                format:
+                  type: string
+                  description: Output format. Vector formats (svg, webp) are premium.
+                size:
+                  type: number
+                  description: Size of the QR code in pixels (50-2048)
+                margin:
+                  type: number
+                  description: Margin around the QR code in pixels (0-100)
+                color:
+                  type: string
+                  description: 'Foreground color as hex code (e.g., #000000)'
+                backgroundColor:
+                  type: string
+                  description: 'Background color as hex code (e.g., #ffffff)'
+                dotStyle:
+                  type: string
+                  description: Style of QR code dots
+                cornerSquareStyle:
+                  type: string
+                  description: Style of corner squares
+                cornerDotStyle:
+                  type: string
+                  description: Style of corner dots
+                gradient:
+                  type: string
+                  description: Gradient configuration with type (linear, radial) and colorStops array
+                logo:
+                  type: string
+                  description: URL of logo image to place in center of QR code
+                logoSize:
+                  type: number
+                  description: Size of logo relative to QR code (0.1-0.5)
+                logoMargin:
+                  type: number
+                  description: Margin around logo in pixels
+              required:
+              - value
+      tags:
+      - Data Generation
+  /v1/randomgenerator:
+    get:
+      summary: Random Data Generator
+      description: Generate random data of various types
+      operationId: randomgenerator
+      parameters:
+      - name: type
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The type of random data to generate
+        example: number
+      - name: count
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: The number of random data to generate (1 to 100)
+        example: 10
+      - name: includeAvatar
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Include an AI-generated face avatar (only applies when type=name)
+        example: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  type: phone
+                  count: 10
+                  data:
+                  - 967-950-4587
+                  - 792-611-7468 x1293
+                  - (933) 311-9829
+                  - 389.357.7403 x793
+                  - 1-621-490-6394
+                  - 1-699-562-6833 x8558
+                  - 875.226.1530 x641
+                  - 744-991-0150 x1974
+                  - 1-393-784-0533 x15199
+                  - 954-876-6958 x0398
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Generation
+  /v1/randomidentitygenerator:
+    get:
+      summary: Random Identity Generator
+      description: Generate a random identity with a name, address, and more
+      operationId: randomidentitygenerator
+      parameters:
+      - name: count
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: The number of identities to create
+        example: 5
+      - name: includeAvatar
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Include an AI-generated face avatar for each identity
+        example: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  count: 1
+                  identities:
+                  - name: Dr. Brent Carter
+                    username: Fannie_Treutel28
+                    email: Greyson.DAmore99@hotmail.com
+                    phone: 862-207-2982 x6455
+                    website: mervin.net
+                    company:
+                      name: Runolfsson, Gaylord and Christiansen
+                      catchPhrase: Profit-focused didactic algorithm
+                      bs: brand ubiquitous paradigms
+                    gender: Male
+                    birthdate: '1978-11-23'
+                    cell: 1-514-413-1724
+                    avatar: https://storage.googleapis.com/apiverve/APIResources/faces/Male/40-50/87654321.jpg?X-Goog-Signature=...
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Generation
+  /v1/randomusergenerator:
+    get:
+      summary: Random User Generator
+      description: Generate random user data
+      operationId: randomusergenerator
+      parameters:
+      - name: count
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: The number of users to generate
+        example: 1
+      - name: includeAvatar
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Include an AI-generated face avatar matching user's gender and age
+        example: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                - id: 967e4d46-963e-4108-a0c5-ded8f630dcc8
+                  name: Jennifer Hoppe V
+                  gender: Male
+                  username: Olen_Kihn88
+                  email: Juwan5@gmail.com
+                  password: f0VIWRnbXFvW9Tf
+                  registered: '2025-06-29T22:00:36.084Z'
+                  phone: 1-716-677-4155
+                  cell: 1-353-721-7455 x2081
+                  birthdate: '1972-01-24T19:55:15.208Z'
+                  avatar: https://storage.googleapis.com/apiverve/APIResources/faces/Male/40-50/87654321.jpg?X-Goog-Signature=...
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Generation
+  /v1/randomwords:
+    get:
+      summary: Random Word
+      description: Get a random word, including its definition and pronunciation
+      operationId: randomwords
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  word: persevering
+                  definitions:
+                  - Characterized by perseverance; persistent. -- Per`se*ver"ing*ly, adv.
+                  pronunciation: P ER0 S AH0 V IH1 R IH0 NG
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Generation
+  /v1/shortcodegenerator:
+    get:
+      summary: Short Code Generator
+      description: Generate short alphanumeric codes with customizable options
+      operationId: shortcodegenerator
+      parameters:
+      - name: count
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of codes to generate
+        example: 5
+      - name: length
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Length of each code
+        example: 8
+      - name: charset
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Character set
+        example: alphanumeric
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  codes:
+                  - bgiFznFh
+                  - jr84hHsG
+                  - Q77qABwn
+                  - gvMjXxXs
+                  - WDPJzCsi
+                  count: 5
+                  length: 8
+                  charset: alphanumeric
+                  url_safe: true
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Generation
+  /v1/sitemapgenerator:
+    post:
+      summary: Sitemap Generator
+      description: Generate an XML sitemap from URLs
+      operationId: sitemapgenerator
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  sitemap: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n  <url>\n    <loc>https://example.com/</loc>\n    <lastmod>2025-12-16</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.5</priority>\n  </url>\n  <url>\n    <loc>https://example.com/about</loc>\n    <lastmod>2025-12-16</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.5</priority>\n  </url>\n  <url>\n    <loc>https://example.com/contact</loc>\n    <lastmod>2025-12-16</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.5</priority>\n  </url>\n  <url>\n    <loc>https://example.com/blog</loc>\n    <lastmod>2025-12-16</lastmod>\n    <changefreq>daily</changefreq>\n    <priority>0.8</priority>\n  </url>\n  <url>\n    <loc>https://example.com/products</loc>\n    <lastmod>2025-12-16</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.9</priority>\n  </url>\n</urlset>"
+                  urlCount: 5
+                  sizeBytes: 892
+                  sizeKb: 0.87
+                  format: XML
+                  protocol: sitemaps.org/0.9
+                  settings:
+                    defaultChangeFreq: weekly
+                    defaultPriority: 0.5
+                    includeLastMod: true
+                    baseUrl: https://example.com
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                urls:
+                  type: string
+                  description: Array of URLs (strings or objects with url, priority, changeFreq, lastMod)
+                baseUrl:
+                  type: string
+                  description: Base URL to prepend to relative paths
+                changeFreq:
+                  type: string
+                  description: Default change frequency
+                priority:
+                  type: number
+                  description: Default priority
+                includeLastMod:
+                  type: boolean
+                  description: Include lastmod dates in sitemap
+              required:
+              - urls
+      tags:
+      - Data Generation
+  /v1/totpgenerator:
+    post:
+      summary: TOTP Generator
+      description: Generate time-based one-time password
+      operationId: totpgenerator
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  token: '935324'
+                  digits: 6
+                  period: 30
+                  timeRemaining: 25
+                  expiresAt: '2025-12-16T22:31:00Z'
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                secret:
+                  type: string
+                  description: Base32-encoded shared secret
+                digits:
+                  type: integer
+                  description: Number of digits in token
+                period:
+                  type: integer
+                  description: Time period in seconds
+              required:
+              - secret
+      tags:
+      - Data Generation
+  /v1/ulidgenerator:
+    get:
+      summary: ULID Generator
+      description: Generate one or more ULIDs
+      operationId: ulidgenerator
+      parameters:
+      - name: count
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of ULIDs to generate
+        example: 5
+      - name: timestamp
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Custom timestamp in milliseconds (optional, uses current time if not specified)
+        example: 1609459200000
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  ulids:
+                  - 01KCMMK564DMMCC17AVBZTVNT1
+                  - 01KCMMK565ZE4681DFAEWBF95G
+                  - 01KCMMK566K1REYH0JEK4Q8DKW
+                  - 01KCMMK5670W9EHFNX76R8FKWH
+                  - 01KCMMK568SFRY6DCZTZYMR66Y
+                  count: 5
+                  timestamp: 1765924246724
+                  format: 26 characters (10 timestamp + 16 random)
+                  sortable: true
+                  case_insensitive: true
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Generation
+  /v1/useragentgenerator:
+    get:
+      summary: User Agent Generator
+      description: Generate a random user agent string
+      operationId: useragentgenerator
+      parameters:
+      - name: device
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The device type for the user agent string
+        example: desktop
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  ua: Mozilla/5.0 (Windows NT 6.4) AppleWebKit/537.36.0 (KHTML, like Gecko) Chrome/94.0.0.0 Safari/537.36.0
+                  browser:
+                    name: Chrome
+                    version: 94.0.0.0
+                    major: '94'
+                  engine:
+                    name: Blink
+                    version: 94.0.0.0
+                  os:
+                    name: Windows
+                    version: '10'
+                  device: {}
+                  cpu: {}
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Generation
+  /v1/usernamegenerator:
+    get:
+      summary: Username Generator
+      description: Generate usernames based on the specified criteria
+      operationId: usernamegenerator
+      parameters:
+      - name: email
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The email address to generate usernames from
+        example: sean@mail.com
+      - name: count
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: The number of usernames to generate
+        example: 10
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  count: 10
+                  suggestions:
+                  - doxologysean
+                  - sean
+                  - downpoursean
+                  - tonsilarsean
+                  - interdependencysean
+                  - seantrivant
+                  - seansquireen
+                  - seankillifish
+                  - seantiltyard
+                  - seaninterrupt
+                  email: sean@mail.com
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Generation
+  /v1/uuidgenerator:
+    get:
+      summary: UUID Generator
+      description: Generate one or more RFC 4122 version 4 UUIDs
+      operationId: uuidgenerator
+      parameters:
+      - name: count
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of UUIDs to generate
+        example: 5
+      - name: version
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: UUID version (only version 4 currently supported)
+        example: 4
+      - name: format
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Output format
+        example: default
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  uuids:
+                  - fd874c4e-4fc2-4a65-ab1e-46c7a141c3c3
+                  - 59f31559-dd12-46ff-a3d1-d7bd5eddb09b
+                  - f09b5f16-1b68-4082-acbc-38ce08de2fe4
+                  - c8c1b3d8-e927-43a7-840c-ced3964ca95f
+                  - aa3cb61e-096f-46fa-a12c-5f2b696186fb
+                  count: 5
+                  version: 4
+                  format: default
+                  variant: RFC 4122
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Data Generation
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
+externalDocs:
+  description: APIVerve Documentation
+  url: https://docs.apiverve.com

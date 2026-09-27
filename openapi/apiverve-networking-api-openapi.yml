@@ -1,0 +1,817 @@
+openapi: 3.2.0
+info:
+  title: APIVerve Networking API
+  description: One API key, 370+ real-world REST endpoints — weather, geocoding, finance, DNS, validation, text processing and more. Every endpoint returns JSON. Full documentation at https://docs.apiverve.com.
+  termsOfService: https://apiverve.com/terms/
+  contact:
+    name: APIVerve Support
+    email: hello@apiverve.com
+    url: https://apiverve.com/contact
+  license:
+    name: APIVerve Terms of Service
+    url: https://apiverve.com/terms/
+  version: 1.0.0
+  x-logo:
+    url: https://apiverve.com/images/favicon.png
+    altText: APIVerve
+servers:
+- url: https://api.apiverve.com
+security:
+- api_key: []
+tags:
+- name: Networking
+paths:
+  /v1/bluetoothlookup:
+    get:
+      summary: Bluetooth Company Lookup
+      description: Lookup Bluetooth company/manufacturer by company ID
+      operationId: bluetoothlookup
+      parameters:
+      - name: companyid
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The Bluetooth SIG company identifier (decimal or hex with 0x prefix). For example, 76 or 0x4C for Apple.
+        example: '76'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  companyId: 76
+                  companyIdHex: '0x004C'
+                  found: true
+                  company: Apple, Inc.
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Networking
+  /v1/botdetector:
+    get:
+      summary: Bot Detector
+      description: Analyzes a user agent string to determine if it belongs to a known bot or crawler, and returns detailed information about the bot type and category.
+      operationId: botdetector
+      parameters:
+      - name: ua
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The user agent string to analyze (URL encoded)
+        example: Googlebot/2.1 (+http://www.google.com/bot.html)
+      - name: ip
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Optional IP the request came from. When the user agent claims to be a Google, Bing, OpenAI or Apple crawler, it is checked against that operator's published IP ranges
+        example: 66.249.66.1
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  userAgent: Googlebot/2.1 (+http://www.google.com/bot.html)
+                  isBot: true
+                  bot:
+                    name: Googlebot
+                    category: search_engine
+                    url: http://www.google.com/bot.html
+                    reputation: trusted
+                    shouldBlock: false
+                  isAutomated: true
+                  verified: true
+                  riskScore: 0
+                  riskLevel: low
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Networking
+  /v1/contentfilter:
+    post:
+      summary: Content Filter
+      description: Checks whether a URL or domain appears in the content filter blocklist covering fake news, gambling, adult content, and social media.
+      operationId: contentfilter
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  url: https://www.pornhub.com/video/123
+                  domain: www.pornhub.com
+                  isBlocked: true
+                  category: porn
+                  matchedDomain: pornhub.com
+                  safetyRating: unsafe
+                  categories:
+                  - porn
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: The URL or domain to check
+              required:
+              - url
+      tags:
+      - Networking
+  /v1/ipblacklistlookup:
+    get:
+      summary: IP Blacklist Lookup
+      description: Checks whether an IP address appears on inbound (attacker) or outbound (malicious destination) blocklists and returns threat level assessment with geolocation details.
+      operationId: ipblacklistlookup
+      parameters:
+      - name: ip
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The IP address to check against blocklists
+        example: 185.220.101.1
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  ipAddress: 185.220.101.1
+                  isIPBlacklisted: true
+                  inbound:
+                    found: true
+                    description: IP is known for malicious inbound activity (spam, scanning, brute-force attacks)
+                  outbound: null
+                  threatLevel: high
+                  isTor: true
+                  ipDetails:
+                    ip: 185.220.101.1
+                    country: DE
+                    region: BY
+                    timezone: Europe/Berlin
+                    city: Nuremberg
+                    coordinates:
+                    - 49.4478
+                    - 11.0683
+                    countryName: Germany
+                    regionName: Bavaria
+                    postalCode: '90403'
+                    continent: EU
+                    continentName: Europe
+                    accuracyRadius: 20
+                    isEU: true
+                  asn: AS60729
+                  asnName: TORSERVERS-NET
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Networking
+  /v1/iplookup:
+    get:
+      summary: IP Lookup
+      description: Lookup the details and location of an IP address
+      operationId: iplookup
+      parameters:
+      - name: ip
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The IP address for which you want to get the location data (e.g., 173.172.81.20)
+        example: 173.172.81.20
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  ip: 173.172.81.20
+                  country: US
+                  countryName: United States
+                  region: MO
+                  regionName: Missouri
+                  city: Kansas City
+                  continent: NA
+                  continentName: North America
+                  timezone: America/Chicago
+                  coordinates:
+                  - 39.0831
+                  - -94.5853
+                  postalCode: '64106'
+                  accuracyRadius: 20
+                  isEU: false
+                  asn: AS11427
+                  asnName: TWC-11427-TEXAS
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Networking
+  /v1/macaddresslookup:
+    get:
+      summary: MAC Address Lookup
+      description: Lookup MAC address data based on the MAC address
+      operationId: macaddresslookup
+      parameters:
+      - name: mac
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The MAC address for which you want to get the data (e.g., 00-B0-D0-63-C2-26)
+        example: 00-B0-D0-63-C2-26
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  mac: 00:B0:D0:63:C2:26
+                  isValid: true
+                  vendor: Dell Inc.
+                  oui: 00B0D0
+                  formats:
+                    colon: 00:B0:D0:63:C2:26
+                    dash: 00-B0-D0-63-C2-26
+                    dot: 00.B0.D0.63.C2.26
+                    raw: 00B0D063C226
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Networking
+  /v1/nameservers:
+    get:
+      summary: Nameservers
+      description: Get the authoritative nameservers for a domain including IP addresses and owner information.
+      operationId: nameservers
+      parameters:
+      - name: domain
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The domain name to lookup nameservers for
+        example: google.com
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  domain: google.com
+                  nameserverCount: 4
+                  hasMultipleProviders: false
+                  nameservers:
+                  - nameserver: ns1.google.com
+                    ipAddresses:
+                    - 216.239.32.10
+                    reverseDns: ns1.google.com
+                    owner: google.com
+                  - nameserver: ns2.google.com
+                    ipAddresses:
+                    - 216.239.34.10
+                    reverseDns: ns2.google.com
+                    owner: google.com
+                  uniqueOwners:
+                  - google.com
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Networking
+  /v1/phishingcheck:
+    post:
+      summary: Phishing Domain Checker
+      description: Checks whether a domain is in the active phishing database
+      operationId: phishingcheck
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  domain: secure-banking-login.suspicious-domain.com
+                  isPhishing: true
+                  matchedDomain: suspicious-domain.com
+                  inputType: url
+                  originalInput: https://secure-banking-login.suspicious-domain.com/auth
+                  isPunycode: false
+                  isIpAddress: false
+                  riskScore: 85
+                  riskLevel: high
+                  sources:
+                  - phishing-database
+                  - blocklistproject
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                domain:
+                  type: string
+                  description: The domain to check (e.g., example.com)
+              required:
+              - domain
+      tags:
+      - Networking
+  /v1/pinger:
+    post:
+      summary: Domain and IP Pinger
+      description: Pinger is a simple tool for checking if a URL is up. It returns a boolean value indicating whether the URL is up or not.
+      operationId: pinger
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  host: google.com
+                  numericHost: 2607:f8b0:4001:c6e::8a
+                  alive: true
+                  roundTrips: 3
+                  packetLoss: 0
+                  minMS: 0.652
+                  avgMS: 0.6846666666666666
+                  maxMS: 0.712
+                  stdDev: 0.02478350706058811
+                  times:
+                  - 0.712
+                  - 0.652
+                  - 0.69
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                host:
+                  type: string
+                  description: The host name or public IP that you want to ping
+                timeout:
+                  type: integer
+                  description: The timeout for the ping request in milliseconds
+                roundTrips:
+                  type: integer
+                  description: How many pings to send before averaging the round-trip time
+              required:
+              - host
+      tags:
+      - Networking
+  /v1/tldlookup:
+    get:
+      summary: TLD Lookup
+      description: Retrieves the type and sponsoring organization for a given top-level domain.
+      operationId: tldlookup
+      parameters:
+      - name: tld
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The top-level domain to look up (with or without leading dot)
+        example: com
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  tld: com
+                  found: true
+                  type: generic
+                  organization: VeriSign Global Registry Services
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Networking
+  /v1/tlscheck:
+    get:
+      summary: TLS Checker
+      description: TLS Check is an API that inspects the TLS/SSL configuration of a server identified by its IP address. It reports supported protocols, cipher suites, and potential vulnerabilities.
+      operationId: tlscheck
+      parameters:
+      - name: domain
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The domain to check the TLS/SSL configuration for
+        example: amazon.com
+      - name: port
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: The port to connect to (usually 443 for HTTPS)
+        example: 443
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  domain: amazon.com
+                  tlsVersions:
+                    TLSv1: true
+                    TLSv1.1: true
+                    TLSv1.2: true
+                    TLSv1.3: true
+                  highestVersion: TLSv1.3
+                  hasDeprecatedTLS: true
+                  isSecure: false
+                  riskScore: 55
+                  riskLevel: medium
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Networking
+  /v1/tordetect:
+    get:
+      summary: Tor Node Detector
+      description: Tor Detect is an API that checks whether a given IP address belongs to a known Tor exit node. Useful for security, access control, and analytics.
+      operationId: tordetect
+      parameters:
+      - name: ip
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The IP address to check against the Tor exit node list
+        example: 185.189.183.143
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  ipAddress: 185.189.183.143
+                  isTor: true
+                  ipDetails:
+                    country: NL
+                    region: ZH
+                    timezone: Europe/Amsterdam
+                  parsed: true
+                  asn: AS215747
+                  asnName: NUBACLOUD
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Networking
+  /v1/usbvendorlookup:
+    get:
+      summary: USB Vendor Lookup
+      description: Lookup USB vendor and optionally product information by ID
+      operationId: usbvendorlookup
+      parameters:
+      - name: vendorid
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The USB vendor ID in 4-digit hex format (e.g., 05AC for Apple)
+        example: 05AC
+      - name: productid
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The USB product ID in 4-digit hex format (optional)
+        example: '8290'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  vendorId: 05AC
+                  productId: '8290'
+                  found: true
+                  vendor: Apple, Inc.
+                  product: iPhone
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Networking
+  /v1/vpndetector:
+    get:
+      summary: VPN Proxy Detector
+      description: VPN Detector is a simple tool for detecting VPN usage. It returns a boolean value indicating whether the IP address is using a VPN or not.
+      operationId: vpndetector
+      parameters:
+      - name: ip
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The IP address you want to check for VPN usage
+        example: 103.62.49.210
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  ip: 103.62.49.210
+                  is_vpn: false
+                  is_datacenter: true
+                  is_tor: false
+                  asn: AS137409
+                  asn_name: GSLNETWORKS-AS-AP GSL Networks Pty LTD
+                  checked_on: '2026-09-14'
+                  risk_level: Moderate
+                  threat_level: Low
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Networking
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
+externalDocs:
+  description: APIVerve Documentation
+  url: https://docs.apiverve.com

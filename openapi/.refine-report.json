@@ -1,0 +1,47 @@
+{
+  "provider": "apiverve",
+  "sources": [
+    "apiverve-openapi.yaml"
+  ],
+  "outputs": [
+    "apiverve-ai-computer-vision-api-openapi.yml",
+    "apiverve-astrology-api-openapi.yml",
+    "apiverve-calendar-api-openapi.yml",
+    "apiverve-data-conversion-api-openapi.yml",
+    "apiverve-data-generation-api-openapi.yml",
+    "apiverve-data-lookup-api-openapi.yml",
+    "apiverve-data-processing-api-openapi.yml",
+    "apiverve-data-scraping-api-openapi.yml",
+    "apiverve-data-validation-api-openapi.yml",
+    "apiverve-documents-api-openapi.yml",
+    "apiverve-domain-data-api-openapi.yml",
+    "apiverve-entertainment-api-openapi.yml",
+    "apiverve-finance-api-openapi.yml",
+    "apiverve-food-api-openapi.yml",
+    "apiverve-games-api-openapi.yml",
+    "apiverve-geography-api-openapi.yml",
+    "apiverve-health-wellness-api-openapi.yml",
+    "apiverve-images-api-openapi.yml",
+    "apiverve-lifestyle-api-openapi.yml",
+    "apiverve-math-calculations-api-openapi.yml",
+    "apiverve-networking-api-openapi.yml",
+    "apiverve-news-api-openapi.yml",
+    "apiverve-parsers-api-openapi.yml",
+    "apiverve-reference-data-api-openapi.yml",
+    "apiverve-science-api-openapi.yml",
+    "apiverve-security-api-openapi.yml",
+    "apiverve-text-processing-api-openapi.yml",
+    "apiverve-transportation-api-openapi.yml",
+    "apiverve-weather-api-openapi.yml"
+  ],
+  "archived": [
+    "archived openapi/apiverve-openapi.yaml"
+  ],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "apiverve-openapi.yaml: upgraded openapi 3.0.4 -> OpenAPI 3.2.0",
+    "apis.yml register: written (+29 apis, 31 total)"
+  ],
+  "skipped": []
+}

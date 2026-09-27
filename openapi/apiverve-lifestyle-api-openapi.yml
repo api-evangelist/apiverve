@@ -1,0 +1,383 @@
+openapi: 3.2.0
+info:
+  title: APIVerve Lifestyle API
+  description: One API key, 370+ real-world REST endpoints — weather, geocoding, finance, DNS, validation, text processing and more. Every endpoint returns JSON. Full documentation at https://docs.apiverve.com.
+  termsOfService: https://apiverve.com/terms/
+  contact:
+    name: APIVerve Support
+    email: hello@apiverve.com
+    url: https://apiverve.com/contact
+  license:
+    name: APIVerve Terms of Service
+    url: https://apiverve.com/terms/
+  version: 1.0.0
+  x-logo:
+    url: https://apiverve.com/images/favicon.png
+    altText: APIVerve
+servers:
+- url: https://api.apiverve.com
+security:
+- api_key: []
+tags:
+- name: Lifestyle
+paths:
+  /v1/duedatecalculator:
+    get:
+      summary: Due Date Calculator
+      description: Calculate pregnancy due date from first day of last menstrual period
+      operationId: duedatecalculator
+      parameters:
+      - name: last_period
+        in: query
+        schema:
+          type: string
+        required: true
+        description: First day of last menstrual period (YYYY-MM-DD)
+        example: '2025-06-01'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  calculation_method: last_period
+                  last_period_date: '2024-01-01'
+                  estimated_conception_date: '2024-01-15'
+                  due_date: '2024-10-07'
+                  current_progress:
+                    days_pregnant: 715
+                    weeks_pregnant: 102
+                    days_into_week: 1
+                    formatted: 102 weeks, 1 days
+                    trimester: 3
+                    percentage_complete: 255.36
+                  time_until_due:
+                    days: 0
+                    weeks: 0
+                    days_extra: 0
+                    formatted: Past due date
+                    is_overdue: true
+                  upcoming_milestones: []
+                  important_dates:
+                    end_first_trimester: '2024-04-01'
+                    end_second_trimester: '2024-07-08'
+                    full_term_begins: '2024-09-16'
+                  disclaimer: This is an estimate only. Due dates can vary. Consult your healthcare provider for medical advice.
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Lifestyle
+  /v1/menstrualcycle:
+    get:
+      summary: Menstrual Cycle Calculator
+      description: Calculate future menstrual cycles and phases
+      operationId: menstrualcycle
+      parameters:
+      - name: last_period
+        in: query
+        schema:
+          type: string
+        required: true
+        description: First day of last menstrual period (YYYY-MM-DD)
+        example: '2024-01-01'
+      - name: cycle_length
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Average cycle length in days
+        example: 28
+      - name: period_length
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Average period duration in days
+        example: 5
+      - name: cycles
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of future cycles to calculate
+        example: 3
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  last_period_date: '2024-01-01'
+                  cycle_length: 28
+                  period_length: 5
+                  cycles_calculated: 3
+                  cycles:
+                  - cycle_number: 1
+                    period:
+                      start_date: '2024-01-01'
+                      end_date: '2024-01-05'
+                      duration_days: 5
+                    ovulation:
+                      date: '2024-01-15'
+                      day_of_cycle: 14
+                    fertile_window:
+                      start_date: '2024-01-10'
+                      end_date: '2024-01-15'
+                      duration_days: 6
+                    pms_phase:
+                      start_date: '2023-12-21'
+                      end_date: '2023-12-31'
+                    cycle_phases:
+                      menstrual:
+                        start: '2024-01-01'
+                        end: '2024-01-05'
+                        description: Menstruation
+                      follicular:
+                        start: '2024-01-06'
+                        end: '2024-01-14'
+                        description: Follicular phase - preparing for ovulation
+                      ovulation:
+                        date: '2024-01-15'
+                        description: Ovulation - most fertile day
+                      luteal:
+                        start: '2024-01-16'
+                        end: '2024-01-28'
+                        description: Luteal phase - preparing for next period
+                    status: past
+                    days_until: null
+                    days_ago: 715
+                  - cycle_number: 2
+                    period:
+                      start_date: '2024-01-29'
+                      end_date: '2024-02-02'
+                      duration_days: 5
+                    ovulation:
+                      date: '2024-02-12'
+                      day_of_cycle: 14
+                    fertile_window:
+                      start_date: '2024-02-07'
+                      end_date: '2024-02-12'
+                      duration_days: 6
+                    pms_phase:
+                      start_date: '2024-01-18'
+                      end_date: '2024-01-28'
+                    cycle_phases:
+                      menstrual:
+                        start: '2024-01-29'
+                        end: '2024-02-02'
+                        description: Menstruation
+                      follicular:
+                        start: '2024-02-03'
+                        end: '2024-02-11'
+                        description: Follicular phase - preparing for ovulation
+                      ovulation:
+                        date: '2024-02-12'
+                        description: Ovulation - most fertile day
+                      luteal:
+                        start: '2024-02-13'
+                        end: '2024-02-25'
+                        description: Luteal phase - preparing for next period
+                    status: past
+                    days_until: null
+                    days_ago: 687
+                  - cycle_number: 3
+                    period:
+                      start_date: '2024-02-26'
+                      end_date: '2024-03-01'
+                      duration_days: 5
+                    ovulation:
+                      date: '2024-03-11'
+                      day_of_cycle: 14
+                    fertile_window:
+                      start_date: '2024-03-06'
+                      end_date: '2024-03-11'
+                      duration_days: 6
+                    pms_phase:
+                      start_date: '2024-02-15'
+                      end_date: '2024-02-25'
+                    cycle_phases:
+                      menstrual:
+                        start: '2024-02-26'
+                        end: '2024-03-01'
+                        description: Menstruation
+                      follicular:
+                        start: '2024-03-02'
+                        end: '2024-03-10'
+                        description: Follicular phase - preparing for ovulation
+                      ovulation:
+                        date: '2024-03-11'
+                        description: Ovulation - most fertile day
+                      luteal:
+                        start: '2024-03-12'
+                        end: '2024-03-24'
+                        description: Luteal phase - preparing for next period
+                    status: past
+                    days_until: null
+                    days_ago: 659
+                  current_status:
+                    phase: Unknown
+                    description: ''
+                    next_period: null
+                    days_until_next_period: null
+                  averages:
+                    cycle_length: 28
+                    period_duration: 5
+                    days_between_periods: 28
+                  disclaimer: This calculator provides estimates only. Actual cycles may vary. Consult a healthcare provider for medical advice.
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Lifestyle
+  /v1/ovulationcalculator:
+    get:
+      summary: Ovulation Calculator
+      description: Calculate ovulation date and fertile window
+      operationId: ovulationcalculator
+      parameters:
+      - name: last_period
+        in: query
+        schema:
+          type: string
+        required: true
+        description: First day of last menstrual period (YYYY-MM-DD)
+        example: '2024-01-01'
+      - name: cycle_length
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Average menstrual cycle length in days
+        example: 28
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  last_period: '2024-01-01'
+                  cycle_length: 28
+                  ovulation:
+                    date: '2024-01-15'
+                    days_from_last_period: 14
+                  fertile_window:
+                    start: '2024-01-10'
+                    end: '2024-01-15'
+                    duration_days: 6
+                  most_fertile_days:
+                    start: '2024-01-13'
+                    end: '2024-01-15'
+                    duration_days: 3
+                  fertile_days:
+                  - date: '2024-01-10'
+                    day_relative_to_ovulation: -5
+                    fertility_level: medium
+                    description: Fertile
+                  - date: '2024-01-11'
+                    day_relative_to_ovulation: -4
+                    fertility_level: medium
+                    description: Fertile
+                  - date: '2024-01-12'
+                    day_relative_to_ovulation: -3
+                    fertility_level: medium
+                    description: Fertile
+                  - date: '2024-01-13'
+                    day_relative_to_ovulation: -2
+                    fertility_level: high
+                    description: Most fertile
+                  - date: '2024-01-14'
+                    day_relative_to_ovulation: -1
+                    fertility_level: high
+                    description: Most fertile
+                  - date: '2024-01-15'
+                    day_relative_to_ovulation: 0
+                    fertility_level: high
+                    description: Most fertile
+                  next_period:
+                    date: '2024-01-29'
+                    days_from_last_period: 28
+                  cycle_phases:
+                    follicular_phase:
+                      duration_days: 14
+                      description: From first day of period to ovulation
+                    ovulation:
+                      duration_days: 1
+                      description: Egg is released from ovary
+                    luteal_phase:
+                      duration_days: 14
+                      description: From ovulation to next period
+                  current_status:
+                    current_phase: Menstruation
+                    is_fertile: false
+                    days_until_ovulation: -701
+                    days_until_next_period: -687
+                  disclaimer: This calculator provides estimates only. Actual ovulation may vary. Consult a healthcare provider for medical advice.
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Lifestyle
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
+externalDocs:
+  description: APIVerve Documentation
+  url: https://docs.apiverve.com

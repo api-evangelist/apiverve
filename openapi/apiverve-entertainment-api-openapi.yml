@@ -1,0 +1,1273 @@
+openapi: 3.2.0
+info:
+  title: APIVerve Entertainment API
+  description: One API key, 370+ real-world REST endpoints — weather, geocoding, finance, DNS, validation, text processing and more. Every endpoint returns JSON. Full documentation at https://docs.apiverve.com.
+  termsOfService: https://apiverve.com/terms/
+  contact:
+    name: APIVerve Support
+    email: hello@apiverve.com
+    url: https://apiverve.com/contact
+  license:
+    name: APIVerve Terms of Service
+    url: https://apiverve.com/terms/
+  version: 1.0.0
+  x-logo:
+    url: https://apiverve.com/images/favicon.png
+    altText: APIVerve
+servers:
+- url: https://api.apiverve.com
+security:
+- api_key: []
+tags:
+- name: Entertainment
+paths:
+  /v1/advice:
+    get:
+      summary: Advice Generator
+      description: Advice Generator is a simple tool for generating random pieces of advice. It returns a random piece of advice.
+      operationId: advice
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  id: 3xx4VZSZ
+                  advice: Be creative and innovative.
+                  lang: en
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Entertainment
+  /v1/bucketlist:
+    get:
+      summary: Bucket List
+      description: Bucket List is a simple tool for getting a random bucket list item. It returns a random bucket list item
+      operationId: bucketlist
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  bucketListItem: Go on a educational trip
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Entertainment
+  /v1/charades:
+    get:
+      summary: Charades Generator
+      description: Generate random charades word from category
+      operationId: charades
+      parameters:
+      - name: category
+        in: query
+        schema:
+          type: string
+        required: false
+        description: 'Category: all, movies, books, songs, actions, animals, objects'
+        example: movies
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  word: Selena
+                  category: movies
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Entertainment
+  /v1/chessmovevalidator:
+    get:
+      summary: Chess Move Validator
+      description: Validate algebraic chess notation
+      operationId: chessmovevalidator
+      parameters:
+      - name: move
+        in: query
+        schema:
+          type: string
+        required: true
+        description: Chess move in algebraic notation
+        example: Nf3
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  move: Nf3
+                  valid: true
+                  type: piece move
+                  piece: N
+                  capture: false
+                  check: false
+                  checkmate: false
+                  promotion: false
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Entertainment
+  /v1/chucknorris:
+    get:
+      summary: Chuck Norris Jokes
+      description: Get a random Chuck Norris joke
+      operationId: chucknorris
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  joke: The Mona Lisa Used To Smile, Then Chuck Norris Roundhouse Kicked It
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Entertainment
+  /v1/compliments:
+    get:
+      summary: Compliment Generator
+      description: Generate a unique compliment
+      operationId: compliments
+      parameters:
+      - name: adult
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Include flirty/romantic compliments
+        example: false
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  compliment: Your graceful professionalism is an asset to everyone.
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Entertainment
+  /v1/dadjokes:
+    get:
+      summary: Dad Jokes
+      description: Dad Jokes is a simple tool for getting dad jokes. It returns a random dad joke.
+      operationId: dadjokes
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  joke: What state do crayons go to on vacation? Color-ado.
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Entertainment
+  /v1/dndgenerator:
+    get:
+      summary: D&D Generator
+      description: Generate random D&D content by type
+      operationId: dndgenerator
+      parameters:
+      - name: type
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Content type to generate
+        example: character
+      - name: count
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of items to generate
+        example: 1
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  type: character
+                  count: 1
+                  results:
+                    name: Ashorshadow
+                    race: Elf
+                    class: Warlock
+                    level: 6
+                    background: Criminal
+                    alignment: Lawful Good
+                    stats:
+                      strength: 10
+                      dexterity: 12
+                      constitution: 7
+                      intelligence: 15
+                      wisdom: 12
+                      charisma: 10
+                    hitPoints: 20
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Entertainment
+  /v1/fortuneteller:
+    get:
+      summary: Fortune Teller
+      description: Generate personalized AI fortune with insights and lucky elements
+      operationId: fortuneteller
+      parameters:
+      - name: category
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Fortune category
+        example: general
+      - name: question
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Optional question for personalized fortune (max 500 characters)
+        example: What does the future hold for me?
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  fortune: The threads of destiny are weaving a tapestry of unexpected joy; embrace the unknown, for within its depths lie blossoms of serendipity. A golden opportunity awaits, carried upon the wings of synchronicity.
+                  insight: Trust in the whispers of your intuition; it shall guide you through the maze of life.
+                  timeframe: in the coming weeks
+                  category: general
+                  question: null
+                  luckyNumbers:
+                  - 87
+                  - 10
+                  - 16
+                  - 83
+                  - 99
+                  - 34
+                  luckyElement: Wood
+                  luckyColor: Purple
+                  luckyDay: Tuesday
+                  timestamp: '2025-12-16T22:23:31.796Z'
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Entertainment
+  /v1/historicalevents:
+    get:
+      summary: Historical Events
+      description: Get a list of historical events that match a specific keyword
+      operationId: historicalevents
+      parameters:
+      - name: text
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The keyword for which you want to get the historical events (e.g., moon landing)
+        example: moon landing
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  count: 6
+                  filteredOn:
+                  - text
+                  events:
+                  - year: '1969'
+                    month: '05'
+                    day: '18'
+                    date: 1969/05/18
+                    event: ' Apollo program: ''''Apollo 10'''' (Tom Stafford, Gene Cernan, John Young) is launched, on the full dress-rehearsal for the Moon landing.'
+                    range: May
+                    granularity: year
+                  - year: '1969'
+                    month: '05'
+                    day: '25'
+                    date: 1969/05/25
+                    event: 'Apollo program: ''''Apollo 10'''' returns to Earth, after a successful 8-day test of all the components needed for the upcoming first manned Moon landing.'
+                    range: May
+                    granularity: year
+                  - year: '1969'
+                    month: '07'
+                    day: '20'
+                    date: 1969/07/20
+                    event: ' Apollo program: The lunar module ''''Eagle'''' lands on the lunar surface. An estimated 500 million people worldwide watch in awe as Neil Armstrong takes his historic first steps on the Moon at 02:56 UTC, the largest television audience for a live broadcast at that time.cite web|title=Manned Space Chronology: Apollo_11|url=<a href="http://www.spaceline.org/flightchron/apollo11.html|publisher=spaceline.org|accessdate=2008-02-06|">http://www.spaceline.org/flightchron/apollo11.html|publisher=spaceline.org|accessdate=2008-02-06|</a> archiveurl= <a href="http://web.archive.org/web/20080214213826/http://www.spaceline.org/flightchron/apollo11.html|">http://web.archive.org/web/20080214213826/http://www.spaceline.org/flightchron/apollo11.html|</a> archivedate= 14 February 2008 !--DASHBot--| deadurl= no}}cite web|title= Apollo Anniversary: Moon Landing quotInspired Worldquot|url=<a href="http://news.nationalgeographic.com/news/2004/07/0714_040714_moonlanding.html|publisher=nationalgeographic.com|accessdate=2008-02-06|">http://news.nationalgeographic.com/news/2004/07/0714_040714_moonlanding.html|publisher=nationalgeographic.com|accessdate=2008-02-06|</a> archiveurl= <a href="http://web.archive.org/web/20080209140059/http://news.nationalgeographic.com/news/2004/07/0714_040714_moonlanding.html|">http://web.archive.org/web/20080209140059/http://news.nationalgeographic.com/news/2004/07/0714_040714_moonlanding.html|</a> archivedate= 9 February 2008 !--DASHBot--| deadurl= no}}'
+                    range: July
+                    granularity: year
+                  - year: '1969'
+                    month: '07'
+                    day: '20'
+                    date: 1969/07/20
+                    event: The ''Apollo 11'' astronauts return from the first successful Moon landing, and are placed in biological isolation for several days, on the chance they may have brought back lunar germs. The airless lunar environment is later determined to preclude microscopic life.
+                    range: July
+                    granularity: year
+                  - year: '1971'
+                    month: '02'
+                    day: 08
+                    date: 1971/02/08
+                    event: 'Apollo program: ''''Apollo 14'''' returns to Earth after the third manned Moon landing.'
+                    range: February
+                    granularity: year
+                  - year: '1973'
+                    month: '01'
+                    day: '07'
+                    date: 1973/01/07
+                    event: Elvis Presley's concert in Hawaii. The first worldwide telecast by an entertainer watched by more people than watched the Apollo moon landings.
+                    range: January
+                    granularity: year
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Entertainment
+  /v1/lovecalculator:
+    get:
+      summary: Love Calculator
+      description: Calculate the love compatibility between two names
+      operationId: lovecalculator
+      parameters:
+      - name: name1
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The first name to calculate love compatibility
+        example: John
+      - name: name2
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The second name to calculate love compatibility
+        example: Jane
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  name1: Jane
+                  name2: John
+                  lovePercentage: 62%
+                  response: You have good chemistry. Keep getting to know each other and see where it leads.
+                  additionalText: The love percentage between Jane and John is 62%.
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Entertainment
+  /v1/magic8ball:
+    get:
+      summary: Magic 8-Ball
+      description: Get a random Magic 8-Ball prediction
+      operationId: magic8ball
+      parameters:
+      - name: question
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Your question for the Magic 8-Ball (optional)
+        example: Will it rain today?
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  question: Will it rain today?
+                  answer: Signs point to yes
+                  type: affirmative
+                  certainty: medium
+                  shake_count: 3
+                  timestamp: '2025-12-16T22:25:52.008Z'
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Entertainment
+  /v1/musicnotegenerator:
+    get:
+      summary: Music Note Generator
+      description: Generate audio file for musical note
+      operationId: musicnotegenerator
+      parameters:
+      - name: note
+        in: query
+        schema:
+          type: string
+        required: true
+        description: 'Musical note (A-G with optional # or b)'
+        example: C
+      - name: octave
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Octave number
+        example: 4
+      - name: duration
+        in: query
+        schema:
+          type: number
+        required: false
+        description: Duration in seconds
+        example: 1
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  note: C
+                  octave: 4
+                  frequency: 261.63
+                  duration: 1
+                  audio:
+                    audioFile: 72510463-6388-4588-8e08-5714f20f9c67.wav
+                    format: .wav
+                    downloadURL: https://storage.googleapis.com/apiverve/APIData/musicnotegenerator/72510463-6388-4588-8e08-5714f20f9c67.wav?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1765925810&Signature=djWUb%2B8QmrAZLTEDiPAIB%2Bx7w7OYyJiClHTcPtkIvvtlKT01z%2FxJMMjUMvUHTx0aRpF94Oq5jdFKBqw2NPKOaEQPNIeF%2BukRt3cS5chrLI3ynvnLobkz4%2FrTGXW8r2BE42oWGMC1xjTJpdU5IMQjhEmWDMRPWzJo5sy6ZQAll5US9DtSVl7Tc2wyHCZRlxcTxlOLPCWv9SZ6Mn8i4kSXITWwp2FaR%2BEdJOi6bpRYkBBmWvnLlAiNFTm44v5QKm7dwXpAAyoidJ4%2Bo%2B2OErXHJ%2BTDMiLwFHZAc4Bt4slYTX5henGIt752fCoj2%2FOaLWSXp%2BnJNFkvKdKxVpDH40y%2FqA%3D%3D
+                    duration: 1.00s
+                    sampleRate: 44100Hz
+                    bitDepth: 16-bit
+                    expires: 1765925810991
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Entertainment
+  /v1/neverhaveiever:
+    get:
+      summary: Never Have I Ever
+      description: Generate a Never Have I Ever statement
+      operationId: neverhaveiever
+      parameters:
+      - name: adult
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Include adult/relationship-focused statements
+        example: false
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  statement: Never have I ever learned to knit or crochet.
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Entertainment
+  /v1/pictionary:
+    get:
+      summary: Pictionary Generator
+      description: Generate pictionary words by difficulty level
+      operationId: pictionary
+      parameters:
+      - name: difficulty
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Difficulty level
+        example: medium
+      - name: count
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Number of words to generate
+        example: 5
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  words:
+                  - Including
+                  - Widely
+                  - Nation
+                  - Buffalo
+                  - Twelve
+                  count: 5
+                  difficulty: medium
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Entertainment
+  /v1/randomfacts:
+    get:
+      summary: Random Facts
+      description: Get a random fact
+      operationId: randomfacts
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  fact: Rhinoceros have 3 toes on each foot
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Entertainment
+  /v1/randomjoke:
+    get:
+      summary: Random Joke
+      description: Get a random joke from a collection of jokes
+      operationId: randomjoke
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  score: 7
+                  setup: Why is the space between a woman's chest and her hips called a waist?
+                  punchline: Because you could easily fit another pair of tits in there.
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Entertainment
+  /v1/randompun:
+    get:
+      summary: Random Pun
+      description: Get a random pun from a collection of puns
+      operationId: randompun
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  category: Family, Parents
+                  rating: 2
+                  pun: There was this guy who decided he wanted to live with his gay friends in a nudest colony and so he up and quit his job, and moved. He was really happy until he got a letter from his grandma. She told him he was about to die and wanted a picture of him. He got his friend to take a picture of him, and sice he had no clothes, he cut the picture in half. A few weeks later he received another letter from his grandma telling him he needed to get a haircut because it made his nose look long.... he soon realized he had sent her the wrong half.
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Entertainment
+  /v1/randomquote:
+    get:
+      summary: Random Quote
+      description: Get a random quote from a collection of quotes
+      operationId: randomquote
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  quote: Your sacred space is where you can find yourself again and again.
+                  author: Joseph Campbell
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Entertainment
+  /v1/scrabblescorer:
+    get:
+      summary: Scrabble Word Scorer
+      description: Calculate Scrabble points for a word
+      operationId: scrabblescorer
+      parameters:
+      - name: word
+        in: query
+        schema:
+          type: string
+        required: true
+        description: The word to score
+        example: QUIZ
+      - name: language
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Scrabble language variant
+        example: english
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  word: QUIZ
+                  language: english
+                  total_score: 22
+                  letter_count: 4
+                  letter_scores:
+                  - letter: Q
+                    score: 10
+                  - letter: U
+                    score: 1
+                  - letter: I
+                    score: 1
+                  - letter: Z
+                    score: 10
+                  highest_scoring_letter:
+                    letter: Q
+                    score: 10
+                  average_letter_score: 5.5
+                  note: Scores do not include board multipliers (double/triple letter/word)
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Entertainment
+  /v1/sudoku:
+    get:
+      summary: Sudoku Generator
+      description: Sudoku is a simple tool for generating Sudoku puzzles. It returns a Sudoku puzzle.
+      operationId: sudoku
+      parameters:
+      - name: difficulty
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The difficulty level of the Sudoku puzzle to generate
+        example: medium
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  puzzle:
+                    grid: 674--3---1---72-9-5----1--4------8-3-1---8--52----61--7-1----8--53-97--19--8-4---
+                    html: '<html><head><title>Sudoku Puzzle</title><style>table {border-collapse: collapse; width: 300px; height: 300px;}td {text-align: center; width: 30px; height: 30px; padding: 0;}input {width: 100%; height: 100%; text-align: center; font-size: 18px; border: none;}</style></head><body><table><tr><td style=''border-top: 3px solid #000;border-left: 3px solid #000;''>                      <input type=''text'' value=''6'' maxlength=''1'' disabled />                    </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value=''7'' maxlength=''1'' disabled />                    </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value=''4'' maxlength=''1'' disabled />                    </td><td style=''border-top: 3px solid #000;border-left: 3px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value=''3'' maxlength=''1'' disabled />                    </td><td style=''border-top: 3px solid #000;border-left: 3px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;border-right: 3px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td></tr><tr><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                      <input type=''text'' value=''1'' maxlength=''1'' disabled />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value=''7'' maxlength=''1'' disabled />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value=''2'' maxlength=''1'' disabled />                    </td><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value=''9'' maxlength=''1'' disabled />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;border-right: 3px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td></tr><tr><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                      <input type=''text'' value=''5'' maxlength=''1'' disabled />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value=''1'' maxlength=''1'' disabled />                    </td><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;border-right: 3px solid #000;''>                      <input type=''text'' value=''4'' maxlength=''1'' disabled />                    </td></tr><tr><td style=''border-top: 3px solid #000;border-left: 3px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 3px solid #000;border-left: 3px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 3px solid #000;border-left: 3px solid #000;''>                      <input type=''text'' value=''8'' maxlength=''1'' disabled />                    </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;border-right: 3px solid #000;''>                      <input type=''text'' value=''3'' maxlength=''1'' disabled />                    </td></tr><tr><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value=''1'' maxlength=''1'' disabled />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value=''8'' maxlength=''1'' disabled />                    </td><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;border-right: 3px solid #000;''>                      <input type=''text'' value=''5'' maxlength=''1'' disabled />                    </td></tr><tr><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                      <input type=''text'' value=''2'' maxlength=''1'' disabled />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value=''6'' maxlength=''1'' disabled />                    </td><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                      <input type=''text'' value=''1'' maxlength=''1'' disabled />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;border-right: 3px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td></tr><tr><td style=''border-top: 3px solid #000;border-left: 3px solid #000;''>                      <input type=''text'' value=''7'' maxlength=''1'' disabled />                    </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value=''1'' maxlength=''1'' disabled />                    </td><td style=''border-top: 3px solid #000;border-left: 3px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 3px solid #000;border-left: 3px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value=''8'' maxlength=''1'' disabled />                    </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;border-right: 3px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td></tr><tr><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value=''5'' maxlength=''1'' disabled />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value=''3'' maxlength=''1'' disabled />                    </td><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value=''9'' maxlength=''1'' disabled />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value=''7'' maxlength=''1'' disabled />                    </td><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;border-right: 3px solid #000;''>                      <input type=''text'' value=''1'' maxlength=''1'' disabled />                    </td></tr><tr><td style=''border-top: 1px solid #000;border-bottom: 3px solid #000;border-left: 3px solid #000;''>                      <input type=''text'' value=''9'' maxlength=''1'' disabled />                    </td><td style=''border-top: 1px solid #000;border-bottom: 3px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-bottom: 3px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-bottom: 3px solid #000;border-left: 3px solid #000;''>                      <input type=''text'' value=''8'' maxlength=''1'' disabled />                    </td><td style=''border-top: 1px solid #000;border-bottom: 3px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-bottom: 3px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value=''4'' maxlength=''1'' disabled />                    </td><td style=''border-top: 1px solid #000;border-bottom: 3px solid #000;border-left: 3px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-bottom: 3px solid #000;border-left: 1px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td><td style=''border-top: 1px solid #000;border-bottom: 3px solid #000;border-left: 1px solid #000;border-right: 3px solid #000;''>                      <input type=''text'' value='''' maxlength=''1''  />                    </td></tr></table></body></html>'
+                    image:
+                      imageName: d1b59df4-7ab2-474e-b269-e34ce212b469_puzzle.png
+                      format: .png
+                      downloadURL: https://storage.googleapis.com/apiverve/APIData/sudoku/d1b59df4-7ab2-474e-b269-e34ce212b469_puzzle.png?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1766010586&Signature=jFaR0KjqZtGbKvnH7wPVVfz88z4mRT9bgs54W%2BEyU%2B%2B4%2BbXZdqK8wafALwJpk89vRjhsTpaX6huE8SDkDl6U6VY452LDEnv1kOT6SASgttUbUVnnfoyJFfaEQIreHun6Y0dCAIA8RpJ27kBGorHAN9cgvA3N4wLTrzKGXd%2B3ULxbYivUNIjxgXFqeOCNeHhYHOU46i6voYYC7VYaibkpqwwD%2BYw0jQOXzVevwEVmP%2BhfQ0B1mToPnsyzS8Bo2b8Vtyh78YLh3u30KPKoio1%2FbNZ1KYI6hUpZ9UlnQFAN91Wg%2BFVlG4clYhGgwcPsjsq5xUUsdty4JmYYVocturuXrQ%3D%3D
+                      expires: 1766010586784
+                  solution:
+                    grid: '674953218138472596592681734465129873319748625287536149741365982853297461926814357'
+                    html: '<html><head><title>Sudoku Solution</title><style>table {border-collapse: collapse; width: 300px; height: 300px;}td {text-align: center; width: 30px; height: 30px; padding: 0;}input {width: 100%; height: 100%; text-align: center; font-size: 18px; border: none;}</style></head><body><table><tr><td style=''border-top: 3px solid #000;border-left: 3px solid #000;''>                        <input type=''text'' value=''6'' maxlength=''1'' disabled />                      </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''7'' maxlength=''1'' disabled />                      </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''4'' maxlength=''1'' disabled />                      </td><td style=''border-top: 3px solid #000;border-left: 3px solid #000;''>                        <input type=''text'' value=''9'' maxlength=''1'' disabled />                      </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''5'' maxlength=''1'' disabled />                      </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''3'' maxlength=''1'' disabled />                      </td><td style=''border-top: 3px solid #000;border-left: 3px solid #000;''>                        <input type=''text'' value=''2'' maxlength=''1'' disabled />                      </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''1'' maxlength=''1'' disabled />                      </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;border-right: 3px solid #000;''>                        <input type=''text'' value=''8'' maxlength=''1'' disabled />                      </td></tr><tr><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                        <input type=''text'' value=''1'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''3'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''8'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                        <input type=''text'' value=''4'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''7'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''2'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                        <input type=''text'' value=''5'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''9'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;border-right: 3px solid #000;''>                        <input type=''text'' value=''6'' maxlength=''1'' disabled />                      </td></tr><tr><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                        <input type=''text'' value=''5'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''9'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''2'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                        <input type=''text'' value=''6'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''8'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''1'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                        <input type=''text'' value=''7'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''3'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;border-right: 3px solid #000;''>                        <input type=''text'' value=''4'' maxlength=''1'' disabled />                      </td></tr><tr><td style=''border-top: 3px solid #000;border-left: 3px solid #000;''>                        <input type=''text'' value=''4'' maxlength=''1'' disabled />                      </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''6'' maxlength=''1'' disabled />                      </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''5'' maxlength=''1'' disabled />                      </td><td style=''border-top: 3px solid #000;border-left: 3px solid #000;''>                        <input type=''text'' value=''1'' maxlength=''1'' disabled />                      </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''2'' maxlength=''1'' disabled />                      </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''9'' maxlength=''1'' disabled />                      </td><td style=''border-top: 3px solid #000;border-left: 3px solid #000;''>                        <input type=''text'' value=''8'' maxlength=''1'' disabled />                      </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''7'' maxlength=''1'' disabled />                      </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;border-right: 3px solid #000;''>                        <input type=''text'' value=''3'' maxlength=''1'' disabled />                      </td></tr><tr><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                        <input type=''text'' value=''3'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''1'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''9'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                        <input type=''text'' value=''7'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''4'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''8'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                        <input type=''text'' value=''6'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''2'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;border-right: 3px solid #000;''>                        <input type=''text'' value=''5'' maxlength=''1'' disabled />                      </td></tr><tr><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                        <input type=''text'' value=''2'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''8'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''7'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                        <input type=''text'' value=''5'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''3'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''6'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                        <input type=''text'' value=''1'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''4'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;border-right: 3px solid #000;''>                        <input type=''text'' value=''9'' maxlength=''1'' disabled />                      </td></tr><tr><td style=''border-top: 3px solid #000;border-left: 3px solid #000;''>                        <input type=''text'' value=''7'' maxlength=''1'' disabled />                      </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''4'' maxlength=''1'' disabled />                      </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''1'' maxlength=''1'' disabled />                      </td><td style=''border-top: 3px solid #000;border-left: 3px solid #000;''>                        <input type=''text'' value=''3'' maxlength=''1'' disabled />                      </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''6'' maxlength=''1'' disabled />                      </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''5'' maxlength=''1'' disabled />                      </td><td style=''border-top: 3px solid #000;border-left: 3px solid #000;''>                        <input type=''text'' value=''9'' maxlength=''1'' disabled />                      </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''8'' maxlength=''1'' disabled />                      </td><td style=''border-top: 3px solid #000;border-left: 1px solid #000;border-right: 3px solid #000;''>                        <input type=''text'' value=''2'' maxlength=''1'' disabled />                      </td></tr><tr><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                        <input type=''text'' value=''8'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''5'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''3'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                        <input type=''text'' value=''2'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''9'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''7'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 3px solid #000;''>                        <input type=''text'' value=''4'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''6'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-left: 1px solid #000;border-right: 3px solid #000;''>                        <input type=''text'' value=''1'' maxlength=''1'' disabled />                      </td></tr><tr><td style=''border-top: 1px solid #000;border-bottom: 3px solid #000;border-left: 3px solid #000;''>                        <input type=''text'' value=''9'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-bottom: 3px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''2'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-bottom: 3px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''6'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-bottom: 3px solid #000;border-left: 3px solid #000;''>                        <input type=''text'' value=''8'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-bottom: 3px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''1'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-bottom: 3px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''4'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-bottom: 3px solid #000;border-left: 3px solid #000;''>                        <input type=''text'' value=''3'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-bottom: 3px solid #000;border-left: 1px solid #000;''>                        <input type=''text'' value=''5'' maxlength=''1'' disabled />                      </td><td style=''border-top: 1px solid #000;border-bottom: 3px solid #000;border-left: 1px solid #000;border-right: 3px solid #000;''>                        <input type=''text'' value=''7'' maxlength=''1'' disabled />                      </td></tr></table></body></html>'
+                    image:
+                      imageName: d0a6a5a0-c0e3-44cb-8417-e6590f793a7c_solution.png
+                      format: .png
+                      downloadURL: https://storage.googleapis.com/apiverve/APIData/sudoku/d0a6a5a0-c0e3-44cb-8417-e6590f793a7c_solution.png?GoogleAccessId=635500398038-compute%40developer.gserviceaccount.com&Expires=1766010586&Signature=LVChpKLTdpScYP%2F%2FmDSgy9wp%2FECkftQIjWK%2FRZ8dtUjv%2BchJNL5u43Rwkwoh8y7%2FurdHnOUFookVLNJp6EeIMlhHsh9e%2BF5kWaVbZwPfzvVwVWWScoL%2FDx9c6wXm8svbqTb6tXgun8IPaeyt80xTFtg2swAphkB4KS00H5z4Te2O2RL%2F2Op%2BVZu7eVEpQUmTcZ1kR0Nahm5ueeIIPWvUIetV5N5%2FAnzGi5RvyFx0oFIJjPj9zSfi0jPxMbYSUIwF4ZQwyq5e9B%2BeCnX8atCyCs8UN2Sc1ZkFC0BA0ya5t%2F5AoxkdJWeMwMIo%2BcY7jk5anJShVhu9UT6m5bIpSaKdUA%3D%3D
+                      expires: 1766010586850
+                  difficulty: medium
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Entertainment
+  /v1/trivia:
+    get:
+      summary: Trivia Generator
+      description: Get a random trivia question
+      operationId: trivia
+      parameters:
+      - name: category
+        in: query
+        schema:
+          type: string
+        required: false
+        description: The category of the trivia question
+        example: general
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  question: Is the Pink Cadillac the trademark of Mary Kay beauty products?
+                  answer: 'Yes'
+                  options:
+                  - A Yes
+                  - B No
+                  category: general
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Entertainment
+  /v1/truthordare:
+    get:
+      summary: Truth or Dare
+      description: Generate a truth or dare prompt
+      operationId: truthordare
+      parameters:
+      - name: type
+        in: query
+        schema:
+          type: string
+        required: false
+        description: 'Prompt type: truth, dare, or random'
+        example: random
+      - name: adult
+        in: query
+        schema:
+          type: boolean
+        required: false
+        description: Include adult/spicy prompts
+        example: false
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  type: truth
+                  prompt: What is the weirdest thing you've ever eaten?
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Entertainment
+  /v1/wordlehelper:
+    get:
+      summary: Wordle Helper
+      description: Find possible Wordle solutions based on clues
+      operationId: wordlehelper
+      parameters:
+      - name: green
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Correct letters with positions (e.g., A1 means A at position 1)
+        example: A1,E5
+      - name: yellow
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Letters in word but wrong position (e.g., R2 means R not at position 2)
+        example: R2,O3
+      - name: gray
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Letters not in the word
+        example: STLN
+      - name: pattern
+        in: query
+        schema:
+          type: string
+        required: false
+        description: Pattern with known letters (use _ for unknown)
+        example: A___E
+      - name: limit
+        in: query
+        schema:
+          type: integer
+        required: false
+        description: Maximum number of suggestions
+        example: 25
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  matchCount: 11
+                  suggestions:
+                  - adore
+                  - afore
+                  - afire
+                  - argue
+                  - aerie
+                  - azure
+                  - aurae
+                  - arame
+                  - agree
+                  - aware
+                  - areae
+                  filters:
+                    green:
+                      '0': a
+                      '4': e
+                    yellow:
+                    - r
+                    gray:
+                    - s
+                    - t
+                    - l
+                    - n
+                  pattern: A___E
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      tags:
+      - Entertainment
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
+externalDocs:
+  description: APIVerve Documentation
+  url: https://docs.apiverve.com

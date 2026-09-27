@@ -1,0 +1,442 @@
+openapi: 3.2.0
+info:
+  title: APIVerve Data Scraping API
+  description: One API key, 370+ real-world REST endpoints — weather, geocoding, finance, DNS, validation, text processing and more. Every endpoint returns JSON. Full documentation at https://docs.apiverve.com.
+  termsOfService: https://apiverve.com/terms/
+  contact:
+    name: APIVerve Support
+    email: hello@apiverve.com
+    url: https://apiverve.com/contact
+  license:
+    name: APIVerve Terms of Service
+    url: https://apiverve.com/terms/
+  version: 1.0.0
+  x-logo:
+    url: https://apiverve.com/images/favicon.png
+    altText: APIVerve
+servers:
+- url: https://api.apiverve.com
+security:
+- api_key: []
+tags:
+- name: Data Scraping
+paths:
+  /v1/contactextractor:
+    post:
+      summary: Contact Extractor
+      description: Extract contact data from a web page
+      operationId: contactextractor
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  url: https://en.wikipedia.org/wiki/Email_address
+                  emails:
+                  - john.smith@example.com
+                  - jsmith@example.com
+                  - john.smith@example.org
+                  - John..Doe@example.com
+                  - johns@example.com
+                  - JohnS@example.com
+                  - tag@example.com
+                  - joeuser@example.com
+                  - simple@example.com
+                  - very.common@example.com
+                  - FirstName.LastName@EasierReading.org
+                  - x@example.com
+                  - long.email-address-with-hyphens@and.subdomains.example.com
+                  - sorting@example.com
+                  - user.name@example.com
+                  - surname@example.com
+                  - example@s.example
+                  - username@example.org
+                  - example.com@example.org
+                  - user@example.com
+                  - user-@example.org
+                  - CHOCOLATE@example.com
+                  - c@example.com
+                  - l@example.com
+                  - right@example.com
+                  - allowed@example.com
+                  - onore@example.com
+                  - extension@pobox.com
+                  phones: []
+                  places:
+                  - China
+                  - Japan
+                  - Russia
+                  - Rajasthan
+                  - India
+                  emailCount: 27
+                  phoneCount: 0
+                  placeCount: 5
+                  uniqueDomains:
+                  - example.com
+                  - example.org
+                  - s.example
+                  - EasierReading.org
+                  - pobox.com
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: The URL of the web page to extract contact data from
+                limit:
+                  type: number
+                  description: Limits the number of found contact details found on the page. Set -1 for unlimited
+              required:
+              - url
+      tags:
+      - Data Scraping
+  /v1/linkscraper:
+    post:
+      summary: Link Scraper
+      description: Scrape all the links on a web page
+      operationId: linkscraper
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  url: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html
+                  linkCount: 16
+                  externalLinkCount: 13
+                  internalLinkCount: 3
+                  links:
+                  - text: Documentation
+                    href: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html/index.html
+                    external: false
+                  - text: Amazon EC2 Instance Types Guide
+                    href: https://docs.aws.amazon.com/ec2/latest/instancetypes/instance-types.html
+                    external: true
+                  - text: Amazon EC2 Auto Scaling
+                    href: https://docs.aws.amazon.com/autoscaling/
+                    external: true
+                  uniqueDomains:
+                  - docs.aws.amazon.com
+                  - aws.amazon.com
+                  maxLinksReached: false
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: The URL of the web page to scrape links from
+                maxlinks:
+                  type: number
+                  description: Maximum number of links to scrape and return
+                includequery:
+                  type: boolean
+                  description: Include query strings in the scraped links
+              required:
+              - url
+      tags:
+      - Data Scraping
+  /v1/seoscraper:
+    post:
+      summary: SEO Data Scraper
+      description: Scrape SEO data from a web page
+      operationId: seoscraper
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  url: https://apiverve.com
+                  title: APIVerve — One key for 300+ production APIs
+                  description: Consistent schemas, predictable credit pricing, and an uptime SLA on every paid plan across 300+ production APIs. One key, one bill, zero glue code.
+                  keywords: ''
+                  author: ''
+                  canonical: ''
+                  og:title: APIVerve — One key for 300+ production APIs
+                  og:description: Consistent schemas, predictable credit pricing, and an uptime SLA on every paid plan across 300+ production APIs. One key, one bill, zero glue code.
+                  og:image: https://apiverve.com/social-images/page-home.png
+                  og:url: https://apiverve.com
+                  og:type: website
+                  og:site_name: APIVerve
+                  twitter:card: summary_large_image
+                  twitter:title: APIVerve — One key for 300+ production APIs
+                  twitter:description: Consistent schemas, predictable credit pricing, and an uptime SLA on every paid plan across 300+ production APIs.
+                  twitter:image: https://apiverve.com/social-images/page-home.png
+                  twitter:site: ''
+                  robots: ''
+                  viewport: width=device-width, initial-scale=1, maximum-scale=1
+                  charset: utf-8
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: The URL of the web page to scrape SEO data from
+              required:
+              - url
+      tags:
+      - Data Scraping
+  /v1/webimagescraper:
+    post:
+      summary: Website Images Scraper
+      description: Web Image Scraper is a simple tool for scraping images from a website. It returns the URLs of the images found on the website.
+      operationId: webimagescraper
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  url: http://en.wikipedia.org/wiki/Solar_System
+                  imageCount: 25
+                  externalImageCount: 0
+                  internalImageCount: 25
+                  images:
+                  - src: http://en.wikipedia.org/wiki/Solar_System/static/images/icons/wikipedia.png
+                    external: false
+                  - src: http://en.wikipedia.org/wiki/Solar_System/static/images/mobile/copyright/wikipedia-wordmark-en.svg
+                    external: false
+                  - src: http://en.wikipedia.org/wiki/Solar_System/static/images/mobile/copyright/wikipedia-tagline-en.svg
+                    external: false
+                  - src: http://en.wikipedia.org/wiki/Solar_System//upload.wikimedia.org/wikipedia/en/thumb/e/e7/Cscr-featured.svg/20px-Cscr-featured.svg.png
+                    external: false
+                  - src: http://en.wikipedia.org/wiki/Solar_System//upload.wikimedia.org/wikipedia/en/thumb/1/1b/Semi-protection-shackle.svg/20px-Semi-protection-shackle.svg.png
+                    external: false
+                  - src: http://en.wikipedia.org/wiki/Solar_System//upload.wikimedia.org/wikipedia/commons/thumb/8/87/Gnome-mime-sound-openclipart.svg/20px-Gnome-mime-sound-openclipart.svg.png
+                    external: false
+                  - src: http://en.wikipedia.org/wiki/Solar_System//upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Solar_System_true_color_%28title_and_caption%29.jpg/330px-Solar_System_true_color_%28title_and_caption%29.jpg
+                    external: false
+                  - src: http://en.wikipedia.org/wiki/Solar_System//upload.wikimedia.org/wikipedia/commons/thumb/5/56/Soot-line1.jpg/500px-Soot-line1.jpg
+                    external: false
+                  - src: http://en.wikipedia.org/wiki/Solar_System//upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Sun_red_giant.svg/250px-Sun_red_giant.svg.png
+                    external: false
+                  - src: http://en.wikipedia.org/wiki/Solar_System//upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Plane_of_Ecliptic.jpg/250px-Plane_of_Ecliptic.jpg
+                    external: false
+                  - src: http://en.wikipedia.org/wiki/Solar_System//upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Solar_system_orrery_inner_planets.gif/250px-Solar_system_orrery_inner_planets.gif
+                    external: false
+                  - src: http://en.wikipedia.org/wiki/Solar_System//upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Solar_system_orrery_outer_planets.gif/250px-Solar_system_orrery_outer_planets.gif
+                    external: false
+                  - src: http://en.wikipedia.org/wiki/Solar_System//upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Orbital_distances_in_the_solar_system_linear_scale.png/250px-Orbital_distances_in_the_solar_system_linear_scale.png
+                    external: false
+                  - src: http://en.wikipedia.org/wiki/Solar_System//upload.wikimedia.org/wikipedia/commons/thumb/d/df/Solar_System_distance_to_scale.svg/960px-Solar_System_distance_to_scale.svg.png
+                    external: false
+                  - src: http://en.wikipedia.org/wiki/Solar_System//upload.wikimedia.org/wikipedia/commons/thumb/f/f7/PIA21424_-_The_TRAPPIST-1_Habitable_Zone.jpg/500px-PIA21424_-_The_TRAPPIST-1_Habitable_Zone.jpg
+                    external: false
+                  - src: http://en.wikipedia.org/wiki/Solar_System//upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Diagram_of_different_habitable_zone_regions_by_Chester_Harman.jpg/500px-Diagram_of_different_habitable_zone_regions_by_Chester_Harman.jpg
+                    external: false
+                  - src: http://en.wikipedia.org/wiki/Solar_System//upload.wikimedia.org/wikipedia/commons/thumb/8/83/The_Sun_in_white_light.jpg/250px-The_Sun_in_white_light.jpg
+                    external: false
+                  - src: http://en.wikipedia.org/wiki/Solar_System//upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Terrestrial_planet_sizes_3.jpg/250px-Terrestrial_planet_sizes_3.jpg
+                    external: false
+                  - src: http://en.wikipedia.org/wiki/Solar_System//upload.wikimedia.org/wikipedia/commons/thumb/1/11/Inner_solar_system_objects_top_view_for_wiki.png/250px-Inner_solar_system_objects_top_view_for_wiki.png
+                    external: false
+                  - src: http://en.wikipedia.org/wiki/Solar_System//upload.wikimedia.org/wikipedia/commons/thumb/8/86/The_Four_Largest_Asteroids.jpg/250px-The_Four_Largest_Asteroids.jpg
+                    external: false
+                  - src: http://en.wikipedia.org/wiki/Solar_System//upload.wikimedia.org/wikipedia/commons/thumb/6/67/Planet_collage_to_scale_%28captioned%29.jpg/250px-Planet_collage_to_scale_%28captioned%29.jpg
+                    external: false
+                  - src: http://en.wikipedia.org/wiki/Solar_System//upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Kuiper_belt_plot_objects_of_outer_solar_system.png/250px-Kuiper_belt_plot_objects_of_outer_solar_system.png
+                    external: false
+                  - src: http://en.wikipedia.org/wiki/Solar_System//upload.wikimedia.org/wikipedia/commons/thumb/e/ed/TheKuiperBelt_classes-en.svg/250px-TheKuiperBelt_classes-en.svg.png
+                    external: false
+                  - src: http://en.wikipedia.org/wiki/Solar_System//upload.wikimedia.org/wikipedia/commons/thumb/5/58/TheKuiperBelt_Projections_100AU_Classical_SDO.svg/250px-TheKuiperBelt_Projections_100AU_Classical_SDO.svg.png
+                    external: false
+                  - src: http://en.wikipedia.org/wiki/Solar_System//upload.wikimedia.org/wikipedia/commons/thumb/5/56/Distant_object_orbits_%2B_Planet_Nine.png/330px-Distant_object_orbits_%2B_Planet_Nine.png
+                    external: false
+                  uniqueDomains: []
+                  maxLinksReached: true
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: The URL of the website you want to scrape images from
+                maxlinks:
+                  type: integer
+                  description: The limit of image URLs returned from your query
+                includequery:
+                  type: boolean
+                  description: Keep query strings on the scraped image URLs instead of trimming them
+              required:
+              - url
+      tags:
+      - Data Scraping
+  /v1/webscreenshots:
+    post:
+      summary: Website Screenshot
+      description: Capture a screenshot of a web page
+      operationId: webscreenshots
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: status
+                  error:
+                    type: string
+                    description: error
+                  data:
+                    type: object
+                    description: data
+              example:
+                status: ok
+                error: null
+                data:
+                  width: 1024
+                  height: 600
+                  scaleFactor: 1
+                  imageName: 77072426-6af8-45c2-93dd-d7013d2c765e.png
+                  expires: 1766097105719
+                  url: https://ebay.com/
+                  downloadURL: https://storage.googleapis.com/apiverve-helpers.appspot.com/webscreenshots/77072426-6af8-45c2-93dd-d7013d2c765e.png?GoogleAccessId=1089020767582-compute%40developer.gserviceaccount.com&Expires=1766097105&Signature=uZKa777XpeVnlwOZG7Uhjs%2BNkPzkEuiV4Wug2%2B%2BAHcPovRZ3iVjZEX%2FZhp7gnADXI6au5q0ggPwweoOFJeMCdk9zod6aZo4hlUDe1DsJf0oao4rh3tGUl5wPeudXLp7Y%2F3zVflup9Mp255LY6%2B2JdU0auOHdPnEYLDCvf705X9C%2BflmWQZKh7QKi74gvU8pqsP6Zc7SfJJsv5kmhP8SkO7TBZKBU6pAr2mNHKpKgB5mtfCRLbyPYcxawSGlTuyIyRXffWbkfHdDl6pquPX9J%2Fp5uGYM4jTrqrrrR1MPAOfkD7d9V5juqe5A7VvWmhiAyCMGDO%2BeqUO%2BSe6t9php0vA%3D%3D
+        '401':
+          description: Your request was not authorized, or your API Key was invalid
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: A server error has occurred, try again later
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: The URL of the web page to capture the screenshot (e.g., https://example.com)
+                type:
+                  type: string
+                  description: The image format for the screenshot
+                width:
+                  type: number
+                  description: The width of the screenshot in pixels (e.g., 1920). Must be between 100 and 3840
+                height:
+                  type: number
+                  description: The height of the screenshot in pixels (e.g., 1080).  Must be between 100 and 3840
+                fullpage:
+                  type: boolean
+                  description: Whether to capture the full page screenshot (true or false)
+              required:
+              - url
+      tags:
+      - Data Scraping
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
+externalDocs:
+  description: APIVerve Documentation
+  url: https://docs.apiverve.com
