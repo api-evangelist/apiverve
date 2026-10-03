@@ -1,7 +1,7 @@
 {
   "provider": "apiverve",
   "sources": [
-    "apiverve-openapi.yaml"
+    "_original/apiverve-openapi.yaml"
   ],
   "outputs": [
     "apiverve-ai-computer-vision-api-openapi.yml",
@@ -34,14 +34,43 @@
     "apiverve-transportation-api-openapi.yml",
     "apiverve-weather-api-openapi.yml"
   ],
-  "archived": [
-    "archived openapi/apiverve-openapi.yaml"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "apiverve-openapi.yaml: upgraded openapi 3.0.4 -> OpenAPI 3.2.0",
-    "apis.yml register: written (+29 apis, 31 total)"
+    "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "apiverve-ai-computer-vision-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apiverve-astrology-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apiverve-calendar-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apiverve-data-conversion-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apiverve-data-generation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apiverve-data-lookup-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apiverve-data-processing-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apiverve-data-scraping-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apiverve-data-validation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apiverve-documents-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apiverve-domain-data-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apiverve-entertainment-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apiverve-finance-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apiverve-food-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apiverve-games-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apiverve-geography-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apiverve-health-wellness-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apiverve-images-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apiverve-lifestyle-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apiverve-math-calculations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apiverve-networking-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apiverve-news-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apiverve-parsers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apiverve-reference-data-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apiverve-science-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apiverve-security-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apiverve-text-processing-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apiverve-transportation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apiverve-weather-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
