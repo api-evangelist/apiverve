@@ -278,6 +278,8 @@ apis:
   humanURL: https://docs.apiverve.com
   baseURL: https://api.apiverve.com/v1
   tags:
+  - DATA LOOKUP
+  tags_raw:
   - Data Lookup
   properties:
   - type: OpenAPI
@@ -476,6 +478,8 @@ apis:
   humanURL: https://docs.apiverve.com
   baseURL: https://api.apiverve.com/v1
   tags:
+  - Health Wellness
+  tags_raw:
   - Health/Wellness
   properties:
   - type: OpenAPI
@@ -494,6 +498,8 @@ apis:
   humanURL: https://docs.apiverve.com
   baseURL: https://api.apiverve.com/v1
   tags:
+  - Image
+  tags_raw:
   - Images
   properties:
   - type: OpenAPI
@@ -584,6 +590,8 @@ apis:
   humanURL: https://docs.apiverve.com
   baseURL: https://api.apiverve.com/v1
   tags:
+  - Parser
+  tags_raw:
   - Parsers
   properties:
   - type: OpenAPI
