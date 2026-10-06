@@ -5,7 +5,7 @@ description: >-
   llms.txt, and a hosted remote MCP server that turns the whole catalog into agent tools.
 url: https://raw.githubusercontent.com/api-evangelist/apiverve/refs/heads/main/apis.yml
 created: '2026-09-19'
-modified: '2026-09-20'
+modified: '2026-10-06'
 specificationVersion: '0.21'
 tags:
 - API Marketplace
@@ -722,6 +722,8 @@ generated:
   confidence: 97
   at: '2026-09-19T06:33:39.090Z'
 common:
+- url: https://blog.apiverve.com/rss.xml
+  type: BlogRSS
 - type: AgenticAccess
   url: agentic-access/apiverve-agentic-access.yml
 - type: DomainSecurity
