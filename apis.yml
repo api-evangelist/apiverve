@@ -316,6 +316,8 @@ apis:
   humanURL: https://docs.apiverve.com
   baseURL: https://api.apiverve.com/v1
   tags:
+  - Web Scraping
+  tags_raw:
   - Data Scraping
   properties:
   - type: OpenAPI
