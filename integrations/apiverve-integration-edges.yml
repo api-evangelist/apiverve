@@ -108,12 +108,49 @@ edges:
     builder: Pipedream repo (component)
   detected_by: sweep-workflow-automation.py
   first_seen: '2026-10-15'
+- partner_name: npm registry
+  partner: npm
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (JavaScript/TypeScript)
+  evidence: https://www.npmjs.com/package/@apiverve/cli
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: npm registry (public registry JSON)
+    spec_file: null
+    language: JavaScript/TypeScript
+    packages:
+    - name: '@apiverve/cli'
+      version: 1.0.0
+      released: '2026-07-20'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@apiverve/cli
+      repo_leg: domain:apiverve.com
+      publisher_leg: email:apiverve.com
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  detected_by: sweep-official-sdks.py
+  first_seen: '2026-10-18'
 generated: '2026-10-14'
 method: searched
 checked:
+- https://api.nuget.org/v3
+- https://crates.io/api/v1
 - https://github.com/PipedreamHQ/pipedream/tree/94800dd6de6640b942c65ea7ee655f71ac56d438/components/
+- https://proxy.golang.org
+- https://pypi.org/pypi
 - https://registry.modelcontextprotocol.io/v0/servers
+- https://registry.npmjs.org
 - https://registry.npmjs.org/-/v1/search?text=keywords:n8n-community-node-package
+- https://repo1.maven.org/maven2
+- https://rubygems.org/api/v1
 - https://zapier.com/api/v4/apps/
 source:
 - https://github.com/PipedreamHQ/pipedream/tree/94800dd6de6640b942c65ea7ee655f71ac56d438/components/
