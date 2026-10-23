@@ -183,6 +183,387 @@ edges:
     detected: '2026-10-20'
   detected_by: sweep-official-clis.py
   first_seen: '2026-10-20'
+- partner_name: pub.dev
+  partner: pub-dev
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (Dart/Flutter)
+  evidence: https://pub.dev/packages/apiverve_acronymexpander
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: pub.dev (public registry JSON)
+    spec_file: null
+    language: Dart/Flutter
+    packages:
+    - name: apiverve_acronymexpander
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_acronymexpander
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_acronymgenerator
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_acronymgenerator
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_acrostic
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_acrostic
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_advice
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_advice
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_agecalculator
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_agecalculator
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_airlinelookup
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_airlinelookup
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_airportcodeconverter
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_airportcodeconverter
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_airportdistance
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_airportdistance
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_airports
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_airports
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_airquality
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_airquality
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_anagramdetector
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_anagramdetector
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_anagrampuzzle
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_anagrampuzzle
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_antonym
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_antonym
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_articleideas
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_articleideas
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_ascii85encoder
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_ascii85encoder
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_asnlookup
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_asnlookup
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_babynamegenerator
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_babynamegenerator
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_backgroundremover
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_backgroundremover
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_balancesheet
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_balancesheet
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_barcodegenerator
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_barcodegenerator
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_barcodereader
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_barcodereader
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_base64
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_base64
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_benchmarkrate
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_benchmarkrate
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_bible
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_bible
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_bimivalidator
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_bimivalidator
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_bingocardgenerator
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_bingocardgenerator
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_binlookup
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_binlookup
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_birthchart
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_birthchart
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_birthstones
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_birthstones
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_bitcoin
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_bitcoin
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_bluetoothlookup
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_bluetoothlookup
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_bmicalculator
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_bmicalculator
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_boggleboardgenerator
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_boggleboardgenerator
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_botdetector
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_botdetector
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_bucketlist
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_bucketlist
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_caaparser
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_caaparser
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_callingcode
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_callingcode
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_captchagenerator
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_captchagenerator
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_carddeckshuffler
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_carddeckshuffler
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    - name: apiverve_carmodels
+      version: 1.2.2
+      released: '2026-10-21'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/apiverve_carmodels
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:apiverve.com
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-php-dart-elixir-package-registries.py
+    detected: '2026-10-22'
+  detected_by: sweep-php-dart-elixir-package-registries.py
+  first_seen: '2026-10-22'
 generated: '2026-10-14'
 method: searched
 checked:
@@ -204,6 +585,9 @@ checked:
 - https://rubygems.org/api/v1
 - https://zapier.com/api/v4/apps/
 - n8n/integrations/n8n-integration-edges.yml
+- https://hex.pm/api
+- https://packagist.org/packages
+- https://pub.dev/api
 source:
 - https://github.com/PipedreamHQ/pipedream/tree/94800dd6de6640b942c65ea7ee655f71ac56d438/components/
 - https://registry.npmjs.org/-/v1/search?text=keywords:n8n-community-node-package
